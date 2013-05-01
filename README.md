@@ -1,4 +1,4 @@
 norloc
 ======
 
-Norwegian filming locations
+Filming locations for norwegian films and TV-series.
