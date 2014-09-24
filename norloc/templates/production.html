@@ -91,7 +91,7 @@
       <!-- Shots -->
       {% for shot in scene.shot_set.all %}
        {% thumbnail shot.image "450x253" crop="center" as image %}
-        <img src="{{ image.url }}" class="shot" style="width:100%;">
+        <img src="{{ image.url }}" class="shot">
        {% endthumbnail %}
       {% endfor %}  
       <div class="description"><p>{{ scene.description }}</p></div>
