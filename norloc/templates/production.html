@@ -1,0 +1,103 @@
+{% extends "page.html" %}
+
+{% load thumbnail %}
+
+{% block title %}{{ production.title }} ({{ production.release.year }}) | {% endblock %}
+
+<!-- Cover -->
+{% block cover %}
+ {% if production.backdrop %}
+  {% thumbnail production.backdrop "970" as backdrop %}
+   <div class="production" style="background-image: url('{{ backdrop.url }}');">
+  {% endthumbnail %}
+ {% else %}
+  <div class="production">
+ {% endif %}
+ <!-- Poster -->
+ {% if production.poster %}
+  {% thumbnail production.poster "200x293" as poster %}
+   <img src="{{ poster.url }}" class="poster">
+  {% endthumbnail %}
+ {% endif %}
+
+  <!-- Summary -->
+  <div class="summary">
+   <h1 class="truncate" title="{{ production.title }} ({{ production.release.year }})">{{ production.title }} ({{ production.release.year }})</h1>
+   <h5 class="truncate">{{ production.directors.all|join:", " }}</h5>
+   <p>{{ production.summary }}</p>
+
+   <!-- Poster (small) -->
+   {% if production.poster %}
+    {% thumbnail production.poster "x80" as poster %}
+     <img src="{{ poster.url }}" class="poster show-for-small-only">
+    {% endthumbnail %}
+   {% endif %}
+
+   <!-- Labels -->
+   <div class="labels info">
+    <!-- Runtime -->
+    {% if production.runtime != 0 %}
+     <i class="fa fa-clock-o"></i>
+     <span class="runtime">{{ production.runtime }} min.</span>
+    {% endif %}
+    <!-- Release -->
+    {% if production.release %}
+     <i class="fa fa-calendar-o"></i>
+     <span class="release">{{ production.release|date:"d.m.Y" }}</span>
+    {% endif %}
+   </div>
+   {% if production.producers.count != 0 %}
+    <div class="labels">
+     <!-- Production -->
+     <i class="fa fa-briefcase" title="Produksjonsselskap"></i>
+     {% for producer in production.producers.all %}
+      <span>
+       {% if producer.website %}<a href="{{ producer.website }}" target="_blank">{{ producer.name }}</a>
+       {% else %}{{ producer.name }}{% endif %}
+      </span>
+     {% endfor %}
+    </div> 
+   {% endif %}
+   {% if production.distributors.count != 0 %}
+    <div class="labels">
+     <!-- Distribution -->
+     <i class="fa fa-ticket" title="Distribusjon"></i>
+     {% for distributor in production.distributors.all %}
+      <span>
+       {% if distributor.website %}<a href="{{ distributor.website }}" target="_blank">{{ distributor.name }}</a>
+       {% else %}{{ distributor.name }}{% endif %}
+      </span>
+     {% endfor %}
+    </div>
+   {% endif %}
+  </div>
+
+  <div class="bar"></div>
+ </div>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+ <!-- Scenes -->
+ <div class="row">
+  {% if location.scene_set.count != 0 %}
+   {% for scene in production.scene_set.all %}
+    <div class="medium-6 columns">
+     <!-- Scene -->
+     <div class="card scene">
+      <a href=""><h1>{{ scene.location.address }}</h1></a>
+      <i class="type fa fa-video-camera"></i>
+    
+      <!-- Shots -->
+      {% for shot in scene.shot_set.all %}
+       {% thumbnail shot.image "450x253" crop="center" as image %}
+        <img src="{{ image.url }}" class="shot">
+       {% endthumbnail %}
+      {% endfor %}  
+      <div class="description"><p>{{ scene.description }}</p></div>
+     </div>
+    </div>
+   {% endfor %}
+  {% endif %}
+ </div>
+{% endblock %}

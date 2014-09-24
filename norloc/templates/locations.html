@@ -1,0 +1,63 @@
+{% extends "page.html" %}
+
+{% load thumbnail %}
+
+{% block title %}Opptakssteder | {% endblock %}
+
+<!-- Cover -->
+{% block cover %}
+ <div id="map"></div>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+ {% if locations %}
+  <!-- Locations -->
+  <div class="row">
+   {% for location in locations %}
+    {% if location.scene_set.count != 0 %}
+     <div class="medium-6 columns">
+      <!-- Production -->
+      <div class="location">
+       <a href=""><h1>{{ location.address }}</h1></a>
+       <i class="type fa fa-map-marker"></i>
+       {% with location.photos.all|first as first_photo %}
+        <h5>{% if first_photo %}{{ first_photo.title }}{% else %}&nbsp;{% endif %}</h5>
+
+        {% if first_photo %}
+         {% thumbnail first_photo.photo "450" as photo %}
+          <div class="thumb" style="background-image: url('{{ photo.url }}');"></div>
+         {% endthumbnail %}
+        {% else %}
+         <div class="thumb"></div>
+        {% endif %}
+       {% endwith %}
+       <div class="description">
+        <p class="truncate">{{ location.description }}</p>
+       </div>
+       <!-- Scenes -->
+       <div class="scenes">
+        {% for scene in location.scene_set.all %}
+         <!-- Scene -->
+         <div class="scene">
+          {% if scene.production.poster %}
+           {% thumbnail scene.production.poster "21x30" crop="top" as poster %}
+            <a href="{% url 'production' scene.production.slug %}"><img src="{{ poster.url }}" class="poster" title="{{ scene.production.title }}"></a>
+           {% endthumbnail %}
+          {% endif %}
+          {% for shot in scene.shot_set.all %}
+           {% thumbnail shot.image "53x30" crop="center" as shot %}
+            <img src="{{ shot.url }}" alt="shot">
+           {% endthumbnail %}
+          {% endfor %}
+          <a href="{% url 'production' scene.production.slug %}">{{ scene.production.title }} ({{ scene.production.release.year }})</a><br>
+         </div>
+        {% endfor %}
+       </div>
+      </div>
+     </div>
+    {% endif %}
+   {% endfor %}
+  </div>
+ {% endif %}
+{% endblock %}

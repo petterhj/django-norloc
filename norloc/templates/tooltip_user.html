@@ -1,0 +1,28 @@
+<table>
+ <tr>
+  <td colspan="2">
+   <img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/t1.0-1/c10.10.84.84/s50x50/483998_10151085547259518_862688530_s.jpg">
+   {{ user.get_username }}
+   <span class="success radius label">Staff</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="30"></td>
+  <td width="150"></td>
+ </tr>
+ {% if user.is_staff %}
+  <tr>
+   <td><i class="fa fa-gear"></i></td>
+   <td><a href="/admin">Admin</a></td>
+  </tr>
+ {% endif %}
+ </tr>
+ <tr>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td><i class="fa fa-sign-out"></i></td>
+  <td><a href="/logout">Logg ut</a></td>
+ </tr>
+</table>

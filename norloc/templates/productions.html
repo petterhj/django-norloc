@@ -1,0 +1,56 @@
+{% extends "page.html" %}
+
+{% load thumbnail %}
+
+{% block title %}Produksjoner | {% endblock %}
+
+<!-- Cover -->
+{% block cover %}
+ <dl class="sub-nav" role="menu" title="Filter Menu List" style="background: #D6D6D6;margin:0;">
+  <dt>Filter:</dt>
+  <dd class="active" role="menuitem"><a href="#">All</a></dd>
+  <dd role="menuitem"><a href="#">Active</a></dd>
+  <dd role="menuitem"><a href="#">Pending</a></dd>
+  <dd role="menuitem"><a href="#">Suspended</a></dd>
+ </dl>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+ {% if productions %}
+  <!-- Productions -->
+  <div class="row production-list">
+   {% for production in productions %}
+    <div class="small-3 medium-2 columns">
+     <a href="{% url 'production' production.slug %}" title="{{ production.title }} ({{ production.release.year }})">
+      {% if production.poster %}
+       {% thumbnail production.poster "130x191" crop="top" as poster %}
+        <img src="{{ poster.url }}" class="poster">
+       {% endthumbnail %}
+      {% else %}
+       {% thumbnail production.backdrop "130x191" crop="center" as poster %}
+        <img src="{{ poster.url }}" class="poster">
+       {% endthumbnail %}
+      {% endif %}
+     </a>
+    </div>
+   {% endfor %}
+  </div>
+  <!-- Pagination -->
+  <div class="row pagination">
+   <div class="small-12 columns pagination-centered">
+    <ul class="pagination">
+     <li class="arrow unavailable"><a href="">&laquo;</a></li>
+     <li class="current"><a href="">1</a></li>
+     <li><a href="">2</a></li>
+     <li><a href="">3</a></li>
+     <li><a href="">4</a></li>
+     <li class="unavailable"><a href="">&hellip;</a></li>
+     <li><a href="">12</a></li>
+     <li><a href="">13</a></li>
+     <li class="arrow"><a href="">&raquo;</a></li>
+    </ul>
+   </div>
+  </div>
+ {% endif %}
+{% endblock %}
