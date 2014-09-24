@@ -21,7 +21,10 @@ def index(request, type=None):
     # Render
     return render_to_response(
         'productions.html',
-        {'productions': productions},
+        {
+            'productions': productions,
+            'filter': type if type else 'all'
+        },
         context_instance=RequestContext(request)
     )
 
