@@ -15,7 +15,7 @@
  {% endif %}
  <!-- Poster -->
  {% if production.poster %}
-  {% thumbnail production.poster "200x293" as poster %}
+  {% thumbnail production.poster "200x293" crop="center" as poster %}
    <img src="{{ poster.url }}" class="poster">
   {% endthumbnail %}
  {% endif %}
