@@ -1,7 +1,7 @@
 # Imports
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout as django_logout
 from django.shortcuts import redirect
 from productions.models import Production
 
@@ -55,7 +55,7 @@ def login(request):
 # View: Log out
 def logout(request):
     # Log out
-    logout(request)
+    django_logout(request)
 
     # Redirect
     return redirect('/')
