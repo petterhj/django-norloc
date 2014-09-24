@@ -15,6 +15,15 @@ $(document).ready(function(){
 		cursorwidth: 		'3px'
 	});
 
+	// Go to search
+	$('a.goto_search').click(function(){
+		// Scroll to top
+		$('body').animate({ scrollTop: 0 }, 'slow');
+
+		// Focus search field
+		$('input#search').focus();
+	});
+
 	// Initialize map
 	MAP.initialize($('div#map'));
 

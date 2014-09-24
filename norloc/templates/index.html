@@ -7,7 +7,7 @@
  {% thumbnail productions.all.1.backdrop "970" as backdrop %}
   <div class="search" style="background-image: url('{{ backdrop.url }}');">
    <div class="field">
-    <input type="text" placeholder="Film, TV-serie, sted"> 
+    <input type="text" placeholder="Film, TV-serie, sted" id="search"> 
     <i class="fa fa-search"></i>
    </div>
   </div>
@@ -61,7 +61,7 @@
   <div class="row quicklinks">
    <div class="small-12 columns">
     <i class="fa fa-video-camera"></i> <a href="{% url 'productions' %}">Flere produksjoner</a>
-    <i class="fa fa-search"></i> <a href="">Søk</a>
+    <i class="fa fa-search"></i> <a class="goto_search">Søk</a>
    </div>
   </div>
  {% endif %}
