@@ -554,36 +554,43 @@ div.field {
     position:           relative;
     margin-bottom:      15px;
 
+    /* Input */
+    input {
+        border-radius:      @radius !important;
+        margin:             0 !important;
+
+        /* Text */
+        &[type="text"],
+        &[type="password"] {
+            padding:            10px 10px 10px 40px;
+            background-color:   #FFF;
+            color:              #333;
+            border:             0;
+            font-size:          15px;
+            box-shadow:         3px 3px 3px 0 rgba(30, 30, 30, 0.3);
+
+            &:focus {
+                box-shadow:         3px 3px 3px 0 rgba(30, 30, 30, 0.8);
+
+                &+ i.fa {
+                    color:              #333;
+                }
+            }        
+        }
+
+        /* Button */
+        &[type="submit"] {
+            padding:            10px 15px 10px 15px;
+        }
+    }
+
+    /* Icon */
     i.fa {
         position:           absolute;
         top:                10px;
         left:               15px;
-        color:              #333;
+        color:              #666;
         font-size:          15px;
-    }
-}
-input {
-    border-radius:      @radius !important;
-    margin:             0 !important;
-
-    /* Text */
-    &[type="text"],
-    &[type="password"] {
-        padding:            10px 10px 10px 40px;
-        background-color:   #FFF;
-        color:              #333;
-        border:             0;
-        font-size:          15px;
-        box-shadow:         3px 3px 3px 0 rgba(30, 30, 30, 0.3);
-
-        &:focus {
-            box-shadow:         3px 3px 3px 0 rgba(30, 30, 30, 0.8);
-        }        
-    }
-
-    /* Button */
-    &[type="submit"] {
-        padding:            10px 15px 10px 15px;
     }
 }
 
