@@ -104,6 +104,29 @@ div#container {
 
         /* Grid */
         div.row {
+            /* Pagination */
+            &.pagination {
+                ul.pagination {
+                    margin:             0;
+                }
+            }
+            /* Quick links */
+            &.quicklinks {
+                overflow:           auto;
+                margin-top:         20px;
+                font-size:          14px;
+
+                i.fa {
+                    margin-right:       5px;
+                    color:              #CCC;
+
+                    &:not(:first-child) {
+                        margin-left:        15px;
+                    }
+                }
+            }
+
+            /* Columns */
             div.columns:last-child {
                 float:              left;
             }
@@ -116,11 +139,6 @@ div#container {
             > i.fa {
                 margin-right:       4px;
             }
-        }
-
-        /* Pagination */
-        ul.pagination {
-            margin:             0;
         }
 
         /* List */
