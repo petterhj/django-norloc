@@ -128,7 +128,7 @@ div#container {
             /* Poster */
             img.poster {
                 margin-bottom:      15px;
-                border:             2px solid transparent;
+                border:             2px solid #EFEFEF;
                 border-radius:      5px;
 
                 &:hover {
@@ -424,6 +424,10 @@ div#cover {
 
         dt {
             margin:             0 15px 0 0;
+
+            &:not(:first-child) {
+                margin-left:        50px;
+            }
         }
         dd {
             margin:             0 5px 0 0;
@@ -566,15 +570,22 @@ button {
     margin:             0;
 }
 
+input {
+    border-radius:      @radius !important;
+    margin:             0 !important;
+        
+    /* Button */
+    &[type="submit"] {
+        padding:            10px 15px 10px 15px;
+    }
+}
+
 div.field {
     position:           relative;
     margin-bottom:      15px;
 
     /* Input */
     input {
-        border-radius:      @radius !important;
-        margin:             0 !important;
-
         /* Text */
         &[type="text"],
         &[type="password"] {
@@ -592,11 +603,6 @@ div.field {
                     color:              #333;
                 }
             }        
-        }
-
-        /* Button */
-        &[type="submit"] {
-            padding:            10px 15px 10px 15px;
         }
     }
 

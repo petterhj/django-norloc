@@ -9,13 +9,12 @@ from productions.models import Production
 
 
 # View: Index
-def index(request, type=None):
+def index(request, filter_type='all'):
     # Productions
     productions = Production.productions
     
-    if type:
-        productions = productions.films() if type == 'films' else productions.series()
-
+    # if type:
+    productions = productions.films() if filter_type == 'films' else productions.series() if filter_type == 'series' else productions
     productions = productions.order_by('-release')
 
     # Render
@@ -23,7 +22,9 @@ def index(request, type=None):
         'productions.html',
         {
             'productions': productions,
-            'filter': type if type else 'all'
+            'filter': {
+                'type': filter_type
+            }
         },
         context_instance=RequestContext(request)
     )

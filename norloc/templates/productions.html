@@ -8,10 +8,10 @@
 {% block cover %}
  <dl class="sub-nav" role="menu" title="Filter Menu List" style="background: #D6D6D6;margin:0;">
   <dt><i class="fa fa-video-camera"></i></dt>
-  <dd class="{% ifequal filter 'all' %}active{% endifequal %}" role="menuitem"><a href="{% url 'productions' %}">Alle</a></dd>
-  <dd class="{% ifequal filter 'films' %}active{% endifequal %}" role="menuitem"><a href="{% url 'films' %}">Film</a></dd>
-  <dd class="{% ifequal filter 'series' %}active{% endifequal %}" role="menuitem"><a href="{% url 'series' %}">TV</a></dd>
-  <dt></dt>
+  <dd class="{% ifequal filter.type 'all' %}active{% endifequal %}" role="menuitem"><a href="{% url 'productions' %}">Alle</a></dd>
+  <dd class="{% ifequal filter.type 'films' %}active{% endifequal %}" role="menuitem"><a href="{% url 'films' %}">Film</a></dd>
+  <dd class="{% ifequal filter.type 'series' %}active{% endifequal %}" role="menuitem"><a href="{% url 'series' %}">TV</a></dd>
+  <dt><i class="fa fa-map-marker"></i></dt>
  </dl>
 {% endblock %}
 

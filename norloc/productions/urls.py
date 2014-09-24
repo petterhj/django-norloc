@@ -8,8 +8,8 @@ from productions import views
 urlpatterns = patterns('',
 	# Productions
     url(r'^$', views.index, name='productions'),
-    url(r'^films/$', views.index, {'type': 'films'}, name='films'),
-    url(r'^series/$', views.index, {'type': 'series'}, name='series'),
+    url(r'^films/$', views.index, {'filter_type': 'films'}, name='films'),
+    url(r'^series/$', views.index, {'filter_type': 'series'}, name='series'),
 
     # Production
     url(r'^production/(?P<slug>[\w-]+)/$', views.production, name='production'),
