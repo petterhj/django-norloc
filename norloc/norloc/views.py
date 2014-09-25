@@ -1,7 +1,7 @@
 # Imports
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from django.contrib.auth import authenticate, login, logout as django_logout
+from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.shortcuts import redirect
 from productions.models import Production
 
@@ -41,14 +41,14 @@ def login(request):
 
         if user is not None:
             if user.is_active:
-                login(request, user)
+                django_login(request, user)
                 # Redirect to a success page.
             else:
                 print 'disabled account'
         else:
             print 'invalid login'
 
-    # Redirect
+    # Redirect // TODO: Redirect to current page
     return redirect('/')
 
 
