@@ -19,7 +19,7 @@
      <div class="medium-6 columns">
       <!-- Production -->
       <div class="location">
-       <a href=""><h1>{{ location.address }}</h1></a>
+       <a href=""><h1>{{ location.address }}, {{ location.municipality }}</h1></a>
        <i class="type fa fa-map-marker"></i>
        {% with location.photos.all|first as first_photo %}
         <h5>{% if first_photo %}{{ first_photo.title }}{% else %}&nbsp;{% endif %}</h5>
