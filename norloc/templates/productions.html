@@ -6,12 +6,23 @@
 
 <!-- Cover -->
 {% block cover %}
- <dl class="sub-nav" role="menu" title="Filter Menu List" style="background: #D6D6D6;margin:0;">
+ <dl class="sub-nav" role="menu">
+  <!-- Productions -->
   <dt><i class="fa fa-video-camera"></i></dt>
-  <dd class="{% ifequal filter.type 'all' %}active{% endifequal %}" role="menuitem"><a href="{% url 'productions' %}">Alle</a></dd>
-  <dd class="{% ifequal filter.type 'films' %}active{% endifequal %}" role="menuitem"><a href="{% url 'films' %}">Film</a></dd>
-  <dd class="{% ifequal filter.type 'series' %}active{% endifequal %}" role="menuitem"><a href="{% url 'series' %}">TV</a></dd>
+  <dd class="{% ifequal filter.type 'all' %}active{% endifequal %}" role="menuitem">
+   <a href="{% url 'productions' %}">Alle</a>
+  </dd>
+  <dd class="{% ifequal filter.type 'films' %}active{% endifequal %}" role="menuitem">
+   <a href="{% url 'films' %}">Film</a>
+  </dd>
+  <dd class="{% ifequal filter.type 'series' %}active{% endifequal %}" role="menuitem">
+   <a href="{% url 'series' %}">TV</a>
+  </dd>
+  <!-- Location -->
   <dt><i class="fa fa-map-marker"></i></dt>
+  <dd class="active" role="menuitem"><a href="">Alle</a></dd>
+  <dd class="" role="menuitem"><a href="">Med</a></dd>
+  <dd class="" role="menuitem"><a href="">Uten</a></dd>
  </dl>
 {% endblock %}
 
