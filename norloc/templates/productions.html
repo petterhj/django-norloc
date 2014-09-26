@@ -1,6 +1,7 @@
 {% extends "page.html" %}
 
 {% load thumbnail %}
+{% load paginator %}
 
 {% block title %}Produksjoner | {% endblock %}
 
@@ -49,7 +50,9 @@
   </div>
   
   <!-- Pagination -->
-  <div class="row pagination">
+  {% paginator productions %}
+<!--   <div class="row pagination">
+  CURRENT: {{ productions.number }}
    <div class="small-12 columns pagination-centered">
     <ul class="pagination">
      <li class="arrow unavailable"><a href="">&laquo;</a></li>
@@ -63,6 +66,6 @@
      <li class="arrow"><a href="">&raquo;</a></li>
     </ul>
    </div>
-  </div>
+  </div> -->
  {% endif %}
 {% endblock %}

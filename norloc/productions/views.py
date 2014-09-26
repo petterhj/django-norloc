@@ -4,6 +4,7 @@ import json
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from productions.models import Production
 
@@ -12,16 +13,28 @@ from productions.models import Production
 def index(request, filter_type='all'):
     # Productions
     productions = Production.productions
-    
-    # if type:
     productions = productions.films() if filter_type == 'films' else productions.series() if filter_type == 'series' else productions
     productions = productions.order_by('-release')
+
+    # Paginator
+    paginator = Paginator(productions, 24)
+
+    page = request.GET.get('page')
+
+    try:
+        prods = paginator.page(page)
+    except PageNotAnInteger:
+        # Return first page
+        prods = paginator.page(1)
+    except EmptyPage:
+        # Page out of range: return last page
+        prods = paginator.page(paginator.num_pages)
 
     # Render
     return render_to_response(
         'productions.html',
         {
-            'productions': productions,
+            'productions': prods,
             'filter': {
                 'type': filter_type
             }
