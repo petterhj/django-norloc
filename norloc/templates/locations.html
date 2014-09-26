@@ -1,6 +1,7 @@
 {% extends "page.html" %}
 
 {% load thumbnail %}
+{% load paginator %}
 
 {% block title %}Opptakssteder | {% endblock %}
 
@@ -59,5 +60,9 @@
     {% endif %}
    {% endfor %}
   </div>
+
+  <!-- Pagination -->
+  {% paginator locations %}
+
  {% endif %}
 {% endblock %}

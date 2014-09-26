@@ -27,15 +27,15 @@ class Photo(models.Model):
         return self.title
 
 
-# QuerySet: Locations
-class LocationsQuerySet(models.QuerySet):
-    def has_scene(self):
-        # print self.
-        # print self.aggregate(Count('productions.Scene'))
-        # return self.annotate(scene_count=Count('productions.Scene')).filter(scene_count__isnull=False)
-        # print [l for l in self.all() if l.scene_set.count() not 0]
+# # QuerySet: Locations
+# class LocationsQuerySet(models.QuerySet):
+#     def has_scene(self):
+#         # print self.
+#         # print self.aggregate(Count('productions.Scene'))
+#         # return self.annotate(scene_count=Count('productions.Scene')).filter(scene_count__isnull=False)
+#         # print [l for l in self.all() if l.scene_set.count() not 0]
 
-        return self.all()
+#         return self.all()
 
 
 # Model: Location
@@ -49,7 +49,7 @@ class Location(models.Model):
     photos = models.ManyToManyField(Photo, blank=True)
 
     # Manager
-    locations = LocationsQuerySet.as_manager()
+    # locations = LocationsQuerySet.as_manager()
 
     # Representation
     def __unicode__(self):

@@ -3,7 +3,6 @@
   <ul class="pagination">
    <li class="arrow{% if not has_previous %} unavailable{% endif %}"><a href="{% if has_previous %}{% if get_params %}?{{ get_params }}&{% else %}?{% endif %}page={{ previous }}{% endif %}">&laquo;</a></li>
 
-
    {% if not in_leading_range %}
     {% for p in pages_outside_trailing_range %}
      <li><a href="{% if get_params %}?{{ get_params }}&{% else %}?{% endif %}page={{ p }}">{{ p }}</a></li>

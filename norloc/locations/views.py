@@ -5,6 +5,7 @@ from django.core import serializers
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from locations.models import Location
 
@@ -12,7 +13,7 @@ from locations.models import Location
 # View: Index
 def index(request):
     # Locations
-    locations = Location.locations.all()
+    locations = Location.objects.all()
 
     # Render
     if request.GET.get('api') == 'json':
@@ -42,9 +43,23 @@ def index(request):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
     else:
+        # Paginator
+        paginator = Paginator(locations, 24)
+
+        page = request.GET.get('page')
+
+        try:
+            locs = paginator.page(page)
+        except PageNotAnInteger:
+            # Return first page
+            locs = paginator.page(1)
+        except EmptyPage:
+            # Page out of range: return last page
+            locs = paginator.page(paginator.num_pages)
+
         # Template
         return render_to_response(
             'locations.html',
-            {'locations': locations},
+            {'locations': locs},
             context_instance=RequestContext(request)
     )
