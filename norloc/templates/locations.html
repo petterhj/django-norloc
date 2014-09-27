@@ -43,8 +43,14 @@
          <div class="scene">
           {% if scene.production.poster %}
            {% thumbnail scene.production.poster "21x30" crop="top" as poster %}
-            <a href="{% url 'production' scene.production.slug %}"><img src="{{ poster.url }}" class="poster" title="{{ scene.production.title }}"></a>
+            <a href="{% url 'production' scene.production.slug %}"><img src="{{ poster.url }}" class="poster" title="{{ scene.production.title }} ({{ scene.production.release.year }})"></a>
            {% endthumbnail %}
+          {% else %}
+           {% if scene.production.backdrop %}
+            {% thumbnail scene.production.backdrop "21x30" crop="center" as backdrop %}
+             <a href="{% url 'production' scene.production.slug %}"><img src="{{ backdrop.url }}" class="poster" title="{{ scene.production.title }} ({{ scene.production.release.year }})"></a>
+            {% endthumbnail %}
+           {% endif %}
           {% endif %}
           {% for shot in scene.shot_set.all %}
            {% thumbnail shot.image "53x30" crop="center" as shot %}
