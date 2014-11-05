@@ -54,7 +54,7 @@ def production(request, slug):
         data = {
             'title': production.title,
             'year': production.release.year,
-            'poster': production.poster.url,
+            'poster': production.poster.url if production.poster else '',
             'locations': {}
         }
 
