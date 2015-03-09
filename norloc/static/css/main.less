@@ -259,15 +259,35 @@ div#container {
                     width:              100%;
                 }
 
-                div.nr {
-                    position:           absolute;
-                    top:                10px;
-                    left:               10px;
-                    background:         #000;
-                    padding:            2px 7px 2px 7px;
-                    color:              #FFF;
-                    opacity:            0.5;
-                    font-size:          11px;
+                /* Slides */
+                &.slides {
+                    /* Navigation */
+                    *.slidesjs-navigation {
+                        position:           absolute;
+                        top:                50%;
+                        z-index:            9999;
+                        color:              #FFF;
+
+                        /* Indicator */
+                        &.slidesjs-indicator {
+                            background:         #000;
+                            padding:            2px 7px 2px 7px;
+                            opacity:            0.5;
+                            font-size:          11px;
+                            top:                10px;
+                            left:               10px;
+                        }
+
+                        /* Previous */
+                        &.slidesjs-previous {
+                            left:               10px;
+                        }
+                        /* Next */
+                        &.slidesjs-next {
+                            right:              10px;
+                        }
+                    }
+                    
                 }
             }
 
