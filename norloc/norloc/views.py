@@ -11,14 +11,6 @@ def index(request):
     # Productions
     productions = Production.productions.order_by('-release')
     
-    for production in productions:
-    	production.scene_count = production.scene_set.count()
-    	production.location_count = 0
-
-    	for scene in production.scene_set.all():
-    		if scene.location:
-    			production.location_count += 1
-
     # Template
     template = loader.get_template('index.html')
 

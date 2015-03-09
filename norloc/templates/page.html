@@ -3,40 +3,7 @@
 {% block page %}
  <!-- Container -->
  <div id="container">
-  <!-- Navigation -->
-  <nav class="top-bar" data-topbar role="navigation">
-   <ul class="title-area">
-    <li class="name"><h1><a href="/">Norske opptakssteder</a></h1></li>
-    <li class="toggle-topbar menu-icon">
-     <a href="#" style="float:left; padding-right: 10px;"><i class="fa fa-film"></i></a>
-     <a href="#" style="float:left; padding-right: 10px;"><i class="fa fa-desktop"></i></a>
-     <a href="#" style="float:left; padding-right: 10px;"><i class="fa fa-map-marker"></i></a>
-     <a href="#" style="float:left; padding-right: 30px;"><i class="fa fa-user"></i></a>
-    </li>
-   </ul>
-
-   <section class="top-bar-section">
-    <!-- Right Nav Section -->
-    <ul class="right">
-     <li class="has-dropdown">
-      <a href="/productions"><i class="fa fa-video-camera"></i> Produksjoner</a>
-      <ul class="dropdown">
-       <li><a href="/productions/films"><i class="fa fa-film"></i> Film</a></li>
-       <li><a href="/productions/series"><span class="icon-tv"></span> TV</a></li>
-      </ul>
-     </li>
-     <li><a href="/locations"><i class="fa fa-map-marker"></i> Opptakssteder</a></li>
-     <li class="has-form">
-      <!-- Auth -->
-      {% if user.is_authenticated %}
-       <button class="button radius user menu"><i class="fa fa-user"></i></button>
-      {% else %}
-       <button class="button radius success user login"><i class="fa fa-sign-in"></i></button>
-      {% endif %}
-     </li>
-    </ul>
-   </section>
-  </nav>
+  {% include "navigation.html" %}
 
   <!-- Cover -->
   <div id="cover">

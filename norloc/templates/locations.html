@@ -7,7 +7,22 @@
 
 <!-- Cover -->
 {% block cover %}
- <div id="map"></div>
+ <!--div id="map" class="map"></div-->
+ <!-- TODO: filters? -->
+ <dl class="sub-nav" role="menu">
+  <!-- Productions -->
+  <dt><i class="fa fa-map-marker"></i></dt>
+  <dd class="dropdown" role="menuitem">
+   <a data-dropdown="drop1" aria-controls="drop1" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false">Fylke <i class="fa fa-caret-down"></i></a>
+   <ul id="drop1" class="f-dropdown" data-dropdown-content aria-hidden="true" aria-autoclose="true" tabindex="-1">
+    <li><a href="#">Alle</a></li>
+    <li class="sep"></li>
+    <li><a href="#">Akershus</a></li>
+    <li><a href="#">Oslo</a></li>
+    <li><a href="#">Hedmark</a></li>
+   </ul>
+  </dd>
+ </dl>
 {% endblock %}
 
 <!-- Content -->

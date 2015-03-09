@@ -5,8 +5,9 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404
 
-from productions.models import Production
+from productions.models import Production, Scene
 
 
 # View: Index
@@ -46,7 +47,7 @@ def index(request, filter_type='all'):
 # View: Production
 def production(request, slug):
     # Production
-    production = Production.productions.production(slug)
+    production = get_object_or_404(Production, slug=slug)
 
      # Render
     if request.GET.get('api') == 'json':
@@ -73,6 +74,24 @@ def production(request, slug):
     else:
         return render_to_response(
             'production.html',
-            {'production': production},
+            {
+                'production': production
+            },
             context_instance=RequestContext(request)
         )
+
+
+# View: Scene locator
+def locator(request, slug, scene_id):
+    # Scene
+    scene = get_object_or_404(Scene, pk=scene_id)
+
+    # Render
+    return render_to_response(
+        'locator.html',
+        {
+            'scene': scene,
+            'production': scene.production
+        },
+        context_instance=RequestContext(request)
+    )

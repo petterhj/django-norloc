@@ -42,6 +42,11 @@ var MAP = MAP || {
 
 				// Locations
 		  		$.each(data, function(k, location) {
+		  			if (location.scenes[0])
+		  				MAP.log(' > Loc: "' + location.scenes[0].production.title + '": ' + location.address);
+		  			else
+		  				MAP.log(' > Loc: Unknown: ' + location.address);
+
 		  			if (location.bounds.length > 2) {
 	  					// Polygon
 	  					var points = [];
@@ -196,6 +201,9 @@ var MAP = MAP || {
 										x: Math.round(point.x),
 										y: Math.round(point.y)
 									}
+
+									console.log(strt);
+									console.log(dest);
 
 									// Animate arrow
 									MAP.canvas.container.show();

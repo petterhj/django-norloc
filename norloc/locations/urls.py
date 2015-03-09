@@ -6,5 +6,7 @@ from locations import views
 
 # Patters
 urlpatterns = patterns('',
-    url(r'^$', views.index)
+	# Locations
+    url(r'^$', views.index),
+    url(r'^map/$', views.map, name='map'),
 )

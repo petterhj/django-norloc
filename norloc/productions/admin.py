@@ -47,7 +47,9 @@ class ShotAdmin(admin.ModelAdmin):
         return obj.scene.production.title
 
     def shot_location(self, obj):
-        return obj.scene.location.address
+        if obj.scene.location:
+            return obj.scene.location.address
+        return None
 
     shot_thumb.short_description = 'Shot'
     shot_thumb.allow_tags = True

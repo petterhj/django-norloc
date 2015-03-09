@@ -13,5 +13,6 @@ urlpatterns = patterns('',
 
     # Production
     url(r'^production/(?P<slug>[\w-]+)/$', views.production, name='production'),
+    url(r'^production/(?P<slug>[\w-]+)/scene/(?P<scene_id>\d+)/locator/$', views.locator, name='locator'),
 
 )

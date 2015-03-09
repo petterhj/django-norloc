@@ -6,13 +6,8 @@
 
 <!-- Cover -->
 {% block cover %}
- {% if production.backdrop %}
-  {% thumbnail production.backdrop "970" as backdrop %}
-   <div class="production" style="background-image: url('{{ backdrop.url }}');">
-  {% endthumbnail %}
- {% else %}
-  <div class="production">
- {% endif %}
+ <div class="production" {% if production.backdrop %}{% thumbnail production.backdrop "970" as backdrop %}style="background-image: url('{{ backdrop.url }}');"{% endthumbnail %}{% endif %}>
+
  <!-- Poster -->
  {% if production.poster %}
   {% thumbnail production.poster "200x293" crop="center" as poster %}
@@ -78,26 +73,105 @@
 
 <!-- Content -->
 {% block content %}
- <!-- Scenes -->
+
  <div class="row">
-  {% if location.scene_set.count != 0 %}
-   {% for scene in production.scene_set.all %}
-    <div class="medium-6 columns">
-     <!-- Scene -->
-     <div class="card scene">
-      <a href=""><h1>{{ scene.location.address }}, {{ scene.location.municipality }}</h1></a>
-      <i class="type fa fa-video-camera"></i>
-    
-      <!-- Shots -->
-      {% for shot in scene.shot_set.all %}
-       {% thumbnail shot.image "450x253" crop="center" as image %}
-        <img src="{{ image.url }}" class="shot">
-       {% endthumbnail %}
-      {% endfor %}  
-      <div class="description"><p>{{ scene.description }}</p></div>
-     </div>
+  <!-- Locations -->
+  {% for location, scenes in production.locations.items %}
+   <div class="medium-12 columns">
+    <div class="card scenes">
+     <a href=""><h1>{{ location.address }}, {{ location.municipality }}</h1></a>
+     <i class="type fa fa-map-marker"></i>
+
+     <!-- Scenes -->
+     {% for scene in scenes %}
+      <div class="row equal force">
+       {% with scene.shot_set.all as shots %}
+        <div class="medium-6 columns">
+         <!-- Shots -->
+         <div class="shots {%if shots.count > 1%}slides{% endif %}">
+          {% if shots.count > 1 %}
+           <!--div class="nr">1 / {{ scene.shot_set.count }}</div-->
+          {% endif %}
+          {% for shot in shots %}
+           {% thumbnail shot.image "450x253" crop="center" as image %}
+            <img src="{{ image.url }}" class="shot" data-location="{{ shot.first.point }}">
+           {% endthumbnail %}
+          {% endfor %}
+         </div>
+        </div>
+
+        <!-- Location -->
+        <div class="medium-6 columns">
+         <div class="location">
+          {% if location.description %}
+           <!-- Map -->
+           <div class="thumb" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{shots.first.point}}&zoom=15&size=450x253&scale=2{%for s in shots%}&markers=size:mid{%if scene.shot_set.count > 1%}|label:{{forloop.counter}}{%endif%}|{{s.point}}{%endfor%}');"></div>
+           
+           <!-- Description -->
+           <p class="description truncate {%if location.photos.all.0.photo%}hasphoto{%endif%}">
+            {{ location.description }}
+           </p>
+
+          {% else %}
+           <img src="https://maps.googleapis.com/maps/api/staticmap?center={{shots.first.point}}&zoom=15&size=450x253&scale=2{%for s in shots%}&markers=size:mid{%if scene.shot_set.count > 1%}|label:{{forloop.counter}}{%endif%}|{{s.point}}{%endfor%}" class="map" alt="statisk_kart" title="Åpne i kart">
+          {% endif %}
+
+          <!-- Photo -->
+          {% if location.photos.all.0.photo %}
+           <div class="photo">
+            {% thumbnail location.photos.all.0.photo "193x130" crop="center" as photo %}
+             <img src="{{ photo.url }}" class="photo" alt="foto" title="Større bilde">
+            {% endthumbnail %}
+            <span><i class="fa fa-copyright"></i> {{ location.photos.all.0.credit }}, {{ location.photos.all.0.license }}</span>
+           </div>
+          {% endif %}
+         </div>
+        </div>
+       {% endwith %}
+      </div>
+
+      <!-- <div class="description"><p>{{ scene.description }}</p></div> -->
+     {% endfor %}
+
     </div>
-   {% endfor %}
-  {% endif %}
+   </div>
+  {% endfor %}
  </div>
+
+ <!-- Locations -->
+ <!-- OLD
+ <div class="row">
+  {% for location, scenes in production.locations.items %}
+   <div class="medium-6 columns">
+    <div class="card scene">
+     <a href=""><h1>{{ location.address }}, {{ location.municipality }}</h1></a>
+     <i class="type fa fa-map-marker"></i>
+
+     {% for scene in scenes %}
+      <div class="shots">
+       {% with scene.shot_set.all as shots %}
+        {% if scene.shot_set.count > 1 %}
+         <div class="nr">1</div>
+        {% endif %}
+        {% thumbnail shots.first.image "450x253" crop="center" as image %}
+         <img src="{{ image.url }}" class="shot" data-location="{{ shot.first.point }}">
+        {% endthumbnail %}
+        <div class="mini-shots">
+        {% for shot in shots|slice:"1:" %}
+         <img src="{{ shot.image.url }}" data-nr="{{ forloop.counter|add:1 }}">
+        {% endfor %}
+        </div>
+
+        <img src="https://maps.googleapis.com/maps/api/staticmap?center={{shots.first.point}}&zoom=14&size=450x253&scale=2{%for s in shots%}&markers=size:mid{%if scene.shot_set.count > 1%}|label:{{forloop.counter}}{%endif%}|{{s.point}}{%endfor%}" class="floater" title="Vis kart">
+       {% endwith %}
+      </div>
+      <div class="description"><p>{{ scene.description }}</p></div>
+     {% endfor %}
+
+    </div>
+   </div>
+  {% endfor %}
+ </div>
+ -->
+
 {% endblock %}

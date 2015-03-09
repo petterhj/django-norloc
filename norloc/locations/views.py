@@ -62,4 +62,16 @@ def index(request):
             'locations.html',
             {'locations': locs},
             context_instance=RequestContext(request)
+        )
+
+
+# View: Map
+def map(request):
+    # Template
+    return render_to_response(
+        'map.html',
+        {
+
+        },
+        context_instance=RequestContext(request)
     )

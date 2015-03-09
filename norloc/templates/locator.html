@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% load thumbnail %}
+
+{% block page %}
+ <!-- Container -->
+ <div id="container">
+  <!-- Navigation -->
+  <nav class="top-bar" data-topbar role="navigation">
+   <ul class="title-area">
+    <li class="name"><h1><a href="/"><i class="fa fa-arrow-left"></i> {{ production.title }} ({{ production.release.year }})</a></h1></li>
+   </ul>
+  </nav>
+
+  <!-- Content -->
+  <div id="content">
+   <!-- Locator -->
+   <div class="row">
+    <div class="medium-6 columns">
+     
+     <!-- Scene -->
+     <div class="card scene">
+      {% if scene.location %}
+       <a href=""><h1>{{ scene.location.address }}, {{ scene.location.municipality }}</h1></a>
+      {% else %}
+       <h1>Ukjent sted</h1>
+      {% endif %}
+      <i class="type fa fa-video-camera"></i>
+    
+      <!-- Shots -->
+      {% for shot in scene.shot_set.all %}
+       {% thumbnail shot.image "450x253" crop="center" as image %}
+        <img src="{{ image.url }}" class="shot">
+       {% endthumbnail %}
+      {% endfor %}
+      <div class="description"><p>{{ scene.description }}</p></div>
+     </div>
+
+    </div>
+    <div class="medium-6 columns">
+
+     <!-- Map -->
+     <div class="card scene">
+      <h1>Opptakssted</h1>
+      <i class="type fa fa-map-marker"></i>
+    
+      <img src="https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284" style="width: 450px; height: 253px;">
+     </div>
+
+    </div>
+   </div>
+
+   <div class="row">
+    <div class="medium-6 columns">
+     
+     <!-- Production -->
+     <div class="card production">
+      <a href="{% url 'production' production.slug %}"><h1>{{ production.title }} ({{ production.release.year }})</h1></a>
+      <i class="type fa fa-{% if production.type == "film" %}film{% else %}desktop{% endif %}"></i>
+      <a href="#"><h5>{{ production.directors.all|join:", " }}</h5></a>
+      <div class="description">
+       {% if production.poster %}
+        {% thumbnail production.poster "65x90" crop="center" as poster %}
+         <img src="{{ poster.url }}" class="poster">
+        {% endthumbnail %}
+       {% endif %}
+       
+       <div{% if not production.poster %} class="noposter" {% endif %}>
+        <p class="truncate">{{ production.summary }}</p>
+        <!-- Scene count -->
+        {% with count=production.scene_count %}
+         <span class="label radius {% if count == 0 %}alert{% endif %}" title="Scener"><i class="fa fa-video-camera"></i> {{ count }}</span>
+        {% endwith %}
+        <!-- Location count -->
+        {% with count=production.location_count %}
+         <span class="label radius {% if count > 0 %}success{% else %}alert{% endif %}" title="Opptakssteder"><i class="fa fa-map-marker"></i> {{ count }}</span>
+        {% endwith %}
+       </div>
+      </div>
+
+    </div>
+   </div>
+  </div>
+ </div>
+{% endblock %}

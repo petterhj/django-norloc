@@ -154,8 +154,9 @@ div#container {
         /* Card */
         div.location,
         div.production, 
-        div.scene {
-            margin-bottom:      20px;
+        div.scene,
+        div.scenes {
+            margin-bottom:      25px;
             position:           relative;
 
             h1 {
@@ -248,11 +249,100 @@ div#container {
             }
         }
 
-        /* Scene */
-        div.scene {
-            /* Shot */
-            img.shot {
-                width:              100%;
+        /* Scenes */
+        div.scenes {
+            /* Shots */
+            div.shots {
+                position:           relative;
+
+                img.shot {
+                    width:              100%;
+                }
+
+                div.nr {
+                    position:           absolute;
+                    top:                10px;
+                    left:               10px;
+                    background:         #000;
+                    padding:            2px 7px 2px 7px;
+                    color:              #FFF;
+                    opacity:            0.5;
+                    font-size:          11px;
+                }
+            }
+
+            /* Location */
+            div.location {
+                height:             100%;
+                position:           relative;
+                margin:             0;
+
+                line-height:        1.6;
+                font-size:          12px;
+                color:              #979797;
+
+                /* Map */
+                img.map {
+                    &:hover {
+                        cursor:             pointer;
+                        /*outline:            #EFEFEF solid 3px;*/
+                    }
+                }
+                div.thumb {
+                    position:           absolute; 
+                    top:                0;
+                    left:               0;
+                    width:              100%;
+                    z-index:            99;
+                }
+
+                /* Description */
+                p.description {
+                    height:             100%;
+                    padding:            155px 0 0 0;
+                    line-height:        1.6;
+                    font-size:          12px;
+                    color:              #979797;
+
+                    &.hasphoto {
+                        padding-left:       40%;
+                    }
+                }
+
+                /* Photo */
+                div.photo {
+                    position:           absolute;
+                    bottom:             0;
+                    left:               0;
+                    overflow:           auto;
+                    width:              40%;
+                    z-index:            999;
+
+                    img {
+                        border-top:         5px solid #FFF;
+                        border-right:       5px solid #FFF;
+                        cursor:             pointer;
+                        width:              98%;
+                    }
+
+                    /* Credit */
+                    span {
+                        position:           absolute;
+                        bottom:             2px;
+                        left:               2px;
+                        font-size:          8px;
+                    }
+                }
+
+                // Medium screens ()
+                @media only screen and (min-width: 40.063em) and (max-width: 865px) { 
+                    div.thumb {
+                        height:             110px;
+                    }
+                    p.description {
+                        padding-top:        115px;
+                    }
+                }
             }
         }
     }
@@ -404,7 +494,7 @@ div#cover {
                         text-align:         right;
 
                         i.fa {
-                            margin:             0 0 0 12px;
+                            margin:             2px 0 0 12px;
                             color:              #999;
                             position:           absolute;
                         }
@@ -434,12 +524,12 @@ div#cover {
 
     /* Filter bar */
     dl.sub-nav {
-        margin:             0 !important;
+        margin:             0;
         padding:            6px 25px 5px 25px;
-        background:         #D6D6D6 !important;
+        background:         #D6D6D6;
 
         dt {
-            margin:             0 15px 0 0;
+            margin:             3px 20px 0 0;
 
             &:not(:first-child) {
                 margin-left:        50px;
@@ -447,15 +537,85 @@ div#cover {
         }
         dd {
             margin:             0 5px 0 0;
+            padding:            3px 0 3px 0;
 
             a {
                 padding:            3px 10px 3px 10px;
+            }
+
+            /* Dropdown */
+            &.dropdown {
+                a {
+                    color:              #999;
+                    border-radius:      3px;
+                    background:         #CCC;
+                    cursor:             default;
+                    display:            inline-block;
+                    line-height:        100%;
+                    padding:            4px 10px 4px 10px;
+
+                    i.fa {
+                        
+                    }
+
+                    &:hover {
+                        border-bottom-left-radius: 0;
+                        border-bottom-right-radius: 0;
+                        background:         darken(#CCC, 5%);
+                        color:              #FFF;
+                    }
+                }
+
+                ul.f-dropdown {
+                    background:         #CCC;
+                    border:             0;
+                    margin:             0;
+                    padding:            3px 0 3px 0;
+
+                    li {
+                        float:              none;
+
+                        &.sep {
+                            background:         darken(#CCC, 5%);
+                            height:             1px;
+                        }
+
+                        a {
+                            width:              100%;
+                            border-radius:      0;
+                            padding:            6px 10px;
+                        }
+                    }
+
+                    li:hover,
+                    li > a:hover {
+                        background:         darken(#CCC, 5%);
+                        color:              #FFF;
+                    }
+
+                    &:before, &:after {
+                        display:            none;
+                    }
+                }
             }
         }
     }
 }
 
 /* Map */
+div.map {
+    /* Chrome Google Maps fix */
+    div.gm-style {
+        img { 
+            max-width:            none;
+        }
+
+        label { 
+            width:                auto;
+            display:              inline; 
+        }
+    }
+}
 div#map {
     background-color:   #CCC; 
     height:             300px;
@@ -468,7 +628,7 @@ div#map {
         left:               0;
         width:              100%;
         height:             220px;
-        /*background:         rgba(255, 0, 0, 0.3);*/
+        background:         rgba(255, 0, 0, 0.3);
         z-index:            99;
     }
 
@@ -493,8 +653,8 @@ div#map {
             cursor:             pointer;
             left:               20px;
             height:             150px;
-            width:              105px;
-            z-index:            999;
+            width:              103px;
+            z-index:            99999;
         }
 
         div.locations {
@@ -563,18 +723,6 @@ div#map {
                     }
                 }
             }
-        }
-    }
-
-    /* Chrome Google Maps fix */
-    div.gm-style {
-        img { 
-            max-width:            none;
-        }
-
-        label { 
-            width:                auto;
-            display:              inline; 
         }
     }
 }
