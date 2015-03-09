@@ -85,13 +85,11 @@
      <!-- Scenes -->
      {% for scene in scenes %}
       <div class="row equal force">
+
        {% with scene.shot_set.all as shots %}
         <div class="medium-6 columns">
          <!-- Shots -->
          <div class="shots {%if shots.count > 1%}slides{% endif %}">
-          {% if shots.count > 1 %}
-           <!--div class="nr">1 / {{ scene.shot_set.count }}</div-->
-          {% endif %}
           {% for shot in shots %}
            {% thumbnail shot.image "450x253" crop="center" as image %}
             <img src="{{ image.url }}" class="shot" data-location="{{ shot.first.point }}">
@@ -103,17 +101,14 @@
         <!-- Location -->
         <div class="medium-6 columns">
          <div class="location">
+          <!-- Map -->
+          <div class="thumb {%if not location.description%}nodesc{%endif%}" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{shots.first.point}}&zoom=15&size=450x253&scale=2{%for s in shots%}&markers=size:mid{%if scene.shot_set.count > 1%}|label:{{forloop.counter}}{%endif%}|{{s.point}}{%endfor%}');"></div>
+
+          <!-- Description -->
           {% if location.description %}
-           <!-- Map -->
-           <div class="thumb" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{shots.first.point}}&zoom=15&size=450x253&scale=2{%for s in shots%}&markers=size:mid{%if scene.shot_set.count > 1%}|label:{{forloop.counter}}{%endif%}|{{s.point}}{%endfor%}');"></div>
-           
-           <!-- Description -->
            <p class="description truncate {%if location.photos.all.0.photo%}hasphoto{%endif%}">
             {{ location.description }}
            </p>
-
-          {% else %}
-           <img src="https://maps.googleapis.com/maps/api/staticmap?center={{shots.first.point}}&zoom=15&size=450x253&scale=2{%for s in shots%}&markers=size:mid{%if scene.shot_set.count > 1%}|label:{{forloop.counter}}{%endif%}|{{s.point}}{%endfor%}" class="map" alt="statisk_kart" title="Åpne i kart">
           {% endif %}
 
           <!-- Photo -->
@@ -128,9 +123,8 @@
          </div>
         </div>
        {% endwith %}
-      </div>
-
-      <!-- <div class="description"><p>{{ scene.description }}</p></div> -->
+       
+      </div><br>
      {% endfor %}
 
     </div>

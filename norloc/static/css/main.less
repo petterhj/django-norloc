@@ -267,12 +267,12 @@ div#container {
                         top:                50%;
                         z-index:            9999;
                         color:              #FFF;
+                        opacity:            0.5;
 
                         /* Indicator */
                         &.slidesjs-indicator {
                             background:         #000;
                             padding:            2px 7px 2px 7px;
-                            opacity:            0.5;
                             font-size:          11px;
                             top:                10px;
                             left:               10px;
@@ -281,13 +281,16 @@ div#container {
                         /* Previous */
                         &.slidesjs-previous {
                             left:               10px;
+                            
+                            &:hover { opacity: 1; }
                         }
                         /* Next */
                         &.slidesjs-next {
                             right:              10px;
+                            
+                            &:hover { opacity: 1; }
                         }
                     }
-                    
                 }
             }
 
@@ -297,23 +300,17 @@ div#container {
                 position:           relative;
                 margin:             0;
 
-                line-height:        1.6;
-                font-size:          12px;
-                color:              #979797;
-
                 /* Map */
-                img.map {
-                    &:hover {
-                        cursor:             pointer;
-                        /*outline:            #EFEFEF solid 3px;*/
-                    }
-                }
                 div.thumb {
                     position:           absolute; 
                     top:                0;
                     left:               0;
                     width:              100%;
                     z-index:            99;
+
+                    &.nodesc {
+                        height:             100%;
+                    }
                 }
 
                 /* Description */
@@ -341,21 +338,28 @@ div#container {
                     img {
                         border-top:         5px solid #FFF;
                         border-right:       5px solid #FFF;
-                        cursor:             pointer;
                         width:              98%;
                     }
 
                     /* Credit */
                     span {
+                        display:            none;
                         position:           absolute;
                         bottom:             2px;
-                        left:               2px;
-                        font-size:          8px;
+                        left:               5px;
+                        font-size:          9px;
+                        opacity:            0.7;
+                    }
+
+                    &:hover {
+                        span {
+                            display:            inline;
+                        }
                     }
                 }
 
                 // Medium screens ()
-                @media only screen and (min-width: 40.063em) and (max-width: 865px) { 
+                @media only screen and (max-width: 865px) { 
                     div.thumb {
                         height:             110px;
                     }
