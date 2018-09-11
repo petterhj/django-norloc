@@ -1,0 +1,160 @@
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: #2B2B2B; }
+
+
+section.caption { 
+	padding: 20px;  overflow: auto;  
+	background: #FFF;
+	font: 12px/16px 'Unica One', Helvetica, Arial, sans-serif;
+	text-align: left; text-transform: uppercase;
+	letter-spacing: .1em; color: #333;
+}
+section.caption a { text-decoration: none; color: #999; }
+section.caption a:hover { background-color: #ddd; }
+section.caption span.accent { color: #c31; }
+section.caption i.zmdi { color: #999; }
+section.caption i.zmdi:hover { color: #c31; cursor: pointer; }
+section.caption > div.navigation { float: left; }
+section.caption > div.admin { float: right; }
+
+
+section.productions { 
+	margin: 0 5%; padding: 60px 0; overflow: auto; 
+	height: calc(100% - 60px);
+}
+section.productions > div.production { 
+	float: left; margin: 0 0 30px 30px;
+	width: 200px; height: 283px;
+	border-radius: 3px; position: relative;
+	background: #333;
+}
+section.productions > div.production.faded { opacity: 0.5; }
+section.productions > div.production > img { 
+	width: 100%; height: 100%;
+	border-radius: inherit; 
+}
+section.productions > div.production > span.title { 
+	position: absolute; bottom: 0; left: 0; 
+	display: inline; width: 100%;
+	border-bottom-right-radius: inherit; border-bottom-left-radius: inherit;
+	background: rgba(0, 0, 0, 0.7); padding: 3px 10px;
+	font: 1.1rem 'Unica One', sans-serif;
+	text-transform: uppercase; text-align: center;
+}
+section.productions > div.production > span.title > a { 
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.7); 
+}
+section.productions > div.production > span.title > a:hover { text-decoration: underline; }
+
+
+section.film { 
+	padding: 30px 20% 60px 20%;
+	background: #FFF;
+	/*background: rgba(255, 255, 255, 0.95);*/
+	text-align: center; 
+}
+section.film > img { margin-top: 45px; margin-bottom: 25px; width: 25%; border-radius: 4px; }
+section.film > h1 {
+    font: 1.7rem 'Unica One', sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    color: #c31;
+    margin: 20px 20px 20px;
+}
+section.film > h4 { font: 12px/12px 'Unica One', sans-serif; color: #666; }
+section.film > h4 > a { color: inherit; text-decoration: none; }
+section.film > h4 > a:hover { text-decoration: underline; }
+section.film > p {
+  font: 1.2rem 'Vollkorn', serif; color: #666; 
+   text-align: justify; margin: 30px auto 0 auto;
+}
+section.film > p > a { color: inherit; text-decoration: none; color: #666; }
+section.film > p > a { color: inherit; text-decoration: none; color: #666; }
+section.film > p > span.source { color: #999; font-size: 12px; font-style: italic; }
+
+section.film > div.meta { 
+	margin-top: 15px;
+	text-align: left;
+}
+section.film > div.meta > span.tag { 
+	float: left; margin-right: 9px;
+	font: 0.7rem 'Vollkorn', serif; color: rgba(0, 0, 0, 0.6);
+	background: #EFEFEF; border-radius: 3px; padding: 2px 7px; 
+}
+section.film > div.meta > span.tag > i.zmdi { 
+	margin-right: 5px;
+	color: rgba(0, 0, 0, 0.2);
+}
+
+
+section.locations { 
+	overflow: auto; display: flex;
+	margin: 0 20%; padding: 60px 0;
+	flex-direction: row; flex-wrap: wrap;
+	justify-content: space-between;
+	align-content: flex-start;
+	color: rgba(255, 255, 255, 0.8); 
+}
+section.locations > div.location { 
+  width: calc(50% - 15px);
+  margin: 15px 0; border-radius: 3px;
+  overflow: auto;
+  background: #323232;
+}
+section.locations > div.location.double { width: 100%; }
+section.locations > div.location.add { 
+	padding: 20px 30px; opacity: 0.3;
+	font: 1rem 'Unica One', sans-serif; 
+	cursor: pointer;
+}
+section.locations > div.location.add:hover { opacity: 1; }
+section.locations > div.location.add > i.zmdi { margin-right: 15px; color: rgba(255, 255, 255, 0.4); }
+
+section.locations > div.location { position: relative; }
+section.locations > div.location img { box-shadow: none; }
+section.locations > div.location > div.scenes { 
+	display: flex; flex-wrap: wrap; justify-content: space-between; 
+	padding: 15px 30px; 
+	/*background: #3d3d3d;*/
+}
+section.locations > div.location > div.scenes > div { margin: 15px 0; width: calc(50% - 15px); }
+section.locations > div.location > div.scenes > div.double { width: 100%; }
+section.locations > div.location > div.scenes > div > img { width: 100%; border-radius: 3px; }
+section.locations > div.location > div.scenes > div + p { margin-top: 0; }
+section.locations > div.location > div.scenes > p { 
+	margin: 15px 0;
+	font: 0.7rem 'Vollkorn', serif; /*#color: rgba(255, 255, 255, 0.3);*/
+}
+section.locations > div.location > div.scenes > hr { 
+	width: 100%; margin: 0 0 5px 0;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 0;
+}
+/*section.locations > div.location > div.scenes > hr:last-of-type { display: none; }*/
+section.locations > div.location > div.description { padding: 0 30px 30px 30px; }
+section.locations > div.location > div.description > h2 { 
+	margin: 0 0 10px 0;
+	font: 1.2rem 'Unica One', sans-serif; 
+	text-transform: uppercase; color: rgba(255, 255, 255, 0.8); 
+}
+section.locations > div.location > div.description > p { font: 0.9rem 'Vollkorn', serif; margin: 0; }
+section.locations > div.location > div.description > p > span.source { color: #999; font-size: 12px; font-style: italic; }
+section.locations > div.location > div.description > i.zmdi { position: absolute; right: 15px; bottom: 15px; color: #666; }
+section.locations > div.location > div.description > i.zmdi:hover { color: #999; cursor: pointer; }
+
+
+
+@media (max-width: 700px) {
+  section.film { padding-left: 10%; padding-right: 10%; }
+  section.scenes { margin-left: 10%; margin-right: 10%; }
+}
+@media (max-width: 500px) {
+  section.film { padding-left: 5%; padding-right: 5%; }
+  section.film > p { font-size: 0.8rem; }
+  section.locations { margin-left: 5%; margin-right: 5%; }
+  section.locations > div.location > div.description { padding: 0 15px 15px 15px; }
+  section.locations > div.location > div.scenes { padding: 10px 10px; }
+  section.locations > div.location > div.scenes > div { margin: 5px 0; width: calc(50% - 5px); }
+}

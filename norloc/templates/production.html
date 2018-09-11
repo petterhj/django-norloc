@@ -1,171 +1,71 @@
-{% extends "page.html" %}
+{% extends "base.html" %}
 
-{% load thumbnail %}
+{% block page %}
+ <!-- Caption -->
+ <section class="caption">
+  <div class="navigation"><a href="{% url 'index' %}">Norske opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> Oslo, 31. august</div>
+  {% if user.is_authenticated %}
+   <div class="admin"><i class="zmdi zmdi-edit"></i></div>
+  {% endif %}
+ </section>
 
-{% block title %}{{ production.title }} ({{ production.release.year }}) | {% endblock %}
-
-<!-- Cover -->
-{% block cover %}
- <div class="production" {% if production.backdrop %}{% thumbnail production.backdrop "970" as backdrop %}style="background-image: url('{{ backdrop.url }}');"{% endthumbnail %}{% endif %}>
-
- <!-- Poster -->
- {% if production.poster %}
-  {% thumbnail production.poster "200x293" crop="center" as poster %}
-   <img src="{{ poster.url }}" class="poster">
-  {% endthumbnail %}
- {% endif %}
-
-  <!-- Summary -->
-  <div class="summary">
-   <h1 class="truncate" title="{{ production.title }} ({{ production.release.year }})">{{ production.title }} ({{ production.release.year }})</h1>
-   <h5 class="truncate">{{ production.directors.all|join:", " }}</h5>
-   <p>{{ production.summary }}</p>
-
-   <!-- Poster (small) -->
-   {% if production.poster %}
-    {% thumbnail production.poster "x80" as poster %}
-     <img src="{{ poster.url }}" class="poster show-for-small-only">
-    {% endthumbnail %}
-   {% endif %}
-
-   <!-- Labels -->
-   <div class="labels info">
-    <!-- Runtime -->
-    {% if production.runtime != 0 %}
-     <i class="fa fa-clock-o"></i>
-     <span class="runtime">{{ production.runtime }} min.</span>
-    {% endif %}
-    <!-- Release -->
-    {% if production.release %}
-     <i class="fa fa-calendar-o"></i>
-     <span class="release">{{ production.release|date:"d.m.Y" }}</span>
-    {% endif %}
-   </div>
-   {% if production.producers.count != 0 %}
-    <div class="labels">
-     <!-- Production -->
-     <i class="fa fa-briefcase" title="Produksjonsselskap"></i>
-     {% for producer in production.producers.all %}
-      <span>
-       {% if producer.website %}<a href="{{ producer.website }}" target="_blank">{{ producer.name }}</a>
-       {% else %}{{ producer.name }}{% endif %}
-      </span>
-     {% endfor %}
-    </div> 
-   {% endif %}
-   {% if production.distributors.count != 0 %}
-    <div class="labels">
-     <!-- Distribution -->
-     <i class="fa fa-ticket" title="Distribusjon"></i>
-     {% for distributor in production.distributors.all %}
-      <span>
-       {% if distributor.website %}<a href="{{ distributor.website }}" target="_blank">{{ distributor.name }}</a>
-       {% else %}{{ distributor.name }}{% endif %}
-      </span>
-     {% endfor %}
-    </div>
-   {% endif %}
+ <!-- Film -->
+ <section class="film">
+  {% if production.poster %}
+   <img src="{{production.poster.url}}">
+  {% endif %}
+  <h1>{{production.title}} ({{production.release.year}})</h1>
+  <h4>
+   {% for director in production.directors.all %}
+    <a href="https://www.imdb.com/name/{{director.imdb_id}}" target="_blank">{{director.name}}</a>
+   {% endfor %}
+  </h4>
+  <p>
+   {{production.summary|safe}} <span class="source">&mdash; Filmweb</span>
+  </p>
+  <div class="meta">
+   <span class="tag"><i class="zmdi zmdi-calendar-alt"></i>{{production.release}}</span>
+   <span class="tag"><i class="zmdi zmdi-time"></i>{{production.runtime}} min.</span>
+   <span class="tag"><i class="zmdi zmdi-pin"></i>{{production.locations|length}} opptakssteder</span>
   </div>
-
-  <div class="bar"></div>
- </div>
-{% endblock %}
-
-<!-- Content -->
-{% block content %}
-
- <div class="row">
-  <!-- Locations -->
-  {% for location, scenes in production.locations.items %}
-   <div class="medium-12 columns">
-    <div class="card scenes">
-     <a href=""><h1>{{ location.address }}, {{ location.municipality }}</h1></a>
-     <i class="type fa fa-map-marker"></i>
-
-     <!-- Scenes -->
-     {% for scene in scenes %}
-      <div class="row equal force">
-
-       {% with scene.shot_set.all as shots %}
-        <div class="medium-6 columns">
-         <!-- Shots -->
-         <div class="shots {%if shots.count > 1%}slides{% endif %}">
-          {% for shot in shots %}
-           {% thumbnail shot.image "450x253" crop="center" as image %}
-            <img src="{{ image.url }}" class="shot" data-location="{{ shot.first.point }}">
-           {% endthumbnail %}
-          {% endfor %}
-         </div>
-        </div>
-
-        <!-- Location -->
-        <div class="medium-6 columns">
-         <div class="location">
-          <!-- Map -->
-          <div class="thumb {%if not location.description%}nodesc{%endif%}" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{shots.first.point}}&zoom=15&size=450x253&scale=2{%for s in shots%}&markers=size:mid{%if scene.shot_set.count > 1%}|label:{{forloop.counter}}{%endif%}|{{s.point}}{%endfor%}');"></div>
-
-          <!-- Description -->
-          {% if location.description %}
-           <p class="description truncate {%if location.photos.all.0.photo%}hasphoto{%endif%}">
-            {{ location.description }}
-           </p>
-          {% endif %}
-
-          <!-- Photo -->
-          {% if location.photos.all.0.photo %}
-           <div class="photo">
-            {% thumbnail location.photos.all.0.photo "193x130" crop="center" as photo %}
-             <img src="{{ photo.url }}" class="photo" alt="foto" title="Større bilde">
-            {% endthumbnail %}
-            <span><i class="fa fa-copyright"></i> {{ location.photos.all.0.credit }}, {{ location.photos.all.0.license }}</span>
-           </div>
-          {% endif %}
-         </div>
-        </div>
-       {% endwith %}
-       
-      </div><br>
-     {% endfor %}
-
-    </div>
-   </div>
-  {% endfor %}
- </div>
+ </section>
 
  <!-- Locations -->
- <!-- OLD
- <div class="row">
+ <section class="locations">
   {% for location, scenes in production.locations.items %}
-   <div class="medium-6 columns">
-    <div class="card scene">
-     <a href=""><h1>{{ location.address }}, {{ location.municipality }}</h1></a>
-     <i class="type fa fa-map-marker"></i>
-
-     {% for scene in scenes %}
-      <div class="shots">
-       {% with scene.shot_set.all as shots %}
-        {% if scene.shot_set.count > 1 %}
-         <div class="nr">1</div>
-        {% endif %}
-        {% thumbnail shots.first.image "450x253" crop="center" as image %}
-         <img src="{{ image.url }}" class="shot" data-location="{{ shot.first.point }}">
-        {% endthumbnail %}
-        <div class="mini-shots">
-        {% for shot in shots|slice:"1:" %}
-         <img src="{{ shot.image.url }}" data-nr="{{ forloop.counter|add:1 }}">
-        {% endfor %}
-        </div>
-
-        <img src="https://maps.googleapis.com/maps/api/staticmap?center={{shots.first.point}}&zoom=14&size=450x253&scale=2{%for s in shots%}&markers=size:mid{%if scene.shot_set.count > 1%}|label:{{forloop.counter}}{%endif%}|{{s.point}}{%endfor%}" class="floater" title="Vis kart">
-       {% endwith %}
-      </div>
-      <div class="description"><p>{{ scene.description }}</p></div>
-     {% endfor %}
-
-    </div>
+  <div class="location double">
+   <div class="scenes">
+    {% for scene in scenes %}
+     {% with scene.shot_set.all as shots %}
+      {% for shot in shots %}
+       {% if shots|length == 1 or shots|length == 3 and forloop.counter == 1 %}
+       <div class="double"><img src="{{shot.image.url}}" style=""></div>
+       {% elif scenes|length == 1 and shots|length == 2 %}
+        <div class="double"><img src="{{shot.image.url}}" style=""></div>
+       {% else %}
+        <div class=""><img src="{{shot.image.url}}" style=""></div>
+       {%endif%}
+      {% endfor %}
+      {% if scene.description %}
+       <p>{{scene.description}}</p>
+      {% endif %}
+      <hr>
+     {% endwith %}
+    {% endfor %}
    </div>
+   <div class="description">
+    <h2>{{location.address}}, {{location.municipality}}, {{location.county}}</h2>
+    {% if location.description %}<p>{{location.description}} <span class="source">&mdash; Wikipedia</span></p>{% endif %}
+    <i class="zmdi zmdi-map"></i>
+   </div>
+  </div>
   {% endfor %}
- </div>
- -->
+
+  {% if user.is_authenticated %}
+   <div class="location double add">
+    <i class="zmdi zmdi-plus-circle"></i>Legg til opptakssted
+   </div>
+  {% endif %}
+ </section>
 
 {% endblock %}

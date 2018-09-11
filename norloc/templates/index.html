@@ -1,68 +1,30 @@
-{% extends "page.html" %}
+{% extends "base.html" %}
 
-{% load thumbnail %}
+{% block page %}
+ <!-- Caption -->
+ <section class="caption">
+  <div class="navigation">Norske opptakssteder<span class="accent">:</span> 
+   <a href="">Filmer</a> | 
+   <a href="">Serier</a> |
+   <a href="">Opptakssteder</a> |
+   <a href="">Regissører</a> |
+   <a href="">Produksjonsselskaper</a>
+  </div>
+  <div class="admin"><i class="zmdi zmdi-plus"></i></div>
+ </section>
 
-<!-- Cover -->
-{% block cover %}
- {% thumbnail productions.all.1.backdrop "970" as backdrop %}
-  <div class="search" style="background-image: url('{{ backdrop.url }}');">
-   <div class="field">
-    <input type="text" placeholder="Film, TV-serie, sted" id="search"> 
-    <i class="fa fa-search"></i>
+ <!-- Productions -->
+ <section class="productions">
+  {% for production in productions %}
+   <div class="production {%if production.locations|length == 0 %}faded{%endif%}">
+    {%if production.poster %}
+     <img src="{{production.poster.url}}">
+    {%endif%}
+    <span class="title">
+     <a href="{%url 'production' production.slug%}">{{production.title}}</a>
+    </span>
    </div>
-  </div>
- {% endthumbnail %}
-{% endblock %}
+  {% endfor %}
+ </section>
 
-<!-- Content -->
-{% block content %}
- {% if productions %}
-  <!-- Productions -->
-  <div class="row">
-   {% for production in productions %}
-    <div class="medium-6 columns">
-     <!-- Production -->
-     <div class="card production {% if production.location_count == 0 %}fade{% endif %}">
-      <a href="{% url 'production' production.slug %}"><h1>{{ production.title }} ({{ production.release.year }})</h1></a>
-      <i class="type fa fa-{% if production.type == "film" %}film{% else %}desktop{% endif %}"></i>
-      <a href="#"><h5>{{ production.directors.all|join:", " }}</h5></a>
-      {% if production.backdrop %}
-       {% thumbnail production.backdrop "450" as backdrop %}
-        <div class="thumb" style="background-image: url('{{ backdrop.url }}');"></div>
-       {% endthumbnail %}
-      {% else %}
-       <div class="thumb"></div>
-      {% endif %}
-      <div class="description">
-       {% if production.poster %}
-        {% thumbnail production.poster "65x90" crop="center" as poster %}
-         <img src="{{ poster.url }}" class="poster">
-        {% endthumbnail %}
-       {% endif %}
-       
-       <div{% if not production.poster %} class="noposter" {% endif %}>
-        <p class="truncate">{{ production.summary }}</p>
-        <!-- Scene count -->
-        {% with count=production.scene_count %}
-         <span class="label radius {% if count == 0 %}alert{% endif %}" title="Scener"><i class="fa fa-video-camera"></i> {{ count }}</span>
-        {% endwith %}
-        <!-- Location count -->
-        {% with count=production.location_count %}
-         <span class="label radius {% if count > 0 %}success{% else %}alert{% endif %}" title="Opptakssteder"><i class="fa fa-map-marker"></i> {{ count }}</span>
-        {% endwith %}
-       </div>
-      </div>
-     </div>
-    </div>
-   {% endfor %}
-  </div>
-
-  <!-- Quick links -->
-  <div class="row quicklinks">
-   <div class="small-12 columns">
-    <i class="fa fa-video-camera"></i> <a href="{% url 'productions' %}">Flere produksjoner</a>
-    <i class="fa fa-search"></i> <a class="goto_search">Søk</a>
-   </div>
-  </div>
- {% endif %}
 {% endblock %}

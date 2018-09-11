@@ -1,8 +1,15 @@
 # Imports
 from django.contrib import admin
+
 from locations.models import Location, Point, Photo
 
 
+# Models
+admin.site.register(Location)
+admin.site.register(Point)
+admin.site.register(Photo)
+
+'''
 # ModelAdmin: Location
 class LocationAdmin(admin.ModelAdmin):
     # List
@@ -38,3 +45,4 @@ class PhotoAdmin(admin.ModelAdmin):
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Point, PointAdmin)
 admin.site.register(Photo, PhotoAdmin)
+'''

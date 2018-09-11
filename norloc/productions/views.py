@@ -1,3 +1,39 @@
+# -*- coding: utf-8 -*-
+
+# Imports
+from __future__ import unicode_literals
+
+from django.template import loader
+from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
+from django.shortcuts import get_object_or_404
+
+from .models import Production
+
+
+
+# View: Index
+def index(request):
+    # Render template
+    template = loader.get_template('index.html')
+    context = {'productions': Production.objects.order_by('-release')}
+    
+    return HttpResponse(template.render(context, request))
+
+
+# View: Production
+def production(request, slug):
+    # Production
+    production = get_object_or_404(Production, slug=slug)
+
+    # Render template
+    template = loader.get_template('production.html')
+    context = {'production': production}
+    
+    return HttpResponse(template.render(context, request))
+
+
+'''
 # Imports
 import json
 
@@ -95,3 +131,4 @@ def locator(request, slug, scene_id):
         },
         context_instance=RequestContext(request)
     )
+'''

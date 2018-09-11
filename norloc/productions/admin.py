@@ -1,18 +1,32 @@
 # Imports
 from django.contrib import admin
-from productions.models import Production, Scene, Shot, Director, Company
+
+from productions.models import Production, Director, Company, Scene, Shot
 
 
 # ModelAdmin: Production
 class ProductionAdmin(admin.ModelAdmin):
     # List
-    list_display = ('title', 'slug', 'type', 'release')
+    list_display = ('poster_thumb', 'title', 'slug', 'type', 'release')
+    list_display_links = ('poster_thumb', 'title',)
+
+    def poster_thumb(self, obj):
+        return '<img src="' + obj.poster.url + '" alt="thumb" style="margin: -4px -5px -5px 0; height: 22px;" />'
+
+    poster_thumb.short_description = 'Shot'
+    poster_thumb.allow_tags = True
 
     # Fieldsets
     fieldsets = [
-        ('Production', {'fields': ['type', 'title', 'slug', 'release', 'summary', 'directors', 'runtime', 'producers', 'distributors']}),
-        ('Images', {'fields': ['poster', 'backdrop']}),
-        ('External information', {'fields': ['imdb_id', 'tmdb_id', 'nbdb_id', 'tvdb_id']}),
+        ('Production', {
+            'fields': ['type', 'title', 'slug', 'release', 'summary', 'directors', 'runtime', 'producers', 'distributors']
+        }),
+        ('Images', {
+            'fields': ['poster', 'backdrop']
+        }),
+        ('External information', {
+            'fields': ['imdb_id', 'tmdb_id', 'nbdb_id', 'tvdb_id']
+        }),
     ]
 
 
@@ -59,10 +73,9 @@ class ShotAdmin(admin.ModelAdmin):
     shot_location.admin_order_field = 'scene__location__address'
 
 
-# Admin interface
+# Models
 admin.site.register(Production, ProductionAdmin)
-admin.site.register(Scene, SceneAdmin)
-admin.site.register(Shot, ShotAdmin)
 admin.site.register(Director)
 admin.site.register(Company)
-# admin.site.register(Distributor)
+admin.site.register(Scene, SceneAdmin)
+admin.site.register(Shot, ShotAdmin)
