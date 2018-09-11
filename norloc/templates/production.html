@@ -3,7 +3,7 @@
 {% block page %}
  <!-- Caption -->
  <section class="caption">
-  <div class="navigation"><a href="{% url 'index' %}">Norske opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> Oslo, 31. august</div>
+  <div class="navigation"><a href="{% url 'index' %}">Norske opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> {{production.title}}</div>
   {% if user.is_authenticated %}
    <div class="admin"><i class="zmdi zmdi-edit"></i></div>
   {% endif %}
