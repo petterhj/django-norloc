@@ -51,4 +51,15 @@ urlpatterns = patterns('',
     url(r'^logout/', views.logout),
     url(r'^admin/', include(admin.site.urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Productions
+    url(r'^$', views.index, name='productions'),
+    url(r'^films/$', views.index, {'filter_type': 'films'}, name='films'),
+    url(r'^series/$', views.index, {'filter_type': 'series'}, name='series'),
+
+    # Production
+    url(r'^production/(?P<slug>[\w-]+)/$', views.production, name='production'),
+    url(r'^production/(?P<slug>[\w-]+)/scene/(?P<scene_id>\d+)/locator/$', views.locator, name='locator'),
+
 '''
+
