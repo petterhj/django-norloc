@@ -10,7 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- <link rel="icon" href="{% static "video_16.png" %}"> -->
-  <link href="https://fonts.googleapis.com/css?family=Fauna+One|Oleo+Script|Fugaz+One|Monda|Unica+One|Alegreya:400italic,400|Abril+Fatface|Vollkorn" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Monda|Unica+One|Noto+Serif|Vollkorn" rel="stylesheet" type="text/css">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -41,7 +42,7 @@
   <!-- Caption -->
   <section class="caption">
    <nav>
-    <a href="{% url 'index' %}">Norske opptakssteder</a><span class="accent">:</span> 
+    <a href="{% url 'index' %}">Norske opptakssteder</a><span class="accent">&#9642;</span> 
     {% block navigation %}{% endblock %}
    </nav>
    {% if user.is_authenticated %}

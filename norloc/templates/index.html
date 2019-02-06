@@ -9,15 +9,8 @@
  <a href="{%url 'map' %}">Kart</a>
 {% endblock %}
 
-{% block page %}
- <!-- Caption -->
- <section class="caption">
-  
-  <div class="admin"><i class="zmdi zmdi-plus"></i></div>
- </section>
-
- <!-- Productions -->
- <section class="productions">
+{% block content %}
+<section class="productions">
   {% for production in productions %}
    <div class="production {%if production.locations|length == 0 %}faded{%endif%}">
     {%if production.poster %}
@@ -29,5 +22,4 @@
    </div>
   {% endfor %}
  </section>
-
 {% endblock %}
