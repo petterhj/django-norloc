@@ -1,6 +1,6 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-body { margin: 0; background: #2B2B2B; }
+body { margin: 0; background: #202020/*#2B2B2B*/; }
 input, button, textarea, select { border: 0; outline: 0; }
 
 /* ========================================================================
@@ -167,115 +167,19 @@ section.content > hr {
 /* Card */
 section.content > div.card { 
   width: calc(50% - 15px); overflow: auto;
-  margin: 15px 0; padding: 25px; 
-  border-radius: 3px; background: #323232;
+  margin: 15px 0 30px 0; 
+  /*padding: 25px; */
+  /*border-radius: 4px; */
+  /*background: #323232;*/
+  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 40px;
 }
 section.content > div.card.double { width: 100%; }
-section.content > div.card.editable input[type="text"],
-section.content > div.card.editable textarea { border-bottom: 1px solid transparent; }
-section.content > div.card.editable .meta,
-section.content > div.card.editable button { display: none; }
-section.content > div.card.editable:hover,
-section.content > div.card.editable:hover * { cursor: pointer; }
-section.content > div.card.editable:hover,
-section.content > div.card.editable.active { background: #383838; }
-section.content > div.card.editable.active:hover,
-section.content > div.card.editable.active:hover * { cursor: auto; }
-section.content > div.card.editable.active input[type="text"],
-section.content > div.card.editable.active textarea { border-bottom-color: rgba(255, 255, 255, 0.1); }
-section.content > div.card.editable.active .meta,
-section.content > div.card.editable.active button { display: inline-block; }
-section.content > div.card.editable.active button { cursor: pointer !important; }
-
-
-/* Card: Production */
-div.card.production { overflow: auto; }
-div.card.production img { float: left; width: 100px; height: 147px; border-radius: 2px; }
-div.card.production div.details { 
-	float: left; width: calc(100% - 125px); margin-left: 25px;
-}
-
-div.card.production input[type="text"],
-div.card.production textarea { 
-    margin: 15px 0 0 0; padding: 0 0 3px 0; 
-    background: transparent; resize: none;
-    color: rgba(255, 255, 255, 0.8);
-}
-div.card.production input[name="title"],
-div.card.production input[name="release"] { margin-top: 0; }
-div.card.production input[name="title"] { 
-    width: calc(70% - 2px); margin-right: 10px; 
-    font: 1.5rem 'Unica One', sans-serif;
-}
-div.card.production input[name="release"] { 
-    float: right; width: calc(25% - 2px); 
-    text-align: right; padding: 5px 0 4px 0;
-    font: 1.2rem 'Unica One', sans-serif; 
-    color: rgba(255, 255, 255, 0.5);
-}
-div.card.production textarea[name="summary"] { 
-    width: 100%; min-height: 120px; 
-    color: rgba(255, 255, 255, 0.5);
-}
-div.card.production span.help-text,
-div.card.production input.meta {
-    font-size: 0.9rem; color: rgba(255, 255, 255, 0.4);
-}
-div.card.production input[name="directors"] { width: 100%; }
-div.card.production input[name="runtime"] { width: 10%; }
-div.card.production input[name$="_id"] { width: 20%; margin-right: 10px; }
-div.card.production button { margin: 25px 0 0 0; }
-div.card.production button[name="add"] { 
-    width: calc(80% - 7px); margin-right: 5px; 
-    background: #E84785; color: rgba(255, 255, 255, 0.8); 
-}
-div.card.production button[name="abort"] { 
-    width: calc(20% - 2px); 
-    background: #546E7A; color: rgba(255, 255, 255, 0.8); 
-}
-
-/* Card: Form */
-
-/*div.card.form {}
-div.card.form input[type="text"],
-div.card.form input[type="date"],
-div.card.form input[type="number"],
-div.card.form textarea,
-div.card.form select {
-    background: #565656; color: rgba(255, 255, 255, 0.8);
-}
-div.card.form input[type="submit"], div.card.form button {
-    background: #E84785; color: rgba(255, 255, 255, 0.8);
-}
-div.card.form input[type="submit"]:hover, div.card.form button:hover {
-    background: #EA4C88; color: rgba(255, 255, 255, 0.9);
-}
-
-div.card.form.production div.heading {
-    overflow: auto;
-}
-div.card.form.production div.heading > div.poster {
-    width: 150px; height: 220px; margin: 10px;
-    padding: 15px; border-radius: 3px;
-    background: #565656; color: rgba(255, 255, 255, 0.8);
-    float: left;
-    background-image: url('http://image.tmdb.org/t/p/original/nulCQs4WEs4lzWMABTs5kkiUgD1.jpg');
-    background-size: 100% 100%;
-}
-div.card.form.production div.heading > div.details {
-    width: calc(100% - 170px);
-    float: left;
-}*/
-
-
-
-
-
-
 
 
 section.content > div.location.add { 
-	padding: 20px 30px; opacity: 0.3;
+	/*padding: 20px 30px; */
+    opacity: 0.3;
 	font: 1rem 'Unica One', sans-serif; 
 	cursor: pointer;
 }
@@ -286,12 +190,14 @@ section.content > div.location { position: relative; }
 section.content > div.location img { box-shadow: none; }
 section.content > div.location > div.scenes { 
 	display: flex; flex-wrap: wrap; justify-content: space-between; 
-	padding: 15px 30px; 
+	/*padding: 15px 30px; */
 	/*background: #3d3d3d;*/
 }
-section.content > div.location > div.scenes > div { margin: 15px 0; width: calc(50% - 15px); }
+section.content > div.location > div.scenes > div { 
+    margin: 0 0 15px 0; width: calc(50% - 15px); 
+}
 section.content > div.location > div.scenes > div.double { width: 100%; }
-section.content > div.location > div.scenes > div > img { width: 100%; border-radius: 3px; }
+section.content > div.location > div.scenes > div > img { width: 100%; border-radius: 4px; }
 section.content > div.location > div.scenes > div + p { margin-top: 0; }
 section.content > div.location > div.scenes > p { 
 	margin: 15px 0;
@@ -304,7 +210,7 @@ section.content > div.location > div.scenes > hr {
 }
 /*section.content > div.location > div.scenes > hr:last-of-type { display: none; }*/
 section.content > div.location > div.scenes + div.description { padding-top: 0; }
-section.content > div.location > div.description { padding: 30px 30px 30px 30px; }
+section.content > div.location > div.description { padding: 0 0 0 0; }
 section.content > div.location > div.description > h2 { 
 	margin: 0 0 10px 0;
 	font: 1.2rem 'Unica One', sans-serif; 
