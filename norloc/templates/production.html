@@ -1,65 +1,87 @@
 {% extends "base.html" %}
 
-{% block page %}
- <!-- Caption -->
- <section class="caption">
-  <div class="navigation"><a href="{% url 'index' %}">Norske opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> {{production.title}}</div>
-  {% if user.is_authenticated %}
-   <div class="admin"><i class="zmdi zmdi-edit"></i></div>
-  {% endif %}
- </section>
+{% block view %}production{% endblock %}
 
- <!-- Film -->
- <section class="film">
-  {% if production.poster %}
-   <img src="{{production.poster.url}}">
-  {% endif %}
-  <h1>{{production.title}} ({{production.release.year}})</h1>
-  <h4>
-   {% for director in production.directors.all %}
-    <a href="https://www.imdb.com/name/{{director.imdb_id}}" target="_blank">{{director.name}}</a>
-   {% endfor %}
-  </h4>
-  <p>
-   {{production.summary|safe}} <span class="source">&mdash; Filmweb</span>
-  </p>
-  <div class="meta">
-   <span class="tag"><i class="zmdi zmdi-calendar-alt"></i>{{production.release}}</span>
-   <span class="tag"><i class="zmdi zmdi-time"></i>{{production.runtime}} min.</span>
-   <span class="tag"><i class="zmdi zmdi-pin"></i>{{production.locations|length}} opptakssteder</span>
-  </div>
- </section>
+{% block navigation %}
+ <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> {{production.title}}
+{% endblock %}
 
- <!-- Locations -->
- <section class="locations">
-  {% for location, scenes in production.locations.items %}
-  <div class="location double">
+{% block header %}
+ {% if production.poster %}
+  <img src="{{production.poster.url}}">
+ {% endif %}
+ <h1>{{production.title}} ({{production.release.year}})</h1>
+ <h4>
+  {% for director in production.directors.all %}
+   <a href="https://www.imdb.com/name/{{director.imdb_id}}" target="_blank">{{director.name}}</a>
+  {% endfor %}
+ </h4>
+ <p>
+  {{production.summary|safe}} <span class="source">&mdash; Filmweb</span>
+ </p>
+ <div class="meta">
+  <span class="tag"><i class="zmdi zmdi-calendar-alt"></i>{{production.release}}</span>
+  <span class="tag"><i class="zmdi zmdi-time"></i>{{production.runtime}} min.</span>
+  <span class="tag"><i class="zmdi zmdi-pin"></i>{{production.locations|length}} opptakssteder</span>
+ </div>
+{% endblock %}
+
+{% block content_class %}locations{% endblock %}
+{% block content_pk %}{{ production.pk }}{% endblock %}
+{% block content %}
+ {% verbatim %}
+ <script id="location-template" type="text/x-handlebars-template">
+  <div class="card location double">
    <div class="scenes">
-    {% for scene in scenes %}
-     {% with scene.shot_set.all as shots %}
-      {% for shot in shots %}
-       {% if shots|length == 1 or shots|length == 3 and forloop.counter == 1 %}
-       <div class="double"><img src="{{shot.image.url}}" style=""></div>
-       {% elif scenes|length == 1 and shots|length == 2 %}
-        <div class="double"><img src="{{shot.image.url}}" style=""></div>
-       {% else %}
-        <div class=""><img src="{{shot.image.url}}" style=""></div>
-       {%endif%}
-      {% endfor %}
-      {% if scene.description %}
-       <p>{{scene.description}}</p>
-      {% endif %}
-      <hr>
-     {% endwith %}
-    {% endfor %}
+    {{#each scenes}}
+     {{#each shots}}
+      <div class="{{shot_size ../../scene_count ../shot_count @index}}"><img src="{{image}}" style=""></div>
+     {{/each}}
+     {{#if description}}
+      <p>{{description}}</p>
+     {{/if}}
+     <hr>
+    {{/each}}
    </div>
    <div class="description">
-    <h2>{{location.address}}, {{location.municipality}}, {{location.county}}</h2>
-    {% if location.description %}<p>{{location.description}} <span class="source">&mdash; Wikipedia</span></p>{% endif %}
+    <h2>{{full_address}}</h2>
+    <p>{{description}}</p>
     <i class="zmdi zmdi-map"></i>
    </div>
   </div>
-  {% endfor %}
+ </script>
+ {% endverbatim %}
+
+ <!--
+ {% for location, scenes in production.locations.items %}
+ <div class="location double">
+  <div class="scenes">
+   {% for scene in scenes %}
+    {% with scene.shot_set.all as shots %}
+     {% for shot in shots %}
+      {% if shots|length == 1 or shots|length == 3 and forloop.counter == 1 %}
+      <div class="double"><img src="{{shot.image.url}}" style=""></div>
+      {% elif scenes|length == 1 and shots|length == 2 %}
+       <div class="double"><img src="{{shot.image.url}}" style=""></div>
+      {% else %}
+       <div class=""><img src="{{shot.image.url}}" style=""></div>
+      {%endif%}
+     {% endfor %}
+     {% if scene.description %}
+      <p>{{scene.description}}</p>
+     {% endif %}
+     <hr>
+    {% endwith %}
+   {% endfor %}
+  </div>
+  <div class="description">
+   <h2>{{location.address}}, {{location.municipality}}, {{location.county}}</h2>
+   {% if location.description %}<p>{{location.description}} <span class="source">&mdash; Wikipedia</span></p>{% endif %}
+   <i class="zmdi zmdi-map"></i>
+  </div>
+ </div>
+ {% endfor %}
+ -->
 
   {% if user.is_authenticated %}
    <div class="location double add">

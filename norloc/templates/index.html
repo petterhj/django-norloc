@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 
+{% block navigation %}
+ <a href="">Filmer</a> | 
+ <a href="">Serier</a> |
+ <a href="">Opptakssteder</a> |
+ <a href="">Regissører</a> |
+ <a href="">Produksjonsselskaper</a> |
+ <a href="{%url 'map' %}">Kart</a>
+{% endblock %}
+
 {% block page %}
  <!-- Caption -->
  <section class="caption">
-  <div class="navigation">Norske opptakssteder<span class="accent">:</span> 
-   <a href="">Filmer</a> | 
-   <a href="">Serier</a> |
-   <a href="">Opptakssteder</a> |
-   <a href="">Regissører</a> |
-   <a href="">Produksjonsselskaper</a>
-  </div>
+  
   <div class="admin"><i class="zmdi zmdi-plus"></i></div>
  </section>
 

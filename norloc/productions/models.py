@@ -76,9 +76,15 @@ class Production(models.Model):
         return locations
 
 
+    @property
+    def title_with_year(self):
+        return '%s%s' % (self.title, ' (%s)' % (str(self.release.year) if self.release else ''))
+    
+
     # Representation
     def __unicode__(self):
         return self.title
+
 
 
 # Model: Scene
@@ -97,20 +103,22 @@ class Scene(models.Model):
         )
 
 
-
 # Model: Shot
 class Shot(models.Model):
     # Fields
     scene = models.ForeignKey(Scene)
     image = models.ImageField(upload_to='shots/')
-    point = models.ForeignKey('locations.Point', blank=True, null=True)
+    timecode = models.IntegerField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
 
 
     # Representation
     def __unicode__(self):
-        return '%s (%s)' % (
+        return '%s (%s,%s)' % (
             self.scene,
-            self.point
+            str(self.latitude),
+            str(self.longitude)
         )
 
 

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block view %}import_production{% endblock %}
+
+{% block caption %}
+ <div class="navigation"><a href="{% url 'index' %}">Norske opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> Import</div>
+{% endblock %}
+
+{% if user.is_authenticated %}
+
+ {% block header %}
+  {% if user.is_authenticated %}
+   <h1>Importér produksjon</h1>
+   <!-- <p class="center">Kun norske produksjoner.</p> -->
+   <form name="search_production">
+    <input type="text" name="title" placeholder="Tittel" value="Sønner av Norge">
+    <button type="submit" name="search">Søk</button>
+   </form>
+  {% endif %}
+ {% endblock %} 
+
+ {% block content %}
+  {% verbatim %}
+  <script id="production-result-template" type="text/x-handlebars-template">
+   <div class="card double production editable">
+    <form name="submit_production">
+     <img src="{{poster}}">
+     <div class="details">
+      <input type="text" name="title" placeholder="Tittel" value="{{title}}" disabled>
+      <input type="text" name="release" placeholder="Dato" value="{{release}}" maxlength="10" disabled>
+      <textarea name="summary" placeholder="Sammendrag" disabled>{{summary}}</textarea>
+      <div class="meta">
+       <input type="text" class="meta" name="directors" placeholder="Regisør(er)" value="{{join directors}}" disabled><br>
+       <input type="text" class="meta" name="runtime" placeholder="Lengde" value="{{runtime}}" maxlength="3" disabled> <span class="help-text">min.</span><br>
+       <input type="text" class="meta" name="imdb_id" placeholder="IMDb ID" value="{{imdb_id}}" disabled>
+       <input type="text" class="meta" name="tmdb_id" placeholder="TMDb ID" value="{{tmdb_id}}" disabled>
+       <input type="text" class="meta" name="nbdb_id" placeholder="NBDb ID" value="{{nbdb_id}}" disabled>
+       <input type="text" class="meta" name="tvdb_id" placeholder="TVDb ID" value="{{tvdb_id}}" disabled>
+      </div>
+      <button type="submit" name="add" disabled="">Legg til</button>
+      <button name="abort" disabled="">Avbryt</button>
+     </div>
+    </form>
+   </div>
+  </script>
+  {% endverbatim %}
+ {% endblock %}
+
+{% endif %}

@@ -12,13 +12,51 @@
   <!-- <link rel="icon" href="{% static "video_16.png" %}"> -->
   <link href="https://fonts.googleapis.com/css?family=Fauna+One|Oleo+Script|Fugaz+One|Monda|Unica+One|Alegreya:400italic,400|Abril+Fatface|Vollkorn" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+   
   <link type="text/css" href="{% static "css/main.css" %}" rel="stylesheet">
+  <link type="text/css" href="{% static "css/leaflet.draw.css" %}" rel="stylesheet">
+  <link type="text/css" href="{% static "css/leaflet.easybutton.css" %}" rel="stylesheet">
+
+  <script language="javascript"> 
+    var DJANGO_USER = "{{user.is_authenticated|yesno:"true,false"}}";
+  </script>
+
+  <script type="text/javascript" src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/handlebars.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/leaflet.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/leaflet.draw.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/leaflet.easybutton.js" %}"></script>
+  
+  <script type="text/javascript" src="{% static "js/norloc.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/norloc.map.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/main.js" %}"></script>
 
   <title>Norske opptakssteder</title>
  </head>
 
- <body>
-  {% block page %}{% endblock %}
+ <body data-view="{% block view %}{% endblock %}">
+  <!-- Caption -->
+  <section class="caption">
+   <nav>
+    <a href="{% url 'index' %}">Norske opptakssteder</a><span class="accent">:</span> 
+    {% block navigation %}{% endblock %}
+   </nav>
+   {% if user.is_authenticated %}
+    <nav class="admin"><i class="zmdi zmdi-edit"></i></nav>
+   {% endif %}
+  </section>
+
+  <!-- Header -->
+  <section class="header">
+   {% block header %}{% endblock %}
+  </section>
+
+  <!-- Content -->
+  <section class="content {%block content_class%}{%endblock%}" data-content-pk="{%block content_pk%}{%endblock%}">
+   {% block content %}{% endblock %}
+  </section>
  </body>
 </html>

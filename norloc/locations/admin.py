@@ -1,12 +1,11 @@
 # Imports
 from django.contrib import admin
 
-from locations.models import Location, Point, Photo
+from locations.models import Location, Photo
 
 
 # Models
 admin.site.register(Location)
-admin.site.register(Point)
 admin.site.register(Photo)
 
 '''

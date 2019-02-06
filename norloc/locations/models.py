@@ -1,22 +1,14 @@
 # Imports
 from django.db import models
 from django.db.models import Count
+from jsonfield import JSONField
 
-
-# Model: Point
-class Point(models.Model):
-    # Fields
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-
-    # Representation
-    def __unicode__(self):
-	   return '%s,%s' % (self.latitude, self.longitude)
 
 
 # Model: Photo
 class Photo(models.Model):
     # Fields
+    location = models.ForeignKey('Location', on_delete=models.CASCADE)
     photo = models.ImageField()
     title = models.CharField(max_length=100)
     credit = models.CharField(max_length=50)
@@ -45,12 +37,17 @@ class Location(models.Model):
     municipality = models.CharField(max_length=30)
     county = models.CharField(max_length=30)
     description = models.TextField(max_length=800, blank=True)
-    bounds = models.ManyToManyField(Point)
-    photos = models.ManyToManyField(Photo, blank=True)
+    bounds = JSONField(blank=True, null=True)
+    bounds_locked = models.BooleanField(default=False)
 
     # Manager
     # locations = LocationsQuerySet.as_manager()
 
+    # Full address
+    @property
+    def full_address(self):
+        return ', '.join([self.address, self.municipality, self.county])
+    
     # Representation
     def __unicode__(self):
         return self.address

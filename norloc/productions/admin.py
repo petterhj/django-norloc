@@ -51,7 +51,7 @@ class SceneAdmin(admin.ModelAdmin):
 # ModelAdmin: Shot
 class ShotAdmin(admin.ModelAdmin):
     # List
-    list_display = ('shot_thumb', 'shot_production', 'shot_location')
+    list_display = ('shot_thumb', 'shot_production', 'shot_location', 'timecode', 'coordinate')
 
     def shot_thumb(self, obj):
         return '<img src="' + obj.image.url + '" alt="thumb" style="margin: -4px -5px -5px 0; width: 39px; height: 22px;" />'
@@ -65,12 +65,21 @@ class ShotAdmin(admin.ModelAdmin):
             return obj.scene.location.address
         return None
 
+    def coordinate(self, obj):
+        if obj.latitude and obj.longitude:
+            return '<a href="http://www.google.com/maps/place/%s,%s" target="_blank">%s,%s</a>' % (
+                str(obj.latitude), str(obj.longitude),
+                str(obj.latitude), str(obj.longitude),
+            )
+        return None
+
     shot_thumb.short_description = 'Shot'
     shot_thumb.allow_tags = True
     shot_production.short_description = 'Production'
     shot_production.admin_order_field = 'scene__production__title'
     shot_location.short_description = 'Location'
     shot_location.admin_order_field = 'scene__location__address'
+    coordinate.allow_tags = True
 
 
 # Models

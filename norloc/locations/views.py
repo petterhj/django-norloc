@@ -1,77 +1,74 @@
+# -*- coding: utf-8 -*-
+
 # Imports
-import json
+from __future__ import unicode_literals
 
-from django.core import serializers
-from django.template import RequestContext
-from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import simplejson as json
 
-from locations.models import Location
+from django.template import loader
+from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+
+from .models import Location
 
 
-# View: Index
-def index(request):
+# JSON: Locations
+def locations(request):
     # Locations
-    locations = Location.objects.all()
+    locations = {l.pk: {
+        'full_address': l.full_address,
+        # 'bounds': [[p.latitude, p.longitude] for p in l.bounds.all()],
+        'bounds': l.bounds if l.bounds else [],
+    } for l in Location.objects.all()}
 
-    # Render
-    if request.GET.get('api') == 'json':
-        # JSON
-        data = []
-
-        for location in locations:
-            data.append({
-                'address': location.address,
-                'bounds':  [{
-                    'latitude': p.latitude,
-                    'longitude': p.longitude
-                } for p in location.bounds.all()],
-                'scenes': [{
-                    'production': {
-                        'slug': s.production.slug,
-                        'title': s.production.title,
-                        'year': s.production.release.year,
-                    },
-                    'shots': [{
-                        'latitude': sh.point.latitude if sh.point else None,
-                        'longitude': sh.point.longitude if sh.point else None
-                    } for sh in s.shot_set.all()]
-                } for s in location.scene_set.all()]
-            });
-
-        return HttpResponse(json.dumps(data), content_type='application/json')
-
-    else:
-        # Paginator
-        paginator = Paginator(locations, 24)
-
-        page = request.GET.get('page')
-
-        try:
-            locs = paginator.page(page)
-        except PageNotAnInteger:
-            # Return first page
-            locs = paginator.page(1)
-        except EmptyPage:
-            # Page out of range: return last page
-            locs = paginator.page(paginator.num_pages)
-
-        # Template
-        return render_to_response(
-            'locations.html',
-            {'locations': locs},
-            context_instance=RequestContext(request)
-        )
+    # Return JSON
+    return JsonResponse(locations)
 
 
-# View: Map
-def map(request):
-    # Template
-    return render_to_response(
-        'map.html',
-        {
+# JSON: Location details
+def location_details(request, lpk):
+    # Location
+    location = get_object_or_404(Location, pk=lpk)
 
-        },
-        context_instance=RequestContext(request)
-    )
+    # Return JSON
+    return JsonResponse({
+        'pk': location.pk,
+        'address': location.address,
+        'municipality': location.municipality,
+        'county': location.county,
+        'description': location.description,
+    })
+
+
+# JSON: Update location bounds
+@login_required
+@require_POST
+def update_location_bounds(request, lpk):
+    # Location
+    location = get_object_or_404(Location, pk=lpk)
+
+    print '~'*50
+    print location.bounds
+    print location.bounds_locked
+    print '~'*50
+
+    if not request.is_ajax():
+        return JsonResponse({'success': False})
+
+    try:
+        # Parse data
+        bounds = json.loads(request.body)
+            
+        # Update location bounds
+        location.bounds = bounds
+        location.save()
+
+    except:
+        raise
+        return JsonResponse({'success': False})
+
+    # Return JSON
+    return JsonResponse({'success': True})

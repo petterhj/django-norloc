@@ -4,14 +4,28 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
-from productions import views
+from productions import views as prd
+from locations import views as loc
 
 
 # URL patterns
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', prd.index, name='index'),
 
-    url(r'^production/(?P<slug>[\w-]+)/$', views.production, name='production'),
+    url(r'^map/$', prd.map, name='map'),
+
+    url(r'^production/(?P<slug>[\w-]+)/$', prd.production, name='production'),
+
+    url(r'^productions/import/$', prd.import_production, name='import_production'),
+
+    url(r'^json/production/(?P<ppk>\d+)/locations/$', prd.locations, name='production_locations'),
+    url(r'^json/shots/$', prd.shots, name='shots'),
+    url(r'^json/scenes/$', prd.scenes, name='scenes'),
+    url(r'^json/tmdb/search/$', prd.tmdb_search, name='tmdb_search'),
+
+    url(r'^json/location/(?P<lpk>\d+)/details$', loc.location_details, name='location_details'),
+    url(r'^json/location/(?P<lpk>\d+)/bounds/update$', loc.update_location_bounds, name='update_bounds'),
+    url(r'^json/locations/$', loc.locations, name='locations'),
 
     url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
