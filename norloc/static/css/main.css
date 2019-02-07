@@ -172,15 +172,15 @@ section.content > hr {
 .location { 
 	position: relative; 
   width: calc(50% - 15px); 
-  margin: 15px 0 60px 0; 
+  margin: 15px 0 55px 0; 
   border-left: 2px solid rgba(255, 255, 255, 0.02);
-	padding: 60px 60px 15px 60px;
+	padding: 0 60px 20px 60px;
 }
 .location.double { width: 100%; }
 
 .location:before { 
-	position: absolute; top: 0; left: 0; margin-left: -20px;
-	width: 40px; height: 40px;
+	position: absolute; top: 0; left: 0; margin-left: -21px;
+	width: 40px; height: 45px;
 	background: #1A1919;
 	text-align: center;
 	font: normal normal normal 2rem/1 'Material-Design-Iconic-Font';
@@ -194,15 +194,16 @@ section.content > hr {
 }
 .location.add:hover { opacity: 1; }
 .location.add > i.zmdi { margin-right: 15px; color: rgba(255, 255, 255, 0.4); }
+.location > h2 { font-size: 1.5rem; } 
 
-.location > div.scenes { margin-bottom: 30px; } 
+.location > div.scenes { margin: 40px 0 0 0; } 
 .location > div.scenes > div.scene { 
 	position: relative;
 	display: flex; flex-wrap: wrap; 
 	justify-content: space-between; 
 	margin-bottom: 45px;
 }
-.location > div.scenes > div.scene:last-of-type { margin-bottom: 0; }
+.location > div.scenes > div.scene:last-of-type { margin-bottom: 15px; }
 .location > div.scenes > div.scene > div.meta { 
 	position: absolute; top: -10px; left: -91px;
 	width: 60px; padding: 10px 0;
@@ -237,7 +238,7 @@ section.content > hr {
 	margin: -15px 0 0 0;
 	font: 0.8rem 'Noto Serif', serif; color: rgba(255, 255, 255, 0.2);
 }
-.location > div.scenes > div.scene:last-of-type > p { margin-bottom: 15px; }
+.location > div.scenes > div.scene:last-of-type > p { margin-bottom: 25px; }
 
 .location > div.description { 
 	padding: 30px;
@@ -250,7 +251,8 @@ section.content > hr {
 	text-transform: uppercase; color: rgba(255, 255, 255, 0.8); 
 }
 .location > div.description > p { 
-    margin: 10px 0 0 0; 
+    /*margin: 10px 0 0 0; */
+    margin: 0;
     font: 0.9rem 'Noto Serif', serif; line-height: 1.7rem;
     color: rgba(255, 255, 255, 0.5); 
 }
