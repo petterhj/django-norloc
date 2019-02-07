@@ -43,6 +43,11 @@ var NORLOC = NORLOC || {
                 return '';
             }
         });
+
+        Handlebars.registerHelper('timecode', function(seconds) {
+            // return moment.duration(seconds)//.format('HH:mm:SS');
+            return moment.utc(seconds * 1000).format('HH:mm:ss');
+        });
                 
         // Load locations
         var ppk = $('section.content.locations').data('content-pk');
@@ -53,7 +58,7 @@ var NORLOC = NORLOC || {
             $.each(locations, function(i, location) {
                 var rendered = $(template(location));
                 
-                $('section.content.locations').append(rendered);
+                $('section.content.locations').append(rendered.hide().fadeIn('slow'));
 
                 // Map
                 rendered.find('i.zmdi-map').click(function() {

@@ -37,6 +37,7 @@ class Location(models.Model):
     municipality = models.CharField(max_length=30)
     county = models.CharField(max_length=30)
     description = models.TextField(max_length=800, blank=True)
+    description_credit = models.CharField(max_length=50, blank=True)
     bounds = JSONField(blank=True, null=True)
     bounds_locked = models.BooleanField(default=False)
 

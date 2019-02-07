@@ -70,8 +70,14 @@ def locations(request, ppk):
                 locations[scene.location.pk] = {
                     'full_address': scene.location.full_address,
                     'description': scene.location.description,
+                    'description_credit': scene.location.description_credit,
                     # 'bounds': scene.location.bounds,
                     'scene_count': scene.shot_set.count(),
+                    'photos': [{
+                        'photo': p.photo.url,
+                        'credit': p.credit,
+                        'license': p.license,
+                    } for p in scene.location.photo_set.all()],
                     'scenes': []
                 }
             

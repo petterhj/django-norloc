@@ -10,14 +10,15 @@
  {% if production.poster %}
   <img src="{{production.poster.url}}">
  {% endif %}
- <h1>{{production.title}} ({{production.release.year}})</h1>
+ <h1>{{production.title}}</h1>
+ <h3>{{production.release.year}}</h3>
  <h4>
   {% for director in production.directors.all %}
    <a href="https://www.imdb.com/name/{{director.imdb_id}}" target="_blank">{{director.name}}</a>
   {% endfor %}
  </h4>
  <p>
-  {{production.summary|safe}} <span class="source">&mdash; Filmweb</span>
+  {{production.summary|safe}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
  </p>
  <div class="meta">
   <span class="tag"><i class="zmdi zmdi-calendar-alt"></i>{{production.release}}</span>
@@ -31,63 +32,43 @@
 {% block content %}
  {% verbatim %}
  <script id="location-template" type="text/x-handlebars-template">
-  <div class="card location double">
+  <div class="location double">
    <div class="scenes">
     {{#each scenes}}
-     {{#each shots}}
-      <div class="{{shot_size ../../scene_count ../shot_count @index}}"><img src="{{image}}" style=""></div>
-     {{/each}}
-     {{#if description}}
-      <p>{{description}}</p>
-     {{/if}}
-     <hr>
+     <div class="scene">
+      {{#each shots}}
+       <div class="shot {{shot_size ../../scene_count ../shot_count @index}}">
+        <img src="{{image}}" style="">
+        {{#if timecode}}<span class="timecode">{{timecode timecode}}</span>{{/if}}
+       </div>
+      {{/each}}
+      {{#if description}}
+       <p>{{description}}</p>
+      {{/if}}
+      <!--div class="meta"><i class="zmdi zmdi-movie-alt"></i><br>00:03:32<br>-<br>00:04:12></div-->
+     </div>
     {{/each}}
    </div>
    <div class="description">
     <h2>{{full_address}}</h2>
-    <p>{{description}}</p>
+    {{#if description}}
+     <p>{{description}}{{#if description_credit}} <span class="source">&mdash; {{description_credit}}</span>{{/if}}</p>
+    {{/if}}
     <!--i class="zmdi zmdi-map"></i-->
+    <div class="photos">
+     {{#each photos}}
+      <img src="{{photo}}" alt="{{credit}}{{#if license}} [{{license}}]{{/if}}" title="Fra: {{credit}}{{#if license}} [{{license}}]{{/if}}">
+     {{/each}}
+    </div>
    </div>
   </div>
  </script>
  {% endverbatim %}
 
- <!--
- {% for location, scenes in production.locations.items %}
- <div class="location double">
-  <div class="scenes">
-   {% for scene in scenes %}
-    {% with scene.shot_set.all as shots %}
-     {% for shot in shots %}
-      {% if shots|length == 1 or shots|length == 3 and forloop.counter == 1 %}
-      <div class="double"><img src="{{shot.image.url}}" style=""></div>
-      {% elif scenes|length == 1 and shots|length == 2 %}
-       <div class="double"><img src="{{shot.image.url}}" style=""></div>
-      {% else %}
-       <div class=""><img src="{{shot.image.url}}" style=""></div>
-      {%endif%}
-     {% endfor %}
-     {% if scene.description %}
-      <p>{{scene.description}}</p>
-     {% endif %}
-     <hr>
-    {% endwith %}
-   {% endfor %}
-  </div>
-  <div class="description">
-   <h2>{{location.address}}, {{location.municipality}}, {{location.county}}</h2>
-   {% if location.description %}<p>{{location.description}} <span class="source">&mdash; Wikipedia</span></p>{% endif %}
-   <i class="zmdi zmdi-map"></i>
-  </div>
- </div>
- {% endfor %}
- -->
-
-  {% if user.is_authenticated %}
-   <!--div class="location double add">
-    <i class="zmdi zmdi-plus-circle"></i>Legg til opptakssted
-   </div-->
-  {% endif %}
- </section>
+ {% if user.is_authenticated %}
+  <!--div class="location double add">
+   <i class="zmdi zmdi-plus-circle"></i>Legg til opptakssted
+  </div-->
+ {% endif %}
 
 {% endblock %}

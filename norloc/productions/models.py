@@ -46,6 +46,7 @@ class Production(models.Model):
     title = models.CharField(max_length=50)
     release = models.DateField('Released')
     summary = models.TextField(max_length=1000)
+    summary_credit = models.CharField(max_length=50, blank=True)
     directors = models.ManyToManyField(Director, blank=True)
     producers = models.ManyToManyField(Company, blank=True, related_name='producers')
     distributors = models.ManyToManyField(Company, blank=True, related_name='distributors')
