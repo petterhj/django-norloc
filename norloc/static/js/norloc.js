@@ -24,7 +24,10 @@ var NORLOC = NORLOC || {
     },
 
     // View: Index
-    index: function() {},
+    index: function() {
+        // Focus search input
+        $('input#search').focus();
+    },
 
     // View: Production
     production: function() {
@@ -60,7 +63,7 @@ var NORLOC = NORLOC || {
         });
                 
         // Load locations
-        var ppk = $('section.content.locations').data('content-pk');
+        var ppk = $('section#content.locations').data('content-pk');
 
         UTIL.log('Fetching locations for production {0}'.format(ppk));
 
@@ -68,7 +71,7 @@ var NORLOC = NORLOC || {
             $.each(locations, function(i, location) {
                 var rendered = $(template(location));
                 
-                $('section.content.locations').append(rendered.hide().fadeIn('slow'));
+                $('section#content.locations').append(rendered.hide().fadeIn('slow'));
 
                 // Map
                 rendered.find('i.zmdi-map').click(function() {
@@ -93,7 +96,7 @@ var NORLOC = NORLOC || {
             });
 
             // Move add button
-            $('section.content.locations').append($('div.location.add').show());
+            $('section#content.locations').append($('div.location.add').show());
         }); 
     },
 
@@ -131,7 +134,7 @@ var NORLOC = NORLOC || {
     // View: Import production
     import_production: function() {
         // Template
-        var target = $('section.content');
+        var target = $('section#content');
         var result_template = Handlebars.compile($('#production-result-template').html());
 
         // Search production

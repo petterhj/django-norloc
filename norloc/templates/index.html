@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block view %}index{% endblock %}
+
 {% block navigation %}
  <a href="">Filmer</a> | 
  <a href="">Serier</a> |
@@ -9,17 +11,23 @@
  <a href="{%url 'map' %}">Kart</a>
 {% endblock %}
 
+{% block header %}
+ <div class="title">
+  <h1>Norske opptakssteder</h1>
+  <input id="search" type="text" placeholder="Tittel, regissør, opptakssted...">
+ </div>
+{% endblock %}
+
 {% block content %}
-<section class="productions">
-  {% for production in productions %}
-   <div class="production {%if production.locations|length == 0 %}faded{%endif%}">
-    {%if production.poster %}
-     <img src="{{production.poster.url}}">
-    {%endif%}
-    <span class="title">
-     <a href="{%url 'production' production.slug%}">{{production.title}}</a>
-    </span>
-   </div>
-  {% endfor %}
+ {% for production in productions %}
+  <div class="production {%if production.locations|length == 0 %}faded{%endif%}">
+   {%if production.poster %}
+    <img src="{{production.poster.url}}">
+   {%endif%}
+   <span class="title">
+    <a href="{%url 'production' production.slug%}">{{production.title}}</a>
+   </span>
+  </div>
+ {% endfor %}
  </section>
 {% endblock %}

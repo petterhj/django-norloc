@@ -41,7 +41,7 @@
 
  <body data-view="{% block view %}{% endblock %}">
   <!-- Caption -->
-  <section class="caption">
+  <section id="caption">
    <nav>
     <a href="{% url 'index' %}">Norske opptakssteder</a><span class="accent">&#9642;</span> 
     {% block navigation %}{% endblock %}
@@ -52,12 +52,12 @@
   </section>
 
   <!-- Header -->
-  <section class="header">
+  <section id="header">
    {% block header %}{% endblock %}
   </section>
 
   <!-- Content -->
-  <section class="content {%block content_class%}{%endblock%}" data-content-pk="{%block content_pk%}{%endblock%}">
+  <section id="content" class="{%block content_class%}{%endblock%}" data-content-pk="{%block content_pk%}{%endblock%}">
    {% block content %}{% endblock %}
   </section>
  </body>
