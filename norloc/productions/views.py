@@ -87,6 +87,7 @@ def locations(request, ppk):
                 'shots': [{
                     'image': s.image.url,
                     'timecode': s.timecode,
+                    'double': s.double,
                     # 'point': {'lat': s.latitude, 'lng': s.longitude}
                 } for s in scene.shot_set.order_by('timecode', 'pk')]
             })

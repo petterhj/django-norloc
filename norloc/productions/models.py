@@ -109,6 +109,7 @@ class Shot(models.Model):
     # Fields
     scene = models.ForeignKey(Scene)
     image = models.ImageField(upload_to='shots/')
+    double = models.BooleanField(default=False)
     timecode = models.IntegerField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)

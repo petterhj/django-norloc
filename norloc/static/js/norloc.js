@@ -44,6 +44,16 @@ var NORLOC = NORLOC || {
             }
         });
 
+        Handlebars.registerHelper('shot_size2', function(is_double, shot_count) {
+            if (is_double) {
+                return 'double';
+            }
+            if (shot_count == 1) {
+                return 'double';
+            }
+            return '';
+        });
+
         Handlebars.registerHelper('timecode', function(seconds) {
             // return moment.duration(seconds)//.format('HH:mm:SS');
             return moment.utc(seconds * 1000).format('HH:mm:ss');

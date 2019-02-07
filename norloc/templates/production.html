@@ -37,7 +37,9 @@
     {{#each scenes}}
      <div class="scene">
       {{#each shots}}
-       <div class="shot {{shot_size ../../scene_count ../shot_count @index}}">
+       <!-- <div class="shot {{shot_size2 ../../scene_count ../shot_count @index}}"> -->
+       <!-- <div class="shot{{#if double}} double{{/if}}"> -->
+       <div class="shot {{shot_size2 double ../shot_count}}">
         <img src="{{image}}" style="">
         {{#if timecode}}<span class="timecode">{{timecode timecode}}</span>{{/if}}
        </div>
