@@ -2,16 +2,15 @@
 
 {% block view %}map{% endblock %}
 
-{% block page %}
- <!-- Caption -->
- <section class="caption">
-  <div class="navigation"><a href="{% url 'index' %}">Norske opptakssteder</a> <span class="accent">&raquo;</span> Kart</div>
-  {% if user.is_authenticated %}
-   <div class="admin"><i class="zmdi zmdi-edit"></i></div>
-  {% endif %}
- </section>
+{% block navigation %}
+ Kart
+{% endblock %}
 
- <div id="map" style="height: calc(100% - 60px); width: 100%;"></div>
+
+
+{% block content %}
+ 
+ <div id="map" style="height: 500px; width: 100%;"></div>
  <!--div id="map" style="height: 600px; width: 100%;"></div>
  <div id="map2" style="height: 600px; width: 100%; margin-top: 10px;"></div-->
 

@@ -34,7 +34,7 @@ section#caption {
 	letter-spacing: .1em; color: #333;
 }
 section#caption a { text-decoration: none; color: #999; }
-section#caption a:first-of-type { color: inherit; }
+section#caption a:first-of-type { color: inherit; font-weight: bold; }
 section#caption a:hover { background-color: #ddd; }
 section#caption span.accent { color: #c31; }
 section#caption a:first-of-type + span.accent { margin-left: 4px; }
@@ -94,32 +94,31 @@ section#header input { background: #F2F2F2; }
 section#header button { background: #CCC; }
 
 body[data-view="index"] section#header { 
-	height: 15%;
 	padding: 0;
-	background-image: url('http://127.0.0.1:8000/media/shots/oslo_august_31_12.jpg');
+	background-image: url('/media/shots/vlcs-Oslo_31_August-00_30_23-2018-09-20-22h52m28s340.png');
 	background-repeat: no-repeat;
 	background-position: 0 80%;
 	background-size: cover;
-	/*background: red no-repeat center center fixed; */
-	/*background-image: url('http://127.0.0.1:8000/media/shots/oslo_august_31_12.jpg');*/
-	/*background-size: cover;*/
-	/*opacity: 0.5;*/
 }
 body[data-view="index"] section#header > div.title {
 	width: 100%; height: 100%;
-	padding: 30px 20% 60px 20%;
+	padding: 30px 20%;
 	/*background: rgba(255, 255, 255, 0.7);*/
 	background: rgba(240, 128, 128, 0.5);
 }
 body[data-view="index"] section#header h1 {
-	background: #FFF;
-	font-size: 2rem;
+	/*background: #FFF;*/
+	margin: 15px 0 15px 0;
+	font-size: 3rem;
+	color: #FFF;
   display: inline-block;
-  padding: 5px 30px;
-  border-radius: 4px;
+  border-bottom: 2px solid #FFF;
+  padding: 5px 15px;
+  /*border-radius: 4px;*/
 }
 body[data-view="index"] section#header input {
 	display: block; width: 100%; background: #FFF;
+	margin: 15px 0;
 	/*border: 2px solid rgba(0, 0, 0, 0.1);*/
 }
 
@@ -130,6 +129,7 @@ body[data-view="index"] section#header input {
    ======================================================================== */
 
 
+body[data-view="index"] section#content { margin: 0 5%; }
 body[data-view="index"] section#content > div.production { 
 	/*float: left; margin: 0 0 30px 30px;*/
 	width: 180px; height: 267px;
@@ -162,7 +162,6 @@ body[data-view="index"] section#content > div.production > span.title > a:hover 
 
 
 section#content { 
-	/*overflow: auto; */
 	display: flex;
 	margin: 0 calc(20% - 60px); padding: 60px 0;
 	flex-direction: row; flex-wrap: wrap;
@@ -170,6 +169,8 @@ section#content {
 	align-content: flex-start;
 	color: rgba(255, 255, 255, 0.8); 
 }
+
+body[data-view="map"] section#content { padding: 0; margin: 0; }
 
 
 /* Location */
@@ -311,8 +312,8 @@ div.leaflet-control-attribution > a { color: rgba(0, 255, 0, 0.2); }
 }
 .location-details-control > div.location {
 	width: 500px; height: 147px;
-    background: #FFF;
-    border-radius: 2px;
+  background: #FFF;
+  border-radius: 2px;
 }
 .location-details-control > div.location input,
 .location-details-control > div.location textarea { 
