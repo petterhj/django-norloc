@@ -10,7 +10,7 @@ from uuid_upload_path import upload_to_factory
 from locations.models import Location
 
 
-MIGRATE = False
+MIGRATE = True
 upload_to_people = upload_to_factory('people') if not MIGRATE else 'people'
 upload_to_posters = upload_to_factory('posters') if not MIGRATE else 'posters'
 upload_to_backdrops = upload_to_factory('backdrops') if not MIGRATE else 'backdrops'
@@ -23,6 +23,8 @@ class Director(models.Model):
     name = models.CharField(max_length=50)
     headshot = models.ImageField(upload_to=upload_to_people, blank=True)
     imdb_id = models.CharField(max_length=10, unique=True)
+
+    slug = AutoSlugField(populate_from='name', editable=True, unique=True, always_update=True)
 
     # Representation
     def __unicode__(self):
