@@ -96,8 +96,10 @@ section#header {
 	> h4 { 
 		font: 12px/12px $font-sans-serif; 
 		a {
+			margin-right: 15px;
 			color: inherit; text-decoration: none;
 			&:hover { text-decoration: underline; }
+			&:last-of-type { margin-right: 0; }
 		}
 	}
 

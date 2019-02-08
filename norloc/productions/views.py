@@ -50,7 +50,7 @@ def production(request, slug):
 def director(request, slug):
     # Director
     director = get_object_or_404(Director, slug=slug)
-    
+
     # Render template
     template = loader.get_template('director.html')
     context = {'director': director}
@@ -84,7 +84,7 @@ def locations(request, ppk):
                     'description': scene.location.description,
                     'description_credit': scene.location.description_credit,
                     # 'bounds': scene.location.bounds,
-                    'uncertain': scene.uncertain,
+                    'uncertain': False,
                     'scene_count': scene.shot_set.count(),
                     'photos': [{
                         'photo': p.photo.url,
@@ -93,7 +93,9 @@ def locations(request, ppk):
                     } for p in scene.location.photo_set.all()],
                     'scenes': []
                 }
-            
+
+            locations[scene.location.pk]['uncertain'] = scene.uncertain
+        
             locations[scene.location.pk]['scenes'].append({
                 'description': scene.description,
                 'shot_count': scene.shot_set.count(),
