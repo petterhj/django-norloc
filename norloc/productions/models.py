@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 from json import dumps as json_dumps
 from django.db import models
 from autoslug import AutoSlugField
+from uuid_upload_path import upload_to_factory
 
 from locations.models import Location
 
@@ -52,8 +53,8 @@ class Production(models.Model):
     distributors = models.ManyToManyField(Company, blank=True, related_name='distributors')
     runtime = models.IntegerField(default=0)
 
-    poster = models.ImageField(upload_to='posters/', blank=True)
-    backdrop = models.ImageField(upload_to='backdrops/', blank=True)
+    poster = models.ImageField(upload_to=upload_to_factory('posters'), blank=True)
+    backdrop = models.ImageField(upload_to=upload_to_factory('backdrops'), blank=True)
 
     imdb_id = models.CharField(max_length=10, blank=True)
     tmdb_id = models.CharField(max_length=10, blank=True)
@@ -107,7 +108,7 @@ class Scene(models.Model):
 class Shot(models.Model):
     # Fields
     scene = models.ForeignKey(Scene)
-    image = models.ImageField(upload_to='shots/')
+    image = models.ImageField(upload_to=upload_to_factory('shots'))
     double = models.BooleanField(default=False)
     timecode = models.IntegerField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)

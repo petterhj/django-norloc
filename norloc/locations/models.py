@@ -2,14 +2,14 @@
 from django.db import models
 from django.db.models import Count
 from jsonfield import JSONField
-
+from uuid_upload_path import upload_to_factory
 
 
 # Model: Photo
 class Photo(models.Model):
     # Fields
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to=upload_to_factory('locations'))
     title = models.CharField(max_length=100)
     credit = models.CharField(max_length=50)
     license = models.CharField(max_length=50, blank=True)
