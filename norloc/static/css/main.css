@@ -138,6 +138,10 @@ section#header > p .source {
   font-size: 12px;
   font-style: italic;
 }
+section#header > p a {
+  color: #C31;
+  text-decoration: none;
+}
 section#header div.meta, section#header div.companies {
   text-align: left;
 }
@@ -183,6 +187,12 @@ body[data-view=index] > section#header .title input {
   width: 100%;
 }
 
+body[data-view=director] > section#header > img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+}
+
 /* ========================================================================
     Content
    ======================================================================== */
@@ -197,10 +207,12 @@ section#content {
   color: rgba(255, 255, 255, 0.8);
 }
 
-body[data-view=index] > section#content {
+body[data-view=index] > section#content,
+body[data-view=director] > section#content {
   margin: 0 5%;
 }
-body[data-view=index] > section#content div.production {
+body[data-view=index] > section#content div.production,
+body[data-view=director] > section#content div.production {
   position: relative;
   width: 180px;
   height: 267px;
@@ -208,15 +220,18 @@ body[data-view=index] > section#content div.production {
   border-radius: 3px;
   background: #333;
 }
-body[data-view=index] > section#content div.production.faded {
+body[data-view=index] > section#content div.production.faded,
+body[data-view=director] > section#content div.production.faded {
   opacity: 0.3;
 }
-body[data-view=index] > section#content div.production > img {
+body[data-view=index] > section#content div.production > img,
+body[data-view=director] > section#content div.production > img {
   width: 100%;
   height: 100%;
   border-radius: inherit;
 }
-body[data-view=index] > section#content div.production > .title {
+body[data-view=index] > section#content div.production > .title,
+body[data-view=director] > section#content div.production > .title {
   display: none;
   position: absolute;
   bottom: 0;
@@ -229,11 +244,13 @@ body[data-view=index] > section#content div.production > .title {
   text-transform: uppercase;
   text-align: center;
 }
-body[data-view=index] > section#content div.production > .title a {
+body[data-view=index] > section#content div.production > .title a,
+body[data-view=director] > section#content div.production > .title a {
   text-decoration: none;
   color: rgba(255, 255, 255, 0.7);
 }
-body[data-view=index] > section#content div.production > .title a:hover {
+body[data-view=index] > section#content div.production > .title a:hover,
+body[data-view=director] > section#content div.production > .title a:hover {
   text-decoration: underline;
 }
 

@@ -12,7 +12,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
-from .models import Production, Scene, Shot
+from .models import Production, Scene, Shot, Director
 
 
 
@@ -42,6 +42,18 @@ def production(request, slug):
     # Render template
     template = loader.get_template('production.html')
     context = {'production': production}
+    
+    return HttpResponse(template.render(context, request))
+
+
+# View: Directors
+def director(request, slug):
+    # Director
+    director = get_object_or_404(Director, slug=slug)
+    
+    # Render template
+    template = loader.get_template('director.html')
+    context = {'director': director}
     
     return HttpResponse(template.render(context, request))
 

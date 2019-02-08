@@ -107,6 +107,10 @@ section#header {
 		text-align: justify; line-height: 1.7rem;
 
 		.source { color: #999; font-size: 12px; font-style: italic; }
+
+		a { 
+			color: $color-accent; text-decoration: none; 
+		}
 	}
 
 	div.meta, div.companies { 
@@ -124,7 +128,7 @@ section#header {
 }
 
 // View: Index
-body[data-view="index"] > section#header { 
+body[data-view="index"] > section#header {
 	padding: 0;
 	background-image: url('/media/shots/vlcs-Oslo_31_August-00_30_23-2018-09-20-22h52m28s340.png');
 	background-repeat: no-repeat;
@@ -147,6 +151,14 @@ body[data-view="index"] > section#header {
 	}
 }
 
+// View: Director
+body[data-view="director"] > section#header {
+	> img {
+		width: 180px; height: 180px;
+		border-radius: 50%; 
+	}
+}
+
 
 
 /* ========================================================================
@@ -162,8 +174,9 @@ section#content {
 	color: rgba(255, 255, 255, 0.8); 
 }
 
-// View: Index
-body[data-view="index"] > section#content {
+// View: Index / Direcor
+body[data-view="index"] > section#content,
+body[data-view="director"] > section#content {
 	margin: 0 5%;
 
 	div.production {

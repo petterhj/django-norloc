@@ -19,7 +19,7 @@
  <h3>{{production.release.year}}</h3>
  <h4>
   {% for director in production.directors.all %}
-   <a href="https://www.imdb.com/name/{{director.imdb_id}}" target="_blank">{{director.name}}</a>
+   <a href="{%url 'director' director.slug %}">{{director.name}}</a>
   {% endfor %}
  </h4>
  <p>

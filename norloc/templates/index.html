@@ -31,7 +31,7 @@
     <img src="{{production.poster.url}}">
    {%endif%}
    <span class="title">
-    <a href="{%url 'production' production.slug%}">{{production.title}}</a>
+    <a href="{%url 'production' production.slug %}">{{production.title}}</a>
    </span>
   </div>
  {% endfor %}
