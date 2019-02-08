@@ -1,0 +1,5 @@
+django
+django-autoslug
+django-jsonfield
+Pillow
+tmdb3
