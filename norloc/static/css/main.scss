@@ -32,6 +32,7 @@ h1, h2, h3, h4, h5 {
 	text-transform: uppercase; color: rgba(255, 255, 255, 0.8); 
 }
 
+.accent { color: $color-accent !important; }
 
 
 /* ========================================================================
@@ -57,7 +58,6 @@ section#caption {
 			&:hover { background-color: #DDD; }
 		}
 
-		.accent { color: $color-accent; }
 		i.zmdi { 
 			color: #999; 
 			&:hover { color: $color-accent; cursor: pointer; }
