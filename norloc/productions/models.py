@@ -87,14 +87,13 @@ class Production(models.Model):
         return self.title
 
 
-
 # Model: Scene
 class Scene(models.Model):
     # Fields
     production = models.ForeignKey(Production)
     description = models.TextField(max_length=800, blank=True)
     location = models.ForeignKey('locations.Location', blank=True, null=True, on_delete=models.SET_NULL)
-
+    uncertain = models.BooleanField(default=False)
 
     # Representation
     def __unicode__(self):

@@ -38,7 +38,7 @@ class SceneAdmin(admin.ModelAdmin):
     # Fieldsets
     fieldsets = [
         ('Scene', {'fields': ['production', 'description']}),
-        ('Location', {'fields': ['location']}),
+        ('Location', {'fields': ['location', 'uncertain']}),
     ]
 
     #def point_link(self, obj):

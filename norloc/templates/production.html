@@ -37,12 +37,12 @@
 {% block content %}
  {% verbatim %}
  <script id="location-template" type="text/x-handlebars-template">
-  <div class="location double">
+  <div class="location double {{#if uncertain}}uncertain{{/if}}">
    <h2>{{full_address}}</h2>
 
    <div class="scenes">
     {{#each scenes}}
-     <div class="scene">
+     <div class="scene {{#if ../uncertain}}uncertain{{/if}}">
       {{#each shots}}
        <!-- <div class="shot {{shot_size2 ../../scene_count ../shot_count @index}}"> -->
        <!-- <div class="shot{{#if double}} double{{/if}}"> -->

@@ -348,6 +348,14 @@ body[data-view=production] > section#content div.location div.description div.ph
   opacity: 1;
   cursor: pointer;
 }
+body[data-view=production] > section#content div.location.uncertain h2 {
+  color: #C31;
+}
+body[data-view=production] > section#content div.location.uncertain h2:after {
+  margin-left: 10px;
+  content: "";
+  font-family: "Material-Design-Iconic-Font";
+}
 
 body[data-view=map] > section#content {
   padding: 0;

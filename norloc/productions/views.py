@@ -72,6 +72,7 @@ def locations(request, ppk):
                     'description': scene.location.description,
                     'description_credit': scene.location.description_credit,
                     # 'bounds': scene.location.bounds,
+                    'uncertain': scene.uncertain,
                     'scene_count': scene.shot_set.count(),
                     'photos': [{
                         'photo': p.photo.url,
