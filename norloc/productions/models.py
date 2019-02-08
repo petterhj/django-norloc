@@ -10,11 +10,18 @@ from uuid_upload_path import upload_to_factory
 from locations.models import Location
 
 
+MIGRATE = False
+upload_to_people = upload_to_factory('people') if not MIGRATE else 'people'
+upload_to_posters = upload_to_factory('posters') if not MIGRATE else 'posters'
+upload_to_backdrops = upload_to_factory('backdrops') if not MIGRATE else 'backdrops'
+upload_to_shots = upload_to_factory('shots') if not MIGRATE else 'shots'
+
 
 # Model: Director
 class Director(models.Model):
     # Fields
     name = models.CharField(max_length=50)
+    headshot = models.ImageField(upload_to=upload_to_people, blank=True)
     imdb_id = models.CharField(max_length=10, unique=True)
 
     # Representation
@@ -53,8 +60,8 @@ class Production(models.Model):
     distributors = models.ManyToManyField(Company, blank=True, related_name='distributors')
     runtime = models.IntegerField(default=0)
 
-    poster = models.ImageField(upload_to=upload_to_factory('posters'), blank=True)
-    backdrop = models.ImageField(upload_to=upload_to_factory('backdrops'), blank=True)
+    poster = models.ImageField(upload_to=upload_to_posters, blank=True)
+    backdrop = models.ImageField(upload_to=upload_to_backdrops, blank=True)
 
     imdb_id = models.CharField(max_length=10, blank=True)
     tmdb_id = models.CharField(max_length=10, blank=True)
@@ -108,7 +115,7 @@ class Scene(models.Model):
 class Shot(models.Model):
     # Fields
     scene = models.ForeignKey(Scene)
-    image = models.ImageField(upload_to=upload_to_factory('shots'))
+    image = models.ImageField(upload_to=upload_to_shots)
     double = models.BooleanField(default=False)
     timecode = models.IntegerField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
