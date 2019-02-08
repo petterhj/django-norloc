@@ -139,26 +139,38 @@ section#header > p .source {
   font-style: italic;
 }
 section#header > p a {
+  opacity: 0.8;
   color: #C31;
   text-decoration: none;
 }
-section#header div.meta, section#header div.companies {
-  text-align: left;
+section#header > p a:hover {
+  opacity: 1;
 }
-section#header div.meta .tag, section#header div.companies .tag {
-  float: left;
-  margin-right: 9px;
+section#header div.meta {
+  text-align: left;
   font: 0.7rem "Monda", sans-serif;
   color: rgba(0, 0, 0, 0.6);
+}
+section#header div.meta .tag {
+  float: left;
+  margin-right: 9px;
   background: #EFEFEF;
   border-radius: 3px;
   padding: 2px 7px;
 }
-section#header div.meta .tag > i.zmdi, section#header div.companies .tag > i.zmdi {
+section#header div.meta .tag > i.zmdi {
   margin-right: 5px;
   color: rgba(0, 0, 0, 0.2);
 }
-section#header div.companies {
+section#header div.meta a {
+  text-decoration: none;
+  color: #C31;
+  opacity: 0.8;
+}
+section#header div.meta a:hover {
+  opacity: 1;
+}
+section#header div.meta.right {
   float: right;
 }
 

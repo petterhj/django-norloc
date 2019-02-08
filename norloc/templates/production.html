@@ -30,7 +30,7 @@
   <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i>{{production.runtime}} min.</span>
   <span class="tag" title="Opptakssteder"><i class="zmdi zmdi-pin"></i>{{production.locations|length}} opptakssteder</span>
  </div>
- <div class="companies">
+ <div class="meta right">
   {% for producer in production.producers.all %}
    <span class="tag" title="Produsent"><i class="zmdi zmdi-case"></i>{{producer.name}}</span>
   {% endfor %}

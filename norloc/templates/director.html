@@ -22,6 +22,11 @@
  <div class="meta">
   <span class="tag" title="Filmer"><i class="zmdi zmdi-movie-alt"></i>{{director.production_set.all|length}} produksjoner</span>
  </div>
+ <div class="meta right">
+  {% if director.imdb_id %}
+   <a href="https://www.imdb.com/name/{{director.imdb_id}}" target="_blank">IMDb</a>
+  {% endif %}
+ </div>
 {% endblock %}
 
 
