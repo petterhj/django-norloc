@@ -36,7 +36,7 @@
   <script type="text/javascript" src="{% static "js/norloc.map.js" %}"></script>
   <script type="text/javascript" src="{% static "js/main.js" %}"></script>
 
-  <title>Norske opptakssteder</title>
+  <title>{% block title %}{% endblock %}Norske opptakssteder</title>
  </head>
 
  <body data-view="{% block view %}{% endblock %}" data-content-pk="{% block content_pk %}{% endblock %}">

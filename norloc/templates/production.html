@@ -26,9 +26,17 @@
   {{production.summary|safe}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
  </p>
  <div class="meta">
-  <span class="tag"><i class="zmdi zmdi-calendar-alt"></i>{{production.release}}</span>
-  <span class="tag"><i class="zmdi zmdi-time"></i>{{production.runtime}} min.</span>
-  <span class="tag"><i class="zmdi zmdi-pin"></i>{{production.locations|length}} opptakssteder</span>
+  <span class="tag" title="Premiereår"><i class="zmdi zmdi-calendar-alt"></i>{{production.release}}</span>
+  <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i>{{production.runtime}} min.</span>
+  <span class="tag" title="Opptakssteder"><i class="zmdi zmdi-pin"></i>{{production.locations|length}} opptakssteder</span>
+ </div>
+ <div class="companies">
+  {% for producer in production.producers.all %}
+   <span class="tag" title="Produsent"><i class="zmdi zmdi-case"></i>{{producer.name}}</span>
+  {% endfor %}
+  {% for distributor in production.distributors.all %}
+   <span class="tag" title="Distributør"><i class="zmdi zmdi-city-alt"></i>{{distributor.name}}</span>
+  {% endfor %}
  </div>
 {% endblock %}
 

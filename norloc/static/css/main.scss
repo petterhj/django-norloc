@@ -109,7 +109,7 @@ section#header {
 		.source { color: #999; font-size: 12px; font-style: italic; }
 	}
 
-	div.meta { 
+	div.meta, div.companies { 
 		text-align: left; 
 
 		.tag {
@@ -120,6 +120,7 @@ section#header {
 			> i.zmdi { margin-right: 5px; color: rgba(0, 0, 0, 0.2); }
 		}
 	}
+	div.companies { float: right; }
 }
 
 // View: Index

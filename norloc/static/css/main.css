@@ -138,10 +138,10 @@ section#header > p .source {
   font-size: 12px;
   font-style: italic;
 }
-section#header div.meta {
+section#header div.meta, section#header div.companies {
   text-align: left;
 }
-section#header div.meta .tag {
+section#header div.meta .tag, section#header div.companies .tag {
   float: left;
   margin-right: 9px;
   font: 0.7rem "Monda", sans-serif;
@@ -150,9 +150,12 @@ section#header div.meta .tag {
   border-radius: 3px;
   padding: 2px 7px;
 }
-section#header div.meta .tag > i.zmdi {
+section#header div.meta .tag > i.zmdi, section#header div.companies .tag > i.zmdi {
   margin-right: 5px;
   color: rgba(0, 0, 0, 0.2);
+}
+section#header div.companies {
+  float: right;
 }
 
 body[data-view=index] > section#header {
