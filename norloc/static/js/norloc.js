@@ -21,6 +21,11 @@ var NORLOC = NORLOC || {
                 input.attr('title', placeholder);
             }
         });
+
+        // Clickable elements
+        $('[data-href]').on('click', function() {
+            window.location.href = $(this).data('href');
+        });
     },
 
     // View: Index

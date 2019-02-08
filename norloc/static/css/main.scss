@@ -34,6 +34,8 @@ h1, h2, h3, h4, h5 {
 
 .accent { color: $color-accent !important; }
 
+[data-href] { cursor: pointer; }
+
 
 /* ========================================================================
     Caption
@@ -178,8 +180,9 @@ body[data-view="index"] > section#content {
 		}
 
 		> .title {
+			display: none;
 			position: absolute; bottom: 0; left: 0; 
-			display: inline; width: 100%;
+			// display: inline; width: 100%;
 			border-bottom-right-radius: inherit; border-bottom-left-radius: inherit;
 			background: rgba(0, 0, 0, 0.7); padding: 6px 10px;
 			font: 1.1rem 'Unica One', sans-serif;

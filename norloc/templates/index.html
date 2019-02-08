@@ -26,7 +26,7 @@
 {# Content #}
 {% block content %}
  {% for production in productions %}
-  <div class="production {%if production.locations|length == 0 %}faded{%endif%}">
+  <div class="production {%if production.locations|length == 0 %}faded{%endif%}" data-href="{%url 'production' production.slug%}" title="{{production.title}} ({{production.release.year}})">
    {%if production.poster %}
     <img src="{{production.poster.url}}">
    {%endif%}

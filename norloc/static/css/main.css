@@ -46,6 +46,10 @@ h1, h2, h3, h4, h5 {
   color: #C31 !important;
 }
 
+[data-href] {
+  cursor: pointer;
+}
+
 /* ========================================================================
     Caption
    ======================================================================== */
@@ -210,11 +214,10 @@ body[data-view=index] > section#content div.production > img {
   border-radius: inherit;
 }
 body[data-view=index] > section#content div.production > .title {
+  display: none;
   position: absolute;
   bottom: 0;
   left: 0;
-  display: inline;
-  width: 100%;
   border-bottom-right-radius: inherit;
   border-bottom-left-radius: inherit;
   background: rgba(0, 0, 0, 0.7);
