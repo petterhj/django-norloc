@@ -99,6 +99,7 @@ def locations(request, ppk):
             locations[scene.location.pk]['scenes'].append({
                 'description': scene.description,
                 'shot_count': scene.shot_set.count(),
+                'uncertain': scene.uncertain,
                 'shots': [{
                     'image': s.image.url,
                     'timecode': s.timecode,

@@ -50,7 +50,7 @@
 
    <div class="scenes">
     {{#each scenes}}
-     <div class="scene {{#if ../uncertain}}uncertain{{/if}}">
+     <div class="scene {{#if uncertain}}uncertain{{/if}}">
       {{#each shots}}
        <!-- <div class="shot {{shot_size2 ../../scene_count ../shot_count @index}}"> -->
        <!-- <div class="shot{{#if double}} double{{/if}}"> -->
@@ -62,12 +62,10 @@
       {{#if description}}
        <p>{{description}}</p>
       {{/if}}
-      <!--div class="meta"><i class="zmdi zmdi-movie-alt"></i><br>00:03:32<br>-<br>00:04:12></div-->
      </div>
     {{/each}}
    </div>
    <div class="description">
-    <!--h2>{{full_address}}</h2-->
     {{#if uncertain}}
      <p class="accent">En eller flere scener knyttet til denne lokasjonen er usikker, sannsynligvis feil!</p>
     {{/if}}

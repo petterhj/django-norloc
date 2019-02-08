@@ -287,6 +287,19 @@ body[data-view="production"] > section#content {
 					font: 0.8rem $font-serif2; color: rgba(255, 255, 255, 0.2);
 				}
 				&:last-of-type > p { margin-bottom: 25px; }
+
+				&:before {
+					position: absolute; top: -5px; left: -69px;
+					width: 16px; line-height: 30px;
+					content: '\f19d';
+					color: rgba(255, 255, 255, 0.05);
+					font-family: 'Material-Design-Iconic-Font';
+					background: #1A1919; text-align: center;
+				}
+				&.uncertain:before {
+					content: '\f1f4';
+					color: $color-accent;
+				}
 			}
 		}
 
@@ -337,29 +350,11 @@ body[data-view="map"] > section#content {
 
 
 // .location > div.scenes > div.scene > div.meta { 
-// 	position: absolute; top: -10px; left: -91px;
-// 	width: 60px; padding: 10px 0;
-// 	background: #1A1919;
-// 	text-align: center;
-// 	color: rgba(255, 255, 255, 0.05);
-// 	font: 0.6rem 'Monda', sans-serif;
-// 	font-size: 0.5rem;
-// 	content: '00:03:32\nasd';
-// 	z-index: 9999;
-// 	line-height: 0.7rem;
+
 // }
 // .location > div.scenes > div.scene > div.meta > i.zmdi { 
 // 	font-size: 1.1rem; margin-bottom: 7px; 
 // }
-
-// .location > div.description > h2 { 
-// 	margin: 0;
-// 	font: 1.2rem 'Unica One', sans-serif; 
-// 	text-transform: uppercase; color: rgba(255, 255, 255, 0.8); 
-// }
-
-// .location > div.description > i.zmdi { position: absolute; right: 15px; bottom: 15px; color: #666; }
-// .location > div.description > i.zmdi:hover { color: #999; cursor: pointer; }
 
 
 

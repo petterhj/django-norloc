@@ -357,6 +357,22 @@ body[data-view=production] > section#content div.location div.scenes div.scene p
 body[data-view=production] > section#content div.location div.scenes div.scene:last-of-type > p {
   margin-bottom: 25px;
 }
+body[data-view=production] > section#content div.location div.scenes div.scene:before {
+  position: absolute;
+  top: -5px;
+  left: -69px;
+  width: 16px;
+  line-height: 30px;
+  content: "";
+  color: rgba(255, 255, 255, 0.05);
+  font-family: "Material-Design-Iconic-Font";
+  background: #1A1919;
+  text-align: center;
+}
+body[data-view=production] > section#content div.location div.scenes div.scene.uncertain:before {
+  content: "";
+  color: #C31;
+}
 body[data-view=production] > section#content div.location div.description {
   padding: 30px;
   background: rgba(255, 255, 255, 0.02);
