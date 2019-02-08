@@ -1,5 +1,6 @@
 *.pyc
 settings.py
 db.*
+*.sqlite*
 media/
 migrations/
