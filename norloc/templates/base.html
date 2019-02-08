@@ -39,7 +39,7 @@
   <title>Norske opptakssteder</title>
  </head>
 
- <body data-view="{% block view %}{% endblock %}">
+ <body data-view="{% block view %}{% endblock %}" data-content-pk="{% block content_pk %}{% endblock %}">
   <!-- Caption -->
   <section id="caption">
    <nav>
@@ -57,7 +57,7 @@
   </section>
 
   <!-- Content -->
-  <section id="content" class="{%block content_class%}{%endblock%}" data-content-pk="{%block content_pk%}{%endblock%}">
+  <section id="content">
    {% block content %}{% endblock %}
   </section>
  </body>

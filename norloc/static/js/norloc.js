@@ -48,13 +48,7 @@ var NORLOC = NORLOC || {
         });
 
         Handlebars.registerHelper('shot_size2', function(is_double, shot_count) {
-            if (is_double) {
-                return 'double';
-            }
-            if (shot_count == 1) {
-                return 'double';
-            }
-            return '';
+            return (is_double || shot_count == 1) ? 'double' : '';
         });
 
         Handlebars.registerHelper('timecode', function(seconds) {
@@ -63,7 +57,7 @@ var NORLOC = NORLOC || {
         });
                 
         // Load locations
-        var ppk = $('section#content.locations').data('content-pk');
+        var ppk = $('body').data('content-pk');
 
         UTIL.log('Fetching locations for production {0}'.format(ppk));
 
@@ -71,7 +65,7 @@ var NORLOC = NORLOC || {
             $.each(locations, function(i, location) {
                 var rendered = $(template(location));
                 
-                $('section#content.locations').append(rendered.hide().fadeIn('slow'));
+                $('section#content').append(rendered.hide().fadeIn('slow'));
 
                 // Map
                 rendered.find('i.zmdi-map').click(function() {
@@ -96,7 +90,7 @@ var NORLOC = NORLOC || {
             });
 
             // Move add button
-            $('section#content.locations').append($('div.location.add').show());
+            $('section#content').append($('div.location.add').show());
         }); 
     },
 

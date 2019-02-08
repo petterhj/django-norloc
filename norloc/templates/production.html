@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 
 {% block view %}production{% endblock %}
+{% block content_pk %}{{ production.pk }}{% endblock %}
 
+
+{# Navigation #}
 {% block navigation %}
  <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> {{production.title}}
 {% endblock %}
 
+
+{# Header #}
 {% block header %}
  {% if production.poster %}
   <img src="{{production.poster.url}}">
@@ -27,14 +32,14 @@
  </div>
 {% endblock %}
 
-{% block content_class %}locations{% endblock %}
-{% block content_pk %}{{ production.pk }}{% endblock %}
+
+{# Content #}
 {% block content %}
  {% verbatim %}
  <script id="location-template" type="text/x-handlebars-template">
   <div class="location double">
    <h2>{{full_address}}</h2>
-   
+
    <div class="scenes">
     {{#each scenes}}
      <div class="scene">
@@ -74,5 +79,4 @@
    <i class="zmdi zmdi-plus-circle"></i>Legg til opptakssted
   </div-->
  {% endif %}
-
 {% endblock %}
