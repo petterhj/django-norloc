@@ -2,7 +2,7 @@
 
 {% block view %}production{% endblock %}
 {% block content_pk %}{{ production.pk }}{% endblock %}
-
+{% block title %}{{production.title}} ({{production.release.year}}) | {% endblock %}
 
 {# Navigation #}
 {% block navigation %}
