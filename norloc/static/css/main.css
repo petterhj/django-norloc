@@ -175,11 +175,19 @@ section#header div.meta .tag {
   padding: 2px 7px;
 }
 section#header div.meta .tag > a {
+  position: relative;
   color: inherit;
   opacity: 1;
 }
 section#header div.meta .tag > a:hover {
   opacity: 0.8;
+}
+section#header div.meta .tag > a:after {
+  content: ", ";
+  opacity: 0.8;
+}
+section#header div.meta .tag > a:last-of-type:after {
+  content: "";
 }
 section#header div.meta .tag > i.zmdi {
   margin-right: 5px;

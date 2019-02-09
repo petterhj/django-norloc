@@ -97,9 +97,9 @@ section#header {
 	> h4 { 
 		font: 12px/12px $font-sans-serif; 
 		margin-bottom: 25px;
+		
 		a {
-			display: inline-block;
-			margin: 15px 15px 0 0;
+			display: inline-block; margin: 15px 15px 0 0;
 			color: inherit; text-decoration: none;
 			&:hover { text-decoration: underline; }
 			&:last-of-type { margin-right: 0; }
@@ -134,8 +134,13 @@ section#header {
 			float: left; margin-right: 9px;
 			background: #EFEFEF; border-radius: 3px; padding: 2px 7px; 
 
-			> a { color: inherit; opacity: 1; }
-			> a:hover { opacity: 0.8; }
+			> a { 
+				position: relative;
+				color: inherit; opacity: 1; 
+				&:hover { opacity: 0.8; }
+				&:after { content: ', '; opacity: 0.8; }
+				&:last-of-type:after { content: ''; }
+			}
 			> i.zmdi { margin-right: 5px; color: rgba(0, 0, 0, 0.2); }
 		}
 		

@@ -1,7 +1,7 @@
 # Imports
 from django.contrib import admin
 
-from productions.models import Production, Director, Company, Scene, Shot
+from productions.models import Production, Person, Company, Scene, Shot
 
 
 # ModelAdmin: Production
@@ -19,7 +19,7 @@ class ProductionAdmin(admin.ModelAdmin):
     # Fieldsets
     fieldsets = [
         ('Production', {
-            'fields': ['type', 'title', 'slug', 'release', 'summary', 'summary_credit', 'directors', 'runtime', 'producers', 'distributors']
+            'fields': ['type', 'title', 'slug', 'release', 'summary', 'summary_credit', 'directors', 'writers', 'runtime', 'producers', 'distributors']
         }),
         ('Images', {
             'fields': ['poster', 'backdrop']
@@ -92,5 +92,5 @@ class CompanyAdmin(admin.ModelAdmin):
 admin.site.register(Production, ProductionAdmin)
 admin.site.register(Scene, SceneAdmin)
 admin.site.register(Shot, ShotAdmin)
-admin.site.register(Director)
+admin.site.register(Person)
 admin.site.register(Company, CompanyAdmin)

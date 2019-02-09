@@ -12,7 +12,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
-from .models import Production, Scene, Shot, Director
+from .models import Production, Scene, Shot, Person
 
 
 
@@ -49,7 +49,7 @@ def production(request, slug):
 # View: Directors
 def director(request, slug):
     # Director
-    director = get_object_or_404(Director, slug=slug)
+    director = get_object_or_404(Person, slug=slug)
 
     # Render template
     template = loader.get_template('director.html')

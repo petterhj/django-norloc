@@ -31,6 +31,13 @@
   <span class="tag" title="Opptakssteder"><i class="zmdi zmdi-pin"></i>{{production.locations|length}} opptakssteder</span>
  </div>
  <div class="meta right">
+  {% if production.writers.count > 0 %}
+   <span class="tag"><i class="zmdi zmdi-edit"></i>
+    {% for writer in production.writers.all %}
+     <a href="{%url 'director' writer.slug %}">{{writer.name}}</a>
+    {% endfor %}
+   </span>
+  {% endif %}
   {% for producer in production.producers.all %}
    <span class="tag" title="Produsent"><i class="zmdi zmdi-case"></i>{% if producer.website %}<a href="{{producer.website}}" target="_blank">{{producer.name}}</a>{% else %}{{producer.name}}{% endif %}</span>
   {% endfor %}

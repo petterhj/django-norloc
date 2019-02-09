@@ -10,15 +10,15 @@ from uuid_upload_path import upload_to_factory
 from locations.models import Location
 
 
-MIGRATE = False
+MIGRATE = True
 upload_to_people = upload_to_factory('people') if not MIGRATE else 'people'
 upload_to_posters = upload_to_factory('posters') if not MIGRATE else 'posters'
 upload_to_backdrops = upload_to_factory('backdrops') if not MIGRATE else 'backdrops'
 upload_to_shots = upload_to_factory('shots') if not MIGRATE else 'shots'
 
 
-# Model: Director
-class Director(models.Model):
+# Model: Person
+class Person(models.Model):
     # Fields
     name = models.CharField(max_length=50)
     headshot = models.ImageField(upload_to=upload_to_people, blank=True)
@@ -59,7 +59,8 @@ class Production(models.Model):
     release = models.DateField('Released')
     summary = models.TextField(max_length=1000)
     summary_credit = models.CharField(max_length=50, blank=True)
-    directors = models.ManyToManyField(Director, blank=True)
+    directors = models.ManyToManyField(Person, blank=True, related_name='directors')
+    writers = models.ManyToManyField(Person, blank=True, related_name='writers')
     producers = models.ManyToManyField(Company, blank=True, related_name='producers')
     distributors = models.ManyToManyField(Company, blank=True, related_name='distributors')
     runtime = models.IntegerField(default=0)
