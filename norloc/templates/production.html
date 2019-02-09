@@ -19,30 +19,30 @@
  <h3>{{production.release.year}}</h3>
  <h4>
   {% for director in production.directors.all %}
-   <a href="{%url 'director' director.slug %}">{{director.name}}</a>
+   <a href="{%url 'person' director.slug %}">{{director.name}}</a>
   {% endfor %}
  </h4>
  <p>
   {{production.summary|safe}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
  </p>
  <div class="meta">
-  <span class="tag" title="Premiereår"><i class="zmdi zmdi-calendar-alt"></i>{{production.release}}</span>
-  <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i>{{production.runtime}} min.</span>
-  <span class="tag" title="Opptakssteder"><i class="zmdi zmdi-pin"></i>{{production.locations|length}} opptakssteder</span>
+  <span class="tag" title="Premiereår"><i class="zmdi zmdi-calendar-alt"></i><span>{{production.release}}</span></span>
+  <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i><span>{{production.runtime}} min.</span></span>
+  <span class="tag" title="Opptakssteder"><i class="zmdi zmdi-pin"></i><span>{{production.locations|length}} opptakssteder</span></span>
  </div>
  <div class="meta right">
   {% if production.writers.count > 0 %}
    <span class="tag"><i class="zmdi zmdi-edit"></i>
     {% for writer in production.writers.all %}
-     <a href="{%url 'director' writer.slug %}">{{writer.name}}</a>
+     <a href="{%url 'person' writer.slug %}">{{writer.name}}</a>
     {% endfor %}
    </span>
   {% endif %}
   {% for producer in production.producers.all %}
-   <span class="tag" title="Produsent"><i class="zmdi zmdi-case"></i>{% if producer.website %}<a href="{{producer.website}}" target="_blank">{{producer.name}}</a>{% else %}{{producer.name}}{% endif %}</span>
+   <span class="tag" title="Produsent"><i class="zmdi zmdi-case"></i><!--{% if producer.website %}<a href="{{producer.website}}" target="_blank">{{producer.name}}</a>{% else %}{{producer.name}}{% endif %}--></span>
   {% endfor %}
   {% for distributor in production.distributors.all %}
-   <span class="tag" title="Distributør"><i class="zmdi zmdi-city-alt"></i>{% if distributor.website %}<a href="{{distributor.website}}" target="_blank">{{distributor.name}}</a>{% else %}{{distributor.name}}{% endif %}</span>
+   <span class="tag" title="Distributør"><i class="zmdi zmdi-city-alt"></i><!--{% if distributor.website %}<a href="{{distributor.website}}" target="_blank">{{distributor.name}}</a>{% else %}{{distributor.name}}{% endif %}--></span>
   {% endfor %}
  </div>
 {% endblock %}

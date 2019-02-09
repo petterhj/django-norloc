@@ -46,14 +46,14 @@ def production(request, slug):
     return HttpResponse(template.render(context, request))
 
 
-# View: Directors
-def director(request, slug):
-    # Director
-    director = get_object_or_404(Person, slug=slug)
+# View: Person
+def person(request, slug):
+    # Person
+    person = get_object_or_404(Person, slug=slug)
 
     # Render template
-    template = loader.get_template('director.html')
-    context = {'director': director}
+    template = loader.get_template('person.html')
+    context = {'person': person}
     
     return HttpResponse(template.render(context, request))
 

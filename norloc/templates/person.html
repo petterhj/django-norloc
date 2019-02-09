@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block view %}person{% endblock %}
+{% block content_pk %}{{ person.pk }}{% endblock %}
+{% block title %}{{person.name}} | {% endblock %}
+
+
+{# Navigation #}
+{% block navigation %}
+ <a href="{% url 'index' %}">Folk</a> <span class="accent">&raquo;</span> {{person.name}}
+{% endblock %}
+
+
+{# Header #}
+{% block header %}
+ {% if person.headshot %}
+  <img src="{{person.headshot.url}}">
+ {% endif %}
+ <h1>{{person.name}}</h1>
+ <h3>{{person.job_title}}</h3>
+ <p>
+  {{person.bio|safe}}{% if person.bio_credit %} <span class="source">&mdash; {{person.bio_credit}}</span>{% endif %}
+ </p>
+ <div class="meta">
+  <span class="tag" title="Filmer"><i class="zmdi zmdi-movie-alt"></i><span>{{person.production_set.all|length}} produksjoner</span></span>
+ </div>
+ <div class="meta right">
+  {% if person.imdb_id %}
+   <a href="https://www.imdb.com/name/{{person.imdb_id}}" target="_blank">IMDb</a>
+  {% endif %}
+ </div>
+{% endblock %}
+
+
+{# Content #}
+{% block content %}
+ {% for production in person.productions %}
+  <div class="production {%if production.locations|length == 0 %}faded{%endif%}" data-href="{%url 'production' production.slug%}" title="{{production.title}} ({{production.release.year}})">
+   {%if production.poster %}
+    <img src="{{production.poster.url}}">
+   {%endif%}
+   <span class="title">
+    <a href="{%url 'production' production.slug %}">{{production.title}}</a>
+   </span>
+  </div>
+ {% endfor %}
+ </section>
+{% endblock %}

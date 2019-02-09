@@ -10,27 +10,11 @@ from uuid_upload_path import upload_to_factory
 from locations.models import Location
 
 
-MIGRATE = True
+MIGRATE = False
 upload_to_people = upload_to_factory('people') if not MIGRATE else 'people'
 upload_to_posters = upload_to_factory('posters') if not MIGRATE else 'posters'
 upload_to_backdrops = upload_to_factory('backdrops') if not MIGRATE else 'backdrops'
 upload_to_shots = upload_to_factory('shots') if not MIGRATE else 'shots'
-
-
-# Model: Person
-class Person(models.Model):
-    # Fields
-    name = models.CharField(max_length=50)
-    headshot = models.ImageField(upload_to=upload_to_people, blank=True)
-    bio = models.TextField(max_length=1000, blank=True)
-    bio_credit = models.CharField(max_length=50, blank=True)
-    imdb_id = models.CharField(max_length=10, unique=True)
-
-    slug = AutoSlugField(populate_from='name', editable=True, unique=True, always_update=True)
-
-    # Representation
-    def __unicode__(self):
-        return self.name
 
 
 # Model: Company
@@ -59,8 +43,8 @@ class Production(models.Model):
     release = models.DateField('Released')
     summary = models.TextField(max_length=1000)
     summary_credit = models.CharField(max_length=50, blank=True)
-    directors = models.ManyToManyField(Person, blank=True, related_name='directors')
-    writers = models.ManyToManyField(Person, blank=True, related_name='writers')
+    directors = models.ManyToManyField('Person', blank=True, related_name='directors')
+    writers = models.ManyToManyField('Person', blank=True, related_name='writers')
     producers = models.ManyToManyField(Company, blank=True, related_name='producers')
     distributors = models.ManyToManyField(Company, blank=True, related_name='distributors')
     runtime = models.IntegerField(default=0)
@@ -135,6 +119,35 @@ class Shot(models.Model):
             str(self.longitude)
         )
 
+
+# Model: Person
+class Person(models.Model):
+    # Fields
+    name = models.CharField(max_length=50)
+    headshot = models.ImageField(upload_to=upload_to_people, blank=True)
+    bio = models.TextField(max_length=1000, blank=True)
+    bio_credit = models.CharField(max_length=50, blank=True)
+    imdb_id = models.CharField(max_length=10, unique=True)
+
+    slug = AutoSlugField(populate_from='name', editable=True, unique=True, always_update=True)
+
+    @property
+    def job_title(self):
+        titles = []
+        if self.directors.count() > 0:
+            titles.append('Regi')
+        if self.writers.count() > 0:
+            titles.append('Manus')
+        return '/'.join(titles)
+
+    @property
+    def productions(self):
+        productions = self.writers.all() | self.directors.all()
+        return productions.distinct().order_by('-release')
+
+    # Representation
+    def __unicode__(self):
+        return self.name
 
 
 '''
