@@ -113,14 +113,18 @@ section#header > h1 {
   text-align: center;
 }
 section#header > h3, section#header > h4 {
-  margin: 20px 0;
   color: #666;
+}
+section#header > h3 {
+  margin: 20px 0 10px 0;
 }
 section#header > h4 {
   font: 12px/12px "Unica One", Helvetica, Arial, sans-serif;
+  margin-bottom: 25px;
 }
 section#header > h4 a {
-  margin-right: 15px;
+  display: inline-block;
+  margin: 15px 15px 0 0;
   color: inherit;
   text-decoration: none;
 }
@@ -131,7 +135,7 @@ section#header > h4 a:last-of-type {
   margin-right: 0;
 }
 section#header > p {
-  margin: 30px auto 30px auto;
+  margin: 15px auto 30px auto;
   font: 1.2rem "Vollkorn", serif;
   color: #666;
   text-align: justify;
@@ -238,7 +242,7 @@ body[data-view=director] > section#content div.production {
 }
 body[data-view=index] > section#content div.production.faded,
 body[data-view=director] > section#content div.production.faded {
-  opacity: 0.3;
+  opacity: 0.2;
 }
 body[data-view=index] > section#content div.production > img,
 body[data-view=director] > section#content div.production > img {
