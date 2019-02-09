@@ -159,17 +159,6 @@ section#header div.meta {
   font: 0.7rem "Monda", sans-serif;
   color: rgba(0, 0, 0, 0.6);
 }
-section#header div.meta .tag {
-  float: left;
-  margin-right: 9px;
-  background: #EFEFEF;
-  border-radius: 3px;
-  padding: 2px 7px;
-}
-section#header div.meta .tag > i.zmdi {
-  margin-right: 5px;
-  color: rgba(0, 0, 0, 0.2);
-}
 section#header div.meta a {
   text-decoration: none;
   color: #C31;
@@ -177,6 +166,24 @@ section#header div.meta a {
 }
 section#header div.meta a:hover {
   opacity: 1;
+}
+section#header div.meta .tag {
+  float: left;
+  margin-right: 9px;
+  background: #EFEFEF;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+section#header div.meta .tag > a {
+  color: inherit;
+  opacity: 1;
+}
+section#header div.meta .tag > a:hover {
+  opacity: 0.8;
+}
+section#header div.meta .tag > i.zmdi {
+  margin-right: 5px;
+  color: rgba(0, 0, 0, 0.2);
 }
 section#header div.meta.right {
   float: right;

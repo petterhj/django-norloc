@@ -32,10 +32,10 @@
  </div>
  <div class="meta right">
   {% for producer in production.producers.all %}
-   <span class="tag" title="Produsent"><i class="zmdi zmdi-case"></i>{{producer.name}}</span>
+   <span class="tag" title="Produsent"><i class="zmdi zmdi-case"></i>{% if producer.website %}<a href="{{producer.website}}" target="_blank">{{producer.name}}</a>{% else %}{{producer.name}}{% endif %}</span>
   {% endfor %}
   {% for distributor in production.distributors.all %}
-   <span class="tag" title="Distributør"><i class="zmdi zmdi-city-alt"></i>{{distributor.name}}</span>
+   <span class="tag" title="Distributør"><i class="zmdi zmdi-city-alt"></i>{% if distributor.website %}<a href="{{distributor.website}}" target="_blank">{{distributor.name}}</a>{% else %}{{distributor.name}}{% endif %}</span>
   {% endfor %}
  </div>
 {% endblock %}

@@ -7,7 +7,7 @@ from productions.models import Production, Director, Company, Scene, Shot
 # ModelAdmin: Production
 class ProductionAdmin(admin.ModelAdmin):
     # List
-    list_display = ('poster_thumb', 'title', 'slug', 'type', 'release')
+    list_display = ('poster_thumb', 'title', 'slug', 'type', 'release', 'runtime')
     list_display_links = ('poster_thumb', 'title',)
 
     def poster_thumb(self, obj):
@@ -82,9 +82,15 @@ class ShotAdmin(admin.ModelAdmin):
     coordinate.allow_tags = True
 
 
+# ModelAdmin: Company
+class CompanyAdmin(admin.ModelAdmin):
+    # List
+    list_display = ('name', 'website')
+
+
 # Models
 admin.site.register(Production, ProductionAdmin)
-admin.site.register(Director)
-admin.site.register(Company)
 admin.site.register(Scene, SceneAdmin)
 admin.site.register(Shot, ShotAdmin)
+admin.site.register(Director)
+admin.site.register(Company, CompanyAdmin)

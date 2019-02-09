@@ -124,17 +124,19 @@ section#header {
 		text-align: left; 
 		font: 0.7rem $font-sans-serif-simple; color: rgba(0, 0, 0, 0.6);
 
-		.tag {
-			float: left; margin-right: 9px;
-			background: #EFEFEF; border-radius: 3px; padding: 2px 7px; 
-
-			> i.zmdi { margin-right: 5px; color: rgba(0, 0, 0, 0.2); }
-		}
-
 		a {
 			text-decoration: none; color: $color-accent;
 			opacity: 0.8;
 			&:hover { opacity: 1; }
+		}
+
+		.tag {
+			float: left; margin-right: 9px;
+			background: #EFEFEF; border-radius: 3px; padding: 2px 7px; 
+
+			> a { color: inherit; opacity: 1; }
+			> a:hover { opacity: 0.8; }
+			> i.zmdi { margin-right: 5px; color: rgba(0, 0, 0, 0.2); }
 		}
 		
 		&.right { float: right; }
