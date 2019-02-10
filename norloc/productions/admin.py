@@ -19,7 +19,11 @@ class ProductionAdmin(admin.ModelAdmin):
     # Fieldsets
     fieldsets = [
         ('Production', {
-            'fields': ['type', 'title', 'slug', 'release', 'summary', 'summary_credit', 'directors', 'writers', 'runtime', 'producers', 'distributors']
+            'fields': [
+                'type', 'title', 'slug', 'release', 'summary', 'summary_credit', 
+                'directors', 'writers', 'photographers',
+                'runtime', 'producers', 'distributors'
+            ]
         }),
         ('Images', {
             'fields': ['poster', 'backdrop']

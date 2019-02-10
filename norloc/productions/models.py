@@ -45,6 +45,7 @@ class Production(models.Model):
     summary_credit = models.CharField(max_length=50, blank=True)
     directors = models.ManyToManyField('Person', blank=True, related_name='directors')
     writers = models.ManyToManyField('Person', blank=True, related_name='writers')
+    photographers = models.ManyToManyField('Person', blank=True, related_name='photographers')
     producers = models.ManyToManyField(Company, blank=True, related_name='producers')
     distributors = models.ManyToManyField(Company, blank=True, related_name='distributors')
     runtime = models.IntegerField(default=0)
@@ -138,11 +139,13 @@ class Person(models.Model):
             titles.append('Regi')
         if self.writers.count() > 0:
             titles.append('Manus')
+        if self.photographers.count() > 0:
+            titles.append('Foto')
         return '/'.join(titles)
 
     @property
     def productions(self):
-        productions = self.writers.all() | self.directors.all()
+        productions = self.writers.all() | self.directors.all() | self.photographers.all()
         return productions.distinct().order_by('-release')
 
     # Representation

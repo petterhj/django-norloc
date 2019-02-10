@@ -19,8 +19,22 @@
  <h3>{{production.release.year}}</h3>
  <h4>
   {% for director in production.directors.all %}
-   <a href="{%url 'person' director.slug %}">{{director.name}}</a>
+   <a href="{%url 'person' director.slug %}" title="Regissør">{{director.name}}</a>
   {% endfor %}
+ </h4>
+ <h4>
+  {% if production.writers.count > 0 %}
+   <i class="zmdi zmdi-edit" title="Manus"></i>
+   {% for writer in production.writers.all %}
+    <a href="{%url 'person' writer.slug %}" title="Manus">{{writer.name}}</a>
+   {% endfor %}
+  {% endif %}
+  {% if production.photographers.count > 0 %}
+   <i class="zmdi zmdi-camera" title="Foto"></i>
+   {% for photographer in production.photographers.all %}
+    <a href="{%url 'person' photographer.slug %}" title="Foto">{{photographer.name}}</a>
+   {% endfor %}
+  {% endif %}
  </h4>
  <p>
   {{production.summary|safe}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
@@ -31,19 +45,20 @@
   <span class="tag" title="Opptakssteder"><i class="zmdi zmdi-pin"></i><span>{{production.locations|length}} opptakssteder</span></span>
  </div>
  <div class="meta right">
-  {% if production.writers.count > 0 %}
-   <span class="tag"><i class="zmdi zmdi-edit"></i>
-    {% for writer in production.writers.all %}
-     <a href="{%url 'person' writer.slug %}">{{writer.name}}</a>
+  {% if production.producers.count > 0 %}
+   <span class="tag"><i class="zmdi zmdi-case"></i>
+    {% for company in production.producers.all %}
+     <a href="">{{company.name}}</a>
     {% endfor %}
    </span>
   {% endif %}
-  {% for producer in production.producers.all %}
-   <span class="tag" title="Produsent"><i class="zmdi zmdi-case"></i><!--{% if producer.website %}<a href="{{producer.website}}" target="_blank">{{producer.name}}</a>{% else %}{{producer.name}}{% endif %}--></span>
-  {% endfor %}
-  {% for distributor in production.distributors.all %}
-   <span class="tag" title="Distributør"><i class="zmdi zmdi-city-alt"></i><!--{% if distributor.website %}<a href="{{distributor.website}}" target="_blank">{{distributor.name}}</a>{% else %}{{distributor.name}}{% endif %}--></span>
-  {% endfor %}
+  {% if production.distributors.count > 0 %}
+   <span class="tag"><i class="zmdi zmdi-city-alt"></i>
+    {% for company in production.distributors.all %}
+     <a href="">{{company.name}}</a>
+    {% endfor %}
+   </span>
+  {% endif %}
  </div>
 {% endblock %}
 

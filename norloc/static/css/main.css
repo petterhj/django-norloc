@@ -119,8 +119,20 @@ section#header > h3 {
   margin: 20px 0 10px 0;
 }
 section#header > h4 {
-  font: 12px/12px "Unica One", Helvetica, Arial, sans-serif;
+  font-family: "Unica One", Helvetica, Arial, sans-serif;
+  padding: 0 15%;
+}
+section#header > h4:first-of-type {
+  font-size: 0.9rem;
+}
+section#header > h4:last-of-type {
   margin-bottom: 25px;
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+section#header > h4 i.zmdi {
+  margin-right: 5px;
+  color: rgba(0, 0, 0, 0.1);
 }
 section#header > h4 a {
   display: inline-block;
