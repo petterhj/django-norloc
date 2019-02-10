@@ -60,7 +60,6 @@ class Production(models.Model):
 
     slug = AutoSlugField(populate_from='title', editable=True, unique=True, always_update=True)
 
-
     @property
     def locations(self):
         locations = {}
@@ -74,11 +73,9 @@ class Production(models.Model):
 
         return locations
 
-
     @property
     def title_with_year(self):
-        return '%s%s' % (self.title, ' (%s)' % (str(self.release.year) if self.release else ''))
-    
+        return '%s%s' % (self.title, ' (%s)' % (str(self.release.year) if self.release else ''))   
 
     # Representation
     def __unicode__(self):
@@ -131,6 +128,10 @@ class Person(models.Model):
     imdb_id = models.CharField(max_length=10, unique=True)
 
     slug = AutoSlugField(populate_from='name', editable=True, unique=True, always_update=True)
+
+    # Metadata
+    class Meta:
+        ordering = ['name']
 
     @property
     def job_title(self):

@@ -86,6 +86,12 @@ class ShotAdmin(admin.ModelAdmin):
     coordinate.allow_tags = True
 
 
+# ModelAdmin: Person
+class PersonAdmin(admin.ModelAdmin):
+    # List
+    list_display = ('name', 'imdb_id')
+
+
 # ModelAdmin: Company
 class CompanyAdmin(admin.ModelAdmin):
     # List
@@ -96,5 +102,5 @@ class CompanyAdmin(admin.ModelAdmin):
 admin.site.register(Production, ProductionAdmin)
 admin.site.register(Scene, SceneAdmin)
 admin.site.register(Shot, ShotAdmin)
-admin.site.register(Person)
+admin.site.register(Person, PersonAdmin)
 admin.site.register(Company, CompanyAdmin)
