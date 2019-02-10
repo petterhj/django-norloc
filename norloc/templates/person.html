@@ -22,7 +22,7 @@
   {{person.bio|safe}}{% if person.bio_credit %} <span class="source">&mdash; {{person.bio_credit}}</span>{% endif %}
  </p>
  <div class="meta">
-  <span class="tag" title="Filmer"><i class="zmdi zmdi-movie-alt"></i><span>{{person.production_set.all|length}} produksjoner</span></span>
+  <span class="tag" title="Filmer"><i class="zmdi zmdi-movie-alt"></i><span>{{person.productions|length}} produksjoner</span></span>
  </div>
  <div class="meta right">
   {% if person.imdb_id %}
