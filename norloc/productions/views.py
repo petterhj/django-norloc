@@ -3,6 +3,7 @@
 # Imports
 from __future__ import unicode_literals
 
+import logging
 import tmdbsimple as tmdb
 
 from django.shortcuts import render
@@ -11,8 +12,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 
+from lib.tmdb import TMDb
 from .models import Production, Scene, Shot, Person
 
+
+# Logger
+logger = logging.getLogger('norloc')
 
 
 # View: Index
@@ -55,11 +60,16 @@ def person(request, slug):
 # View: Import production
 @login_required
 def import_production(request, tmdb_id=None):
+    # Check provided TMDb ID
     if tmdb_id:
-        # Render template
-        return render(request, 'error.html', {})        
+        # Get details
+        details = tmdb_details(request, tmdb_id)
+        print details#.get('production_countries')
 
-    # Render template
+        # Render template
+        return render(request, 'error.html', {'message': 'Heisann sveinsann'})
+
+    # Render import search template
     return render(request, 'import_production.html', {})
 
 
@@ -150,10 +160,6 @@ def scenes(request):
 # JSON: TMDb search
 @login_required
 def tmdb_search(request):
-    # TMDb
-    tmdb.API_KEY = settings.TMDB_API_KEY
-    search = tmdb.Search()
-
     # Search
     title = request.GET.get('title', '').encode('utf-8')
     results = {'films': []}
@@ -161,27 +167,11 @@ def tmdb_search(request):
     if not title:
         return JsonResponse(results)
 
-    # Results
-    for movie in search.movie(query=title, language='no').get('results')[0:5]:
-        print movie
-        print '---'*10
-
-        title = movie.get('original_title') or movie.get('title')
-        poster_path = movie.get('poster_path')
-        poster = 'https://image.tmdb.org/t/p/w200' + poster_path if poster_path else None
-
-        results['films'].append({
-            'tmdb_id': movie.get('id'),
-            'title': movie.get('title'),
-            'original_language': movie.get('original_language'),
-            'popularity': movie.get('popularity', 0),
-            'overview': movie.get('overview'),
-            'poster': poster,
-            'release': movie.get('release_date')
-        })
-
-        # Sort results by popularity
-        # results['films'] = sorted(results['films'], key=lambda f: f['popularity'], reverse=True) 
+    try:
+        results['films'] = TMDb().search(title, limit=5)
+    except:
+        logger.exception('Could not search TMDb')
+        return JsonResponse(results)
 
     # Response
     return JsonResponse(results)
@@ -190,53 +180,12 @@ def tmdb_search(request):
 # JSON: TMDb details
 @login_required
 def tmdb_details(request, tmdb_id):
-    # TMDb
-    tmdb.API_KEY = settings.TMDB_API_KEY
-
-    # Movie details
+    # Fetch movie details from TMDb
     try:
-        movie = tmdb.Movies(tmdb_id)
-        details = movie.info(language='NO', append_to_response='credits')
+        details = TMDb().details(tmdb_id)
     except:
+        logger.exception('Could not get TMDb details')
         return JsonResponse({})
-
-    import json
-    print json.dumps(details, indent=4)
-
-    title = details.get('original_title') or details.get('title')
-    poster_base = 'https://image.tmdb.org/t/p/w500'
-    crew = details.get('credits', {}).get('crew', [])
-
-    details = {
-        'tmdb_id': details.get('id'),
-        'imdb_id': details.get('imdb_id'),
-        'title': details.get('title'),
-        'overview': details.get('overview'),
-        'poster': poster_base + details.get('poster_path') if details.get('poster_path') else None,
-        'release': details.get('release_date'),
-        'languages': {l['iso_639_1']: l['name'] for l in details.get('spoken_languages', {})},
-        'production_countries': {c['iso_3166_1']: c['name'] for c in details.get('production_countries', {})},
-        'production_companies': [{
-            'name': company.get('name'),
-            'country': company.get('origin_country')
-        } for company in details.get('production_companies')],
-        'runtime': details.get('runtime'),
-        'directors': [{
-            'tmdb_id': person.get('id'),
-            'name': person.get('name'),
-            'image': poster_base + person.get('profile_path') if person.get('profile_path') else None,
-        } for person in crew if person.get('job') == 'Director'],
-        'writers': [{
-            'tmdb_id': person.get('id'),
-            'name': person.get('name'),
-            'image': poster_base + person.get('profile_path') if person.get('profile_path') else None,
-        } for person in crew if person.get('job') == 'Screenplay'],
-        'photographers': [{
-            'tmdb_id': person.get('id'),
-            'name': person.get('name'),
-            'image': poster_base + person.get('profile_path') if person.get('profile_path') else None,
-        } for person in crew if person.get('job') == 'Director of Photography'],
-    }
 
     # Response
     return JsonResponse(details)
