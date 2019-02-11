@@ -51,6 +51,14 @@ h1, h2, h3, h4, h5 {
   color: rgba(255, 255, 255, 0.8);
 }
 
+.faded {
+  opacity: 0.2;
+}
+
+.hidden {
+  display: none;
+}
+
 .accent {
   color: #C31 !important;
 }
@@ -549,6 +557,13 @@ body[data-view=import_production] > section#content div.production > .details p 
   font-size: 0.8rem;
   text-align: justify;
   line-height: 1.3rem;
+}
+body[data-view=import_production] > section#content div.production.minified > .poster {
+  width: 60px;
+  height: 90px;
+}
+body[data-view=import_production] > section#content div.production.minified > .details > p {
+  display: none;
 }
 
 .my-label {

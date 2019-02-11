@@ -19,29 +19,29 @@
   <h1>Legg til produksjon</h1>
   <!-- <p class="center">Kun norske produksjoner.</p> -->
   <form name="search_production">
-   <input type="text" name="title" placeholder="Tittel" value="Sønner av Norge">
+   <input type="text" name="title" placeholder="Tittel" value="Sønner">
    <button type="submit" name="search">Søk</button>
   </form>
  {% endif %}
 {% endblock %} 
 
 
-
 {# Content #}
 {% block content %}
  {% verbatim %}
  <script id="production-result-template" type="text/x-handlebars-template">
-   <div class="production" data-tmdb-id="{{id}}">
+   <div class="production faded minified" data-tmdb-id="{{tmdb_id}}">
     <div class="poster">
      {{#if poster}}<img src="{{poster}}">{{/if}}
     </div>
     <div class="details">
      <h2>{{title}}<span class="year">{{split release separator="-" index=0}}</span></h2>
-     <!-- <h4>{{join directors delimiter=", "}}</h4> -->
+     <h4></h4>
      <p>{{overview}}</p>
      <div class="meta">
       <span class="tag" title="Permiere"><i class="zmdi zmdi-calendar"></i><span>{{release}}</span></span>
-      <span class="tag uppercase" title="Språk"><i class="zmdi zmdi-flag"></i><span>{{original_language}}</span></span>
+      <span class="tag countries uppercase hidden" title="Land"><i class="zmdi zmdi-flag"></i><span></span></span>
+      <span class="tag runtime hidden" title="Lengde"><i class="zmdi zmdi-time"></i><span></span> min.</span>
      </div>
     </div>
    </div>

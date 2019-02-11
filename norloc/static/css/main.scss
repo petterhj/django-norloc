@@ -55,6 +55,8 @@ h1, h2, h3, h4, h5 {
 	text-transform: uppercase; color: rgba(255, 255, 255, 0.8); 
 }
 
+.faded { opacity: 0.2; }
+.hidden { display: none; }
 .accent { color: $color-accent !important; }
 .uppercase { text-transform: uppercase; }
 
@@ -446,6 +448,12 @@ body[data-view="import_production"] > section#content {
 				font-family: $font-serif2; font-size: 0.8rem;
 				text-align: justify; line-height: 1.3rem;
 			}
+		}
+
+		// Minified
+		&.minified {
+			> .poster { width: 60px; height: 90px; }
+			> .details > p { display: none; }
 		}
 	}
 }

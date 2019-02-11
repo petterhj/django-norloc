@@ -161,15 +161,42 @@ var NORLOC = NORLOC || {
             $.getJSON('/json/tmdb/search/?title={0}'.format(title), function(results) {
                 // Append results
                 $.each(results.films, function(i, production) {
+                    console.log('---------------------------')
+                    console.log(production);
                     // Production
                     var rendered = $(template(production));
 
-                    target.append(rendered.hide().fadeIn('slow'));
+                    target.append(rendered);
 
-                    // Check details and if "appliable"
-                    console.log(rendered.data('tmdb-id'))
+                    // Get details and check if "appliable"
+                    $.getJSON('/json/tmdb/details/{0}'.format(production.tmdb_id), function(details) {
+                        if (details) {
+                            // Add extra metadata
+                            if (details.directors.length > 0) {
+                                rendered.find('h4').text(details.directors.map(function(elem){
+                                    return elem.name;
+                                }).join(', '));
+                            }
+                            if (details.runtime > 0) {
+                                rendered.find('.tag.runtime').show()
+                                    .find('span').text(details.runtime);
+                            }
+                            // Check if valid production country
+                            if (details.production_countries) {
+                                var countries = Object.keys(details.production_countries);
+
+                                rendered.find('.tag.countries').show()
+                                    .find('span').text(countries.join(', '));
+
+                                if (countries.includes('NO')) {
+                                    rendered.removeClass('minified faded');
+                                    return;
+                                }
+                            }
+                        }
+                    });
                 });
-
+                
                 // Re-enable inputs
                 search_form.find(':input').prop('disabled', false);
             });

@@ -3,8 +3,6 @@
 # Imports
 from __future__ import unicode_literals
 
-# from tmdbv3api import TMDb, Movie
-# from tmdb3 import set_cache, set_key, set_locale, searchMovie
 import tmdbsimple as tmdb
 
 from django.template import loader
@@ -178,7 +176,7 @@ def tmdb_search(request):
         poster = 'https://image.tmdb.org/t/p/w200' + poster_path if poster_path else None
 
         results['films'].append({
-            'id': movie.get('id'),
+            'tmdb_id': movie.get('id'),
             'title': movie.get('title'),
             'original_language': movie.get('original_language'),
             'popularity': movie.get('popularity', 0),
@@ -200,7 +198,50 @@ def tmdb_details(request, tmdb_id):
     # TMDb
     tmdb.API_KEY = settings.TMDB_API_KEY
 
-    print tmdb_id
+    # Movie details
+    try:
+        movie = tmdb.Movies(tmdb_id)
+        details = movie.info(language='NO', append_to_response='credits')
+    except:
+        return JsonResponse({})
+
+    import json
+    print json.dumps(details, indent=4)
+
+    title = details.get('original_title') or details.get('title')
+    poster_base = 'https://image.tmdb.org/t/p/w500'
+    crew = details.get('credits', {}).get('crew', [])
+
+    details = {
+        'tmdb_id': details.get('id'),
+        'imdb_id': details.get('imdb_id'),
+        'title': details.get('title'),
+        'overview': details.get('overview'),
+        'poster': poster_base + details.get('poster_path') if details.get('poster_path') else None,
+        'release': details.get('release_date'),
+        'languages': {l['iso_639_1']: l['name'] for l in details.get('spoken_languages', {})},
+        'production_countries': {c['iso_3166_1']: c['name'] for c in details.get('production_countries', {})},
+        'production_companies': [{
+            'name': company.get('name'),
+            'country': company.get('origin_country')
+        } for company in details.get('production_companies')],
+        'runtime': details.get('runtime'),
+        'directors': [{
+            'tmdb_id': person.get('id'),
+            'name': person.get('name'),
+            'image': poster_base + person.get('profile_path') if person.get('profile_path') else None,
+        } for person in crew if person.get('job') == 'Director'],
+        'writers': [{
+            'tmdb_id': person.get('id'),
+            'name': person.get('name'),
+            'image': poster_base + person.get('profile_path') if person.get('profile_path') else None,
+        } for person in crew if person.get('job') == 'Screenplay'],
+        'photographers': [{
+            'tmdb_id': person.get('id'),
+            'name': person.get('name'),
+            'image': poster_base + person.get('profile_path') if person.get('profile_path') else None,
+        } for person in crew if person.get('job') == 'Director of Photography'],
+    }
 
     # Response
-    return JsonResponse({})
+    return JsonResponse(details)
