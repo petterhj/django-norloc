@@ -10,6 +10,7 @@ from uuid_upload_path import upload_to_factory
 from locations.models import Location
 
 
+# Upload factories
 MIGRATE = False
 upload_to_people = upload_to_factory('people') if not MIGRATE else 'people'
 upload_to_posters = upload_to_factory('posters') if not MIGRATE else 'posters'
@@ -48,7 +49,7 @@ class Production(models.Model):
     photographers = models.ManyToManyField('Person', blank=True, related_name='photographers')
     producers = models.ManyToManyField(Company, blank=True, related_name='producers')
     distributors = models.ManyToManyField(Company, blank=True, related_name='distributors')
-    runtime = models.IntegerField(default=0)
+    runtime = models.IntegerField(default=0, blank=True)
 
     poster = models.ImageField(upload_to=upload_to_posters, blank=True)
     backdrop = models.ImageField(upload_to=upload_to_backdrops, blank=True)

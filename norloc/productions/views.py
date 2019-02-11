@@ -4,13 +4,15 @@
 from __future__ import unicode_literals
 
 # from tmdbv3api import TMDb, Movie
-from tmdb3 import set_cache, set_key, set_locale, searchMovie
+# from tmdb3 import set_cache, set_key, set_locale, searchMovie
+import tmdbsimple as tmdb
 
 from django.template import loader
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 
 from .models import Production, Scene, Shot, Person
 
@@ -152,38 +154,53 @@ def scenes(request):
     return JsonResponse(scenes)
 
 
-# JSON: TMDb Search
+# JSON: TMDb search
 @login_required
 def tmdb_search(request):
-    # Results
-    results = {'films': []}
+    # TMDb
+    tmdb.API_KEY = settings.TMDB_API_KEY
+    search = tmdb.Search()
 
-    # Setup TMDb
-    set_cache('null')
-    set_key('8cca874e1c98f99621d8200be1b16bd0')
-    set_locale('no', 'no')
-    
     # Search
     title = request.GET.get('title', '').encode('utf-8')
+    results = {'films': []}
 
-    if title:
-        for movie in searchMovie(title):
-            results['films'].append({
-                'title': movie.title,
-                'originaltitle': movie.originaltitle,
-                'summary': movie.overview,
-                'runtime': movie.runtime,
-                'countries': {c.code.lower(): c.name for c in movie.countries},
-                'popularity': movie.popularity,
-                'release': movie.releases.get('NO').releasedate if movie.releases.get('NO') else None,
-                'directors': [p.name for p in movie.crew if p.job == 'Director'],
-                'poster': movie.poster.geturl() if movie.poster else None,
-                'imdb_id': movie.imdb,
-                'tmdb_id': movie.id,
-            })
+    if not title:
+        return JsonResponse(results)
 
-        # Sort results
-        results['films'] = sorted(results['films'], key=lambda f: f['popularity'], reverse=True) 
+    # Results
+    for movie in search.movie(query=title, language='no').get('results')[0:5]:
+        print movie
+        print '---'*10
 
-    # Return JSON
+        title = movie.get('original_title') or movie.get('title')
+        poster_path = movie.get('poster_path')
+        poster = 'https://image.tmdb.org/t/p/w200' + poster_path if poster_path else None
+
+        results['films'].append({
+            'id': movie.get('id'),
+            'title': movie.get('title'),
+            'original_language': movie.get('original_language'),
+            'popularity': movie.get('popularity', 0),
+            'overview': movie.get('overview'),
+            'poster': poster,
+            'release': movie.get('release_date')
+        })
+
+        # Sort results by popularity
+        # results['films'] = sorted(results['films'], key=lambda f: f['popularity'], reverse=True) 
+
+    # Response
     return JsonResponse(results)
+
+
+# JSON: TMDb details
+@login_required
+def tmdb_details(request, tmdb_id):
+    # TMDb
+    tmdb.API_KEY = settings.TMDB_API_KEY
+
+    print tmdb_id
+
+    # Response
+    return JsonResponse({})

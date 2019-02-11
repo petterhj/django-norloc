@@ -134,7 +134,7 @@ var NORLOC = NORLOC || {
     import_production: function() {
         // Template
         var target = $('section#content');
-        var result_template = Handlebars.compile($('#production-result-template').html());
+        var template = Handlebars.compile($('#production-result-template').html());
 
         // Search production
         // $('form[name="search_production"]').on('submit', function(e) {
@@ -158,100 +158,16 @@ var NORLOC = NORLOC || {
             search_form.find(':input').prop('disabled', true);
 
             // Search productions
-            var dummy = {
-                "films": [
-                    {
-                        "tmdb_id": 57989,
-                        "poster": null,
-                        "imdb_id": "tt0055500",
-                        "countries": {
-                            "false": "Norway"
-                        },
-                        "popularity": 1.341,
-                        "summary": "",
-                        "originaltitle": "Sønner av Norge",
-                        "directors": [
-                            "Øyvind Vennerød"
-                        ],
-                        "release": "1961-01-01",
-                        "title": "Sønner av Norge",
-                        "runtime": 90
-                    },
-                    {
-                        "tmdb_id": 81834,
-                        "poster": "http://image.tmdb.org/t/p/original/nulCQs4WEs4lzWMABTs5kkiUgD1.jpg",
-                        "imdb_id": "tt1601227",
-                        "countries": {
-                            "false": "Norway"
-                        },
-                        "popularity": 0.777,
-                        "summary": "Det er ikke lett å gjøre opprør når faren din vil være med ... En dag i 1979 møter Magnus (Sven Nordin) og Nikolaj (Åsmund Høeg) veggen i sitt nye rekkehus på Rykkinn. Far Magnus er arkitekt, hippie og fritenker, noe som skiller seg ut i et miljø der likhet og samhold er idealet. Han gir alltid sønnen ubetinget støtte - også når Nikolaj bestemmer seg for å gi faen i alt.",
-                        "originaltitle": "Sønner av Norge",
-                        "directors": [
-                            "Jens Lien"
-                        ],
-                        "release": "2011-09-08",
-                        "title": "Sønner av Norge",
-                        "runtime": 87
-                    },
-                    {
-                        "tmdb_id": 57990,
-                        "poster": "http://image.tmdb.org/t/p/original/izqeD3bwkyR1MAVIc0zu5aeE09L.jpg",
-                        "imdb_id": "tt0056547",
-                        "countries": {
-                            "false": "Norway"
-                        },
-                        "popularity": 0.655,
-                        "summary": "",
-                        "originaltitle": "Sønner av Norge kjøper bil",
-                        "directors": [
-                            "Øyvind Vennerød"
-                        ],
-                        "release": "1962-01-01",
-                        "title": "Sønner av Norge kjøper bil",
-                        "runtime": 98
-                    }
-                ]
-            };
-
-            // $.getJSON('/json/tmdb/search/?title={0}'.format(title), function(results) {
-            $.each(dummy, function(i, results) {
+            $.getJSON('/json/tmdb/search/?title={0}'.format(title), function(results) {
                 // Append results
-                // $.each(results.films, function(i, production) {
-                $.each(results, function(i, production) {
+                $.each(results.films, function(i, production) {
                     // Production
-                    var rendered_result = $(result_template(production));
-                    var form = rendered_result.find('form[name="submit_production"]');
+                    var rendered = $(template(production));
 
-                    target.append(rendered_result);
+                    target.append(rendered.hide().fadeIn('slow'));
 
-                    // Set active (editable) when clicked
-                    rendered_result.on('click', function(e) {
-                        if (!rendered_result.hasClass('active')) {
-                            rendered_result.addClass('active'); 
-                            rendered_result.find(':input').prop('disabled', false);
-                            rendered_result.find(':input').first().focus();
-                        }
-                    }).children().find('button').click(function(e) {
-                        return false;
-                    });
-                    
-                    // Button events
-                    rendered_result.find('button[name="add"]').on('click', function(e) {
-                        form.trigger('submit');    
-                    });
-                    rendered_result.find('button[name="abort"]').on('click', function(e) {
-                        // Deactivate (abort)
-                        rendered_result.removeClass('active');
-                        rendered_result.find(':input').prop('disabled', true);
-                    });
-
-                    // Submit
-                    form.on('submit', function(e) {
-                        e.preventDefault();
-                        var search_form = $(this);
-                        console.log('submit')
-                    });
+                    // Check details and if "appliable"
+                    console.log(rendered.data('tmdb-id'))
                 });
 
                 // Re-enable inputs

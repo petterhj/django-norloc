@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^json/shots/$', prd.shots, name='shots'),
     url(r'^json/scenes/$', prd.scenes, name='scenes'),
     url(r'^json/tmdb/search/$', prd.tmdb_search, name='tmdb_search'),
+    url(r'^json/tmdb/details/(?P<tmdb_id>\d+)$', prd.tmdb_details, name='tmdb_details'),
 
     url(r'^json/location/(?P<lpk>\d+)/details$', loc.location_details, name='location_details'),
     url(r'^json/location/(?P<lpk>\d+)/bounds/update$', loc.update_location_bounds, name='update_bounds'),

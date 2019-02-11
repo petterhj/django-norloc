@@ -31,40 +31,20 @@
 {% block content %}
  {% verbatim %}
  <script id="production-result-template" type="text/x-handlebars-template">
-
-
-   <div class="card double production editable">
+   <div class="production" data-tmdb-id="{{id}}">
     <div class="poster">
      {{#if poster}}<img src="{{poster}}">{{/if}}
     </div>
     <div class="details">
      <h2>{{title}}<span class="year">{{split release separator="-" index=0}}</span></h2>
-     <h4>{{join directors delimiter=", "}}</h4>
-     <p>{{summary}}</p>
+     <!-- <h4>{{join directors delimiter=", "}}</h4> -->
+     <p>{{overview}}</p>
      <div class="meta">
       <span class="tag" title="Permiere"><i class="zmdi zmdi-calendar"></i><span>{{release}}</span></span>
-      <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i><span>{{runtime}} min.</span></span>
+      <span class="tag uppercase" title="Språk"><i class="zmdi zmdi-flag"></i><span>{{original_language}}</span></span>
      </div>
     </div>
-
-
-     <!--div class="details">
-      <input type="text" name="title" placeholder="Tittel" value="" disabled>
-      <input type="text" name="release" placeholder="Dato" value="{{release}}" maxlength="10" disabled>
-      <textarea name="summary" placeholder="Sammendrag" disabled></textarea>
-      <div class="meta">
-       <input type="text" class="meta" name="directors" placeholder="Regisør(er)" value="{{join directors}}" disabled><br>
-       <input type="text" class="meta" name="runtime" placeholder="Lengde" value="{{runtime}}" maxlength="3" disabled> <span class="help-text">min.</span><br>
-       <input type="text" class="meta" name="imdb_id" placeholder="IMDb ID" value="{{imdb_id}}" disabled>
-       <input type="text" class="meta" name="tmdb_id" placeholder="TMDb ID" value="{{tmdb_id}}" disabled>
-       <input type="text" class="meta" name="nbdb_id" placeholder="NBDb ID" value="{{nbdb_id}}" disabled>
-       <input type="text" class="meta" name="tvdb_id" placeholder="TVDb ID" value="{{tvdb_id}}" disabled>
-      </div>
-      <button type="submit" name="add" disabled="">Legg til</button>
-      <button name="abort" disabled="">Avbryt</button>
-     </div-->
    </div>
-
  </script>
  {% endverbatim %}
 {% endblock %}
