@@ -64,7 +64,7 @@ section#caption {
   color: #333;
 }
 section#caption nav {
-  float: left;
+  width: 100%;
 }
 section#caption nav a {
   text-decoration: none;
@@ -76,8 +76,11 @@ section#caption nav a:first-of-type {
 section#caption nav a:first-of-type + span {
   margin-left: 5px;
 }
-section#caption nav a:hover {
+section#caption nav a:hover:not(.icon) {
   background-color: #DDD;
+}
+section#caption nav a.right {
+  float: right;
 }
 section#caption nav i.zmdi {
   color: #999;
@@ -85,9 +88,6 @@ section#caption nav i.zmdi {
 section#caption nav i.zmdi:hover {
   color: #C31;
   cursor: pointer;
-}
-section#caption nav.admin {
-  float: right;
 }
 
 /* ========================================================================

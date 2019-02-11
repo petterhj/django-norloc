@@ -66,22 +66,21 @@ section#caption {
 	letter-spacing: 0.1em; color: #333;
 
 	nav {
-		float: left; 
+		width: 100%;
 
 		a {
 			text-decoration: none; color: #999;
 
 			&:first-of-type { font-weight: bold; }
 			&:first-of-type + span { margin-left: 5px; }
-			&:hover { background-color: #DDD; }
+			&:hover:not(.icon) { background-color: #DDD; }
+			&.right { float: right; }
 		}
 
 		i.zmdi { 
 			color: #999; 
 			&:hover { color: $color-accent; cursor: pointer; }
 		}
-
-		&.admin { float: right; }
 	}
 }
 

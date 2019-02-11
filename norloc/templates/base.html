@@ -46,9 +46,6 @@
     <a href="{% url 'index' %}">Norske opptakssteder</a><span class="accent">&#9642;</span> 
     {% block navigation %}{% endblock %}
    </nav>
-   {% if user.is_authenticated %}
-    <nav class="admin"><i class="zmdi zmdi-edit"></i></nav>
-   {% endif %}
   </section>
 
   <!-- Header -->

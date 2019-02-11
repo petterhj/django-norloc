@@ -7,6 +7,10 @@
 {# Navigation #}
 {% block navigation %}
  <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> {{production.title}}
+
+ {% if user.is_authenticated %}
+  <a href="" class="right icon" title="Rediger produksjon"><i class="zmdi zmdi-edit"></i></a>
+ {% endif %}
 {% endblock %}
 
 
