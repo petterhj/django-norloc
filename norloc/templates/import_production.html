@@ -1,34 +1,57 @@
 {% extends "base.html" %}
 
 {% block view %}import_production{% endblock %}
+{% block title %}Legg til produksjon | {% endblock %}
 
-{% block caption %}
- <div class="navigation"><a href="{% url 'index' %}">Norske opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> Import</div>
+{# Navigation #}
+{% block navigation %}
+ <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> Legg til
+
+ {% if user.is_authenticated %}
+  <a href="#" class="right icon abort" title="Avbryt"><i class="zmdi zmdi-close"></i></a>
+ {% endif %}
 {% endblock %}
 
-{% if user.is_authenticated %}
 
- {% block header %}
-  {% if user.is_authenticated %}
-   <h1>Importér produksjon</h1>
-   <!-- <p class="center">Kun norske produksjoner.</p> -->
-   <form name="search_production">
-    <input type="text" name="title" placeholder="Tittel" value="Sønner av Norge">
-    <button type="submit" name="search">Søk</button>
-   </form>
-  {% endif %}
- {% endblock %} 
+{# Header #}
+{% block header %}
+ {% if user.is_authenticated %}
+  <h1>Legg til produksjon</h1>
+  <!-- <p class="center">Kun norske produksjoner.</p> -->
+  <form name="search_production">
+   <input type="text" name="title" placeholder="Tittel" value="Sønner av Norge">
+   <button type="submit" name="search">Søk</button>
+  </form>
+ {% endif %}
+{% endblock %} 
 
- {% block content %}
-  {% verbatim %}
-  <script id="production-result-template" type="text/x-handlebars-template">
+
+
+{# Content #}
+{% block content %}
+ {% verbatim %}
+ <script id="production-result-template" type="text/x-handlebars-template">
+
+
    <div class="card double production editable">
-    <form name="submit_production">
-     <img src="{{poster}}">
-     <div class="details">
-      <input type="text" name="title" placeholder="Tittel" value="{{title}}" disabled>
+    <div class="poster">
+     {{#if poster}}<img src="{{poster}}">{{/if}}
+    </div>
+    <div class="details">
+     <h2>{{title}}<span class="year">{{split release separator="-" index=0}}</span></h2>
+     <h4>{{join directors delimiter=", "}}</h4>
+     <p>{{summary}}</p>
+     <div class="meta">
+      <span class="tag" title="Permiere"><i class="zmdi zmdi-calendar"></i><span>{{release}}</span></span>
+      <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i><span>{{runtime}} min.</span></span>
+     </div>
+    </div>
+
+
+     <!--div class="details">
+      <input type="text" name="title" placeholder="Tittel" value="" disabled>
       <input type="text" name="release" placeholder="Dato" value="{{release}}" maxlength="10" disabled>
-      <textarea name="summary" placeholder="Sammendrag" disabled>{{summary}}</textarea>
+      <textarea name="summary" placeholder="Sammendrag" disabled></textarea>
       <div class="meta">
        <input type="text" class="meta" name="directors" placeholder="Regisør(er)" value="{{join directors}}" disabled><br>
        <input type="text" class="meta" name="runtime" placeholder="Lengde" value="{{runtime}}" maxlength="3" disabled> <span class="help-text">min.</span><br>
@@ -39,11 +62,9 @@
       </div>
       <button type="submit" name="add" disabled="">Legg til</button>
       <button name="abort" disabled="">Avbryt</button>
-     </div>
-    </form>
+     </div-->
    </div>
-  </script>
-  {% endverbatim %}
- {% endblock %}
 
-{% endif %}
+ </script>
+ {% endverbatim %}
+{% endblock %}

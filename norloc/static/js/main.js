@@ -31,6 +31,15 @@ Handlebars.registerHelper('join', function(items, block) {
     }
 });
 
+Handlebars.registerHelper('split', function(string, block) {
+    if (!string) { return ''; }
+    
+    var separator = block.hash.separator || ",";
+    var index = block.hash.index || 0;
+
+    return string.split(separator)[index];
+});
+
 
 /*  Utilities
   ================================================================================== */

@@ -8,7 +8,7 @@ $color-accent:				#C31;
 
 
 $break-small: 500px;
-$break-large: 1024px;
+$break-large: 1200px;
 
 @mixin respond-to($media) {
   @if $media == handhelds {
@@ -28,6 +28,7 @@ $break-large: 1024px;
 html, body { height: 100%; }
 body { margin: 0; background: $color-background-main; }
 
+form { overflow: auto; }
 input, button, textarea, select { border: 0; outline: 0; }
 input, textarea, select, button {
 	display: block;
@@ -39,7 +40,13 @@ input::placeholder, textarea::placeholder {
 	color: rgba(0, 0, 0, 0.3);
 }
 button { 
-    padding: 10px; cursor: pointer;
+	background: #E1E1E1;
+    padding: 15px 20px 13px 20px; cursor: pointer;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+
+    &:hover {
+    	background: #DADADA;
+    }
 }
 
 h1, h2, h3, h4, h5 { 
@@ -51,6 +58,36 @@ h1, h2, h3, h4, h5 {
 .accent { color: $color-accent !important; }
 
 [data-href] { cursor: pointer; }
+
+div.meta { 
+	overflow: auto; text-align: left; 
+	font: 0.7rem $font-sans-serif-simple; color: rgba(0, 0, 0, 0.6);
+
+	a {
+		text-decoration: none; color: $color-accent;
+		opacity: 0.8;
+		&:hover { opacity: 1; }
+	}
+
+	.tag {
+		float: left; margin: 5px 15px 0 0;
+		color: rgba(0, 0, 0, 0.5);
+		// background: #EEE; border-radius: 3px; padding: 2px 7px; 
+
+		> a { 
+			position: relative; color: inherit;
+
+			&:hover { color: rgba(0, 0, 0, 0.6); }
+			&:after { content: ', '; }
+			&:last-of-type:after { content: ''; }
+		}
+		> i.zmdi { color: rgba(0, 0, 0, 0.2); }
+		> i.zmdi + a,
+		> span { margin-left: 7px; }
+	}
+	
+	&.right { float: right; }
+}
 
 
 /* ========================================================================
@@ -95,8 +132,8 @@ section#header {
 	background: #FFF;
 	text-align: center; 
 
-	@include respond-to(medium-screens) { padding: 30px 20% 60px 20%; }
-	@include respond-to(wide-screens) { padding: 30px 30% 60px 30%; }
+	@include respond-to(medium-screens) { padding: 30px 20%; }
+	@include respond-to(wide-screens) { padding: 30px 30%; }
 
 	> img {
 		width: 180px; height: 267px;
@@ -130,7 +167,7 @@ section#header {
 	}
 
 	> p {
-		margin: 15px auto 30px auto;
+		margin: 15px auto 25px auto;
 		font: 1.2rem $font-serif; color: #666; 
 		text-align: justify; line-height: 1.7rem;
 
@@ -143,34 +180,14 @@ section#header {
 		}
 	}
 
-	div.meta { 
-		text-align: left; 
-		font: 0.7rem $font-sans-serif-simple; color: rgba(0, 0, 0, 0.6);
+	form {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		grid-column-gap: 10px; grid-row-gap: 0;
 
-		a {
-			text-decoration: none; color: $color-accent;
-			opacity: 0.8;
-			&:hover { opacity: 1; }
+		input, textarea, select {
+			background: #EFEFEF;
 		}
-
-		.tag {
-			float: left; margin-right: 15px;
-			color: rgba(0, 0, 0, 0.5);
-			// background: #EEE; border-radius: 3px; padding: 2px 7px; 
-
-			> a { 
-				position: relative; color: inherit;
-
-				&:hover { color: rgba(0, 0, 0, 0.6); }
-				&:after { content: ', '; }
-				&:last-of-type:after { content: ''; }
-			}
-			> i.zmdi { color: rgba(0, 0, 0, 0.2); }
-			> i.zmdi + a,
-			> span { margin-left: 7px; }
-		}
-		
-		&.right { float: right; }
 	}
 }
 
@@ -199,7 +216,14 @@ body[data-view="index"] > section#header {
 }
 
 // View: Person
+body[data-view="production"] > section#header {
+	padding-bottom: 60px;
+}
+
+// View: Person
 body[data-view="person"] > section#header {
+	padding-bottom: 60px;
+
 	> img {
 		width: 180px; height: 180px;
 		border-radius: 50%; 
@@ -219,6 +243,12 @@ section#content {
 	justify-content: space-between;
 	align-content: flex-start;
 	color: rgba(255, 255, 255, 0.8); 
+
+	h2 { font-size: 1.5rem; margin: 0 0 5px 0; }
+	h4 { font-size: 0.9rem; margin: 0 0 5px 0; }
+
+	.meta > .tag { color: rgba(255, 255, 255, 0.25); }
+	.meta > .tag > i.zmdi { color: rgba(255, 255, 255, 0.1); }
 
 	@include respond-to(medium-screens) { margin: 0 calc(20% - 60px); padding: 60px 0; }
 	@include respond-to(wide-screens) { margin: 0 calc(30% - 60px); padding: 60px 0; }
@@ -285,7 +315,7 @@ body[data-view="production"] > section#content {
 			text-align: center; color: rgba(255, 255, 255, 0.05);
 		}
 
-		h2 { font-size: 1.5rem; margin: 2px 0 0 0; }
+		h2 { margin-top: 2px; }
 
 		// Scenes
 		div.scenes {
@@ -386,7 +416,38 @@ body[data-view="map"] > section#content {
 	padding: 0; margin: 0;
 }
 
+// View: Import production
+body[data-view="import_production"] > section#content {
+	// Production
+	div.production {
+		display: grid; width: 100%;
+		grid-template-columns: auto 1fr;
+		grid-column-gap: 15px; grid-row-gap: 0;
+		margin-bottom: 45px; padding: 0 60px;
 
+		> .poster {
+			width: 100px; height: 150px;
+			border-radius: 4px; background: rgba(255, 255, 255, 0.025);
+
+			> img { 
+				width: inherit; height: inherit;
+				border-radius: inherit;
+			}
+		}
+		> .details { 
+			h2 > span.year { 
+				float: right; margin-top: 0.2rem; 
+				font-size: 1rem; color: $color-accent; 
+			}
+			h4 { color: rgba(255, 255, 255, 0.5); }
+			p { 
+				margin: 2px 0 0 0; 
+				font-family: $font-serif2; font-size: 0.8rem;
+				text-align: justify; line-height: 1.3rem;
+			}
+		}
+	}
+}
 
 // .location > div.scenes > div.scene > div.meta { 
 
@@ -429,8 +490,8 @@ div.leaflet-control-attribution > a { color: rgba(0, 255, 0, 0.2); }
 }
 .location-details-control > div.location {
 	width: 500px; height: 147px;
-  background: #FFF;
-  border-radius: 2px;
+	background: #FFF;
+	border-radius: 2px;
 }
 .location-details-control > div.location input,
 .location-details-control > div.location textarea { 

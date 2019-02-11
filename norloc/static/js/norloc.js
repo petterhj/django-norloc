@@ -158,7 +158,61 @@ var NORLOC = NORLOC || {
             search_form.find(':input').prop('disabled', true);
 
             // Search productions
-            var dummy = {films: [{tmdb_id: 57989,poster: "http://image.tmdb.org/t/p/original/x20TMnrvelUeFd7054CJEH5wglo.jpg",imdb_id: "tt0055500",countries: {no: "Norway"},popularity: 1.341,summary: "",originaltitle: "Sønner av Norge",directors: ["Øyvind Vennerød"],release: "1961-01-01",title: "Sønner av Norge",runtime: 90},{tmdb_id: 81834,poster: "http://image.tmdb.org/t/p/original/nulCQs4WEs4lzWMABTs5kkiUgD1.jpg",imdb_id: "tt1601227",countries: {no: "Norway"},popularity: 0.777,summary: "Det er ikke lett å gjøre opprør når faren din vil være med ... En dag i 1979 møter Magnus (Sven Nordin) og Nikolaj (Åsmund Høeg) veggen i sitt nye rekkehus på Rykkinn. Far Magnus er arkitekt, hippie og fritenker, noe som skiller seg ut i et miljø der likhet og samhold er idealet. Han gir alltid sønnen ubetinget støtte - også når Nikolaj bestemmer seg for å gi faen i alt.",originaltitle: "Sønner av Norge",directors: ["Jens Lien"],release: "2011-09-08",title: "Sønner av Norge",runtime: 87},{tmdb_id: 57990,poster: "http://image.tmdb.org/t/p/original/izqeD3bwkyR1MAVIc0zu5aeE09L.jpg",imdb_id: "tt0056547",countries: {no: "Norway"},popularity: 0.655,summary: "",originaltitle: "Sønner av Norge kjøper bil",directors: ["Øyvind Vennerød"],release: "1962-01-01",title: "Sønner av Norge kjøper bil",runtime: 98}]};
+            var dummy = {
+                "films": [
+                    {
+                        "tmdb_id": 57989,
+                        "poster": null,
+                        "imdb_id": "tt0055500",
+                        "countries": {
+                            "false": "Norway"
+                        },
+                        "popularity": 1.341,
+                        "summary": "",
+                        "originaltitle": "Sønner av Norge",
+                        "directors": [
+                            "Øyvind Vennerød"
+                        ],
+                        "release": "1961-01-01",
+                        "title": "Sønner av Norge",
+                        "runtime": 90
+                    },
+                    {
+                        "tmdb_id": 81834,
+                        "poster": "http://image.tmdb.org/t/p/original/nulCQs4WEs4lzWMABTs5kkiUgD1.jpg",
+                        "imdb_id": "tt1601227",
+                        "countries": {
+                            "false": "Norway"
+                        },
+                        "popularity": 0.777,
+                        "summary": "Det er ikke lett å gjøre opprør når faren din vil være med ... En dag i 1979 møter Magnus (Sven Nordin) og Nikolaj (Åsmund Høeg) veggen i sitt nye rekkehus på Rykkinn. Far Magnus er arkitekt, hippie og fritenker, noe som skiller seg ut i et miljø der likhet og samhold er idealet. Han gir alltid sønnen ubetinget støtte - også når Nikolaj bestemmer seg for å gi faen i alt.",
+                        "originaltitle": "Sønner av Norge",
+                        "directors": [
+                            "Jens Lien"
+                        ],
+                        "release": "2011-09-08",
+                        "title": "Sønner av Norge",
+                        "runtime": 87
+                    },
+                    {
+                        "tmdb_id": 57990,
+                        "poster": "http://image.tmdb.org/t/p/original/izqeD3bwkyR1MAVIc0zu5aeE09L.jpg",
+                        "imdb_id": "tt0056547",
+                        "countries": {
+                            "false": "Norway"
+                        },
+                        "popularity": 0.655,
+                        "summary": "",
+                        "originaltitle": "Sønner av Norge kjøper bil",
+                        "directors": [
+                            "Øyvind Vennerød"
+                        ],
+                        "release": "1962-01-01",
+                        "title": "Sønner av Norge kjøper bil",
+                        "runtime": 98
+                    }
+                ]
+            };
 
             // $.getJSON('/json/tmdb/search/?title={0}'.format(title), function(results) {
             $.each(dummy, function(i, results) {
