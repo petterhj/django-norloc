@@ -55,7 +55,7 @@ class TMDb(object):
         details = {
             'tmdb_id': details.get('id'),
             'imdb_id': details.get('imdb_id'),
-            'title': details.get('title'),
+            'title': title,
             'overview': details.get('overview'),
             'poster': poster_base + details.get('poster_path') if details.get('poster_path') else None,
             'release': details.get('release_date'),

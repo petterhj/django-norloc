@@ -18,23 +18,6 @@ upload_to_backdrops = upload_to_factory('backdrops') if not MIGRATE else 'backdr
 upload_to_shots = upload_to_factory('shots') if not MIGRATE else 'shots'
 
 
-# Model: Company
-class Company(models.Model):
-    # Fields
-    name = models.CharField(max_length=80, unique=True)
-    website = models.CharField(max_length=100, blank=True)
-    twitter = models.CharField(max_length=20, blank=True)
-
-    # Metadata
-    class Meta:
-        verbose_name = 'Company'
-        verbose_name_plural = 'Companies'
-
-    # Representation
-    def __unicode__(self):
-        return self.name
-
-
 # Model: Production
 class Production(models.Model):
     # Fields
@@ -47,15 +30,15 @@ class Production(models.Model):
     directors = models.ManyToManyField('Person', blank=True, related_name='directors')
     writers = models.ManyToManyField('Person', blank=True, related_name='writers')
     photographers = models.ManyToManyField('Person', blank=True, related_name='photographers')
-    producers = models.ManyToManyField(Company, blank=True, related_name='producers')
-    distributors = models.ManyToManyField(Company, blank=True, related_name='distributors')
+    producers = models.ManyToManyField('Company', blank=True, related_name='producers')
+    distributors = models.ManyToManyField('Company', blank=True, related_name='distributors')
     runtime = models.IntegerField(default=0, blank=True)
 
     poster = models.ImageField(upload_to=upload_to_posters, blank=True)
     backdrop = models.ImageField(upload_to=upload_to_backdrops, blank=True)
 
-    imdb_id = models.CharField(max_length=10, blank=True)
-    tmdb_id = models.CharField(max_length=10, blank=True)
+    imdb_id = models.CharField(max_length=10, blank=False, unique=True)
+    tmdb_id = models.CharField(max_length=10, blank=False, unique=True)
     nbdb_id = models.CharField(max_length=10, blank=True)
     tvdb_id = models.CharField(max_length=10, blank=True)
 
@@ -126,7 +109,9 @@ class Person(models.Model):
     headshot = models.ImageField(upload_to=upload_to_people, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
     bio_credit = models.CharField(max_length=50, blank=True)
-    imdb_id = models.CharField(max_length=10, unique=True)
+
+    tmdb_id = models.CharField(max_length=10, blank=True)#False, unique=True)
+    imdb_id = models.CharField(max_length=10, blank=True)
 
     slug = AutoSlugField(populate_from='name', editable=True, unique=True, always_update=True)
 
@@ -153,6 +138,24 @@ class Person(models.Model):
     # Representation
     def __unicode__(self):
         return self.name
+
+
+# Model: Company
+class Company(models.Model):
+    # Fields
+    name = models.CharField(max_length=80, unique=True)
+    website = models.CharField(max_length=100, blank=True)
+    twitter = models.CharField(max_length=20, blank=True)
+
+    # Metadata
+    class Meta:
+        verbose_name = 'Company'
+        verbose_name_plural = 'Companies'
+
+    # Representation
+    def __unicode__(self):
+        return self.name
+
 
 
 '''

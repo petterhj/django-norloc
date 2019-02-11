@@ -5,12 +5,15 @@ from __future__ import unicode_literals
 
 import logging
 import tmdbsimple as tmdb
-
-from django.shortcuts import render
+from requests import get
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.conf import settings
+from uuid_upload_path import upload_to_factory
 
 from lib.tmdb import TMDb
 from .models import Production, Scene, Shot, Person
@@ -60,17 +63,73 @@ def person(request, slug):
 # View: Import production
 @login_required
 def import_production(request, tmdb_id=None):
-    # Check provided TMDb ID
-    if tmdb_id:
-        # Get details
-        details = tmdb_details(request, tmdb_id)
-        print details#.get('production_countries')
+    # Search
+    if not tmdb_id:
+        # Render import search template
+        logger.info('Rendering search template (no TMDb ID provided)')
+        return render(request, 'import_production.html', {})
 
-        # Render template
-        return render(request, 'error.html', {'message': 'Heisann sveinsann'})
+    # Check if production exists
+    existing = Production.objects.filter(tmdb_id=tmdb_id).first()
 
-    # Render import search template
-    return render(request, 'import_production.html', {})
+    if existing:
+        # Redirect to production
+        logger.info('Production (tmdb_id=%s) already exists, redirecting' % (tmdb_id))
+        return redirect(production, slug=existing.slug)
+
+    # Get details
+    try:
+        details = TMDb().details(tmdb_id)
+        is_valid = 'NO' in details.get('production_countries', {}).keys()
+    except:
+        logger.exception('Could not get TMDb details')
+    else:
+        # Check if allowed production country
+        if details and is_valid and not existing:
+            # Create production instance
+            try:
+                p = Production(**{
+                    'type': 'film', 
+                    'title': details.get('title'),
+                    'release': details.get('release'),
+                    'summary': details.get('overview'),
+                    'runtime': details.get('runtime'),
+                    'imdb_id': details.get('imdb_id'),
+                    'tmdb_id': details.get('tmdb_id'),
+                })
+                print p
+                # p.save()
+
+            except:
+                logger.exception('Could not create production instance')
+
+            else:
+                # Save poster
+                try:
+                    r = get(details.get('poster'))
+                    img_temp = NamedTemporaryFile()
+                    img_temp.write(r.content)
+                    img_temp.flush()
+                    p.poster.save('poster', File(img_temp), save=False)
+
+                except:
+                    logger.exception('Could not save poster')
+
+
+        else:
+            logger.error('No details found or not valid')
+
+    # Error occured
+    print '!!!'
+    return render(request, 'error.html', {'message': 'Noe gikk galt under import!'})
+
+    
+# View: Error
+def error(request, message=None):
+    # Render template  
+    return render(request, 'error.html', {
+        'message': message
+    })
 
 
 # JSON: Locations
