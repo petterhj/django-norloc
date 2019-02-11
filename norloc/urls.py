@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^people/(?P<slug>[\w-]+)/$', prd.person, name='person'),
 
     url(r'^productions/import/$', prd.import_production, name='import_production'),
+    url(r'^productions/import/(?P<tmdb_id>\d+)$', prd.import_production, name='import_production'),
 
     url(r'^json/production/(?P<ppk>\d+)/locations/$', prd.locations, name='production_locations'),
     url(r'^json/shots/$', prd.shots, name='shots'),

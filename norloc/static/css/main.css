@@ -542,11 +542,17 @@ body[data-view=import_production] > section#content div.production > .poster > i
   height: inherit;
   border-radius: inherit;
 }
-body[data-view=import_production] > section#content div.production > .details h2 > span.year {
+body[data-view=import_production] > section#content div.production > .details h2 span.year {
+  opacity: 0.7;
+}
+body[data-view=import_production] > section#content div.production > .details h2 span.add {
   float: right;
-  margin-top: 0.2rem;
-  font-size: 1rem;
-  color: #C31;
+  opacity: 0.7;
+  color: #4CAF50;
+}
+body[data-view=import_production] > section#content div.production > .details h2 span.add:hover {
+  opacity: 1;
+  cursor: pointer;
 }
 body[data-view=import_production] > section#content div.production > .details h4 {
   color: rgba(255, 255, 255, 0.5);

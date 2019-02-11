@@ -190,6 +190,10 @@ var NORLOC = NORLOC || {
 
                                 if (countries.includes('NO')) {
                                     rendered.removeClass('minified faded');
+                                    rendered.find('.add').show().on('click', function() {
+                                        // Select film
+                                        window.location = '/productions/import/{0}'.format(production.tmdb_id);
+                                    });
                                     return;
                                 }
                             }

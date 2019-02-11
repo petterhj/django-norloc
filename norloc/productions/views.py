@@ -54,7 +54,11 @@ def person(request, slug):
 
 # View: Import production
 @login_required
-def import_production(request):
+def import_production(request, tmdb_id=None):
+    if tmdb_id:
+        # Render template
+        return render(request, 'error.html', {})        
+
     # Render template
     return render(request, 'import_production.html', {})
 

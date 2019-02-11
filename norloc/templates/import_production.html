@@ -35,7 +35,10 @@
      {{#if poster}}<img src="{{poster}}">{{/if}}
     </div>
     <div class="details">
-     <h2>{{title}}<span class="year">{{split release separator="-" index=0}}</span></h2>
+     <h2>
+      {{title}} <span class="year">({{split release separator="-" index=0}})</span>
+      <span class="add hidden" title="Velg"><i class="zmdi zmdi-plus-circle-o"></i></span>
+     </h2>
      <h4></h4>
      <p>{{overview}}</p>
      <div class="meta">
