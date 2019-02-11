@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 import tmdbsimple as tmdb
 
-from django.template import loader
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
@@ -18,20 +17,16 @@ from .models import Production, Scene, Shot, Person
 
 # View: Index
 def index(request):
-    # Render template
-    template = loader.get_template('index.html')
-    context = {'productions': Production.objects.order_by('-release')}
-    
-    return HttpResponse(template.render(context, request))
+    # Render template  
+    return render(request, 'index.html', {
+        'productions': Production.objects.order_by('-release')
+    })
 
 
 # View: Map
 def map(request):
     # Render template
-    template = loader.get_template('map.html')
-    context = {}
-    
-    return HttpResponse(template.render(context, request))
+    return render(request, 'map.html', {})
 
 
 # View: Production
@@ -40,10 +35,9 @@ def production(request, slug):
     production = get_object_or_404(Production, slug=slug)
 
     # Render template
-    template = loader.get_template('production.html')
-    context = {'production': production}
-    
-    return HttpResponse(template.render(context, request))
+    return render(request, 'production.html', {
+        'production': production
+    })
 
 
 # View: Person
@@ -62,10 +56,7 @@ def person(request, slug):
 @login_required
 def import_production(request):
     # Render template
-    template = loader.get_template('import_production.html')
-    context = {}
-    
-    return HttpResponse(template.render(context, request))
+    return render(request, 'import_production.html', {})
 
 
 # JSON: Locations
