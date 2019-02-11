@@ -94,9 +94,19 @@ section#caption nav.admin {
    	Header
    ======================================================================== */
 section#header {
-  padding: 30px 20% 60px 20%;
+  padding: 0 5% 60px 5%;
   background: #FFF;
   text-align: center;
+}
+@media only screen and (min-width: 501px) and (max-width: 1023px) {
+  section#header {
+    padding: 30px 20% 60px 20%;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  section#header {
+    padding: 30px 30% 60px 30%;
+  }
 }
 section#header > img {
   width: 180px;
@@ -244,13 +254,25 @@ body[data-view=person] > section#header > img {
    ======================================================================== */
 section#content {
   display: flex;
-  margin: 0 calc(20% - 60px);
-  padding: 60px 0;
+  margin: 0 calc(5% - 60px);
+  padding: 30px 0;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   align-content: flex-start;
   color: rgba(255, 255, 255, 0.8);
+}
+@media only screen and (min-width: 501px) and (max-width: 1023px) {
+  section#content {
+    margin: 0 calc(20% - 60px);
+    padding: 60px 0;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  section#content {
+    margin: 0 calc(30% - 60px);
+    padding: 60px 0;
+  }
 }
 
 body[data-view=index] > section#content,
@@ -530,46 +552,6 @@ div.leaflet-control-attribution > a {
 .location-details-control > div.location textarea:hover,
 .location-details-control > div.location textarea:focus {
   border-color: #C31;
-}
-
-@media (max-width: 700px) {
-  section.film {
-    padding-left: 10%;
-    padding-right: 10%;
-  }
-
-  section.scenes {
-    margin-left: 10%;
-    margin-right: 10%;
-  }
-}
-@media (max-width: 500px) {
-  section.film {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-
-  section.film > p {
-    font-size: 0.8rem;
-  }
-
-  section#content {
-    margin-left: 5%;
-    margin-right: 5%;
-  }
-
-  section#content > div.location > div.description {
-    padding: 0 15px 15px 15px;
-  }
-
-  section#content > div.location > div.scenes {
-    padding: 10px 10px;
-  }
-
-  section#content > div.location > div.scenes > div {
-    margin: 5px 0;
-    width: calc(50% - 5px);
-  }
 }
 
 /*# sourceMappingURL=main.css.map */

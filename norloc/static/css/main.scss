@@ -7,6 +7,22 @@ $color-background-main:		#1A1919;
 $color-accent:				#C31;
 
 
+$break-small: 500px;
+$break-large: 1024px;
+
+@mixin respond-to($media) {
+  @if $media == handhelds {
+    @media only screen and (max-width: $break-small) { @content; }
+  }
+  @else if $media == medium-screens {
+    @media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) { @content; }
+  }
+  @else if $media == wide-screens {
+    @media only screen and (min-width: $break-large) { @content; }
+  }
+}
+
+
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -76,9 +92,12 @@ section#caption {
    ======================================================================== */
 
 section#header { 
-	padding: 30px 20% 60px 20%;
+	padding: 0 5% 60px 5%;
 	background: #FFF;
 	text-align: center; 
+
+	@include respond-to(medium-screens) { padding: 30px 20% 60px 20%; }
+	@include respond-to(wide-screens) { padding: 30px 30% 60px 30%; }
 
 	> img {
 		width: 180px; height: 267px;
@@ -91,7 +110,6 @@ section#header {
 	    font: 1.7rem $font-sans-serif; color: $color-accent;
 	    text-transform: uppercase; text-align: center;
 	}
-
 	> h3, > h4 { color: #666; }
 	> h3 { margin: 20px 0 10px 0; }
 	> h4 { 
@@ -197,11 +215,14 @@ body[data-view="person"] > section#header {
 
 section#content {
 	display: flex;
-	margin: 0 calc(20% - 60px); padding: 60px 0;
+	margin: 0 calc(5% - 60px); padding: 30px 0;
 	flex-direction: row; flex-wrap: wrap;
 	justify-content: space-between;
 	align-content: flex-start;
 	color: rgba(255, 255, 255, 0.8); 
+
+	@include respond-to(medium-screens) { margin: 0 calc(20% - 60px); padding: 60px 0; }
+	@include respond-to(wide-screens) { margin: 0 calc(30% - 60px); padding: 60px 0; }
 }
 
 // View: Index / Direcor
@@ -437,15 +458,15 @@ div.leaflet-control-attribution > a { color: rgba(0, 255, 0, 0.2); }
 .location-details-control > div.location textarea:focus { border-color: #C31; }
 
 
-@media (max-width: 700px) {
-  section.film { padding-left: 10%; padding-right: 10%; }
-  section.scenes { margin-left: 10%; margin-right: 10%; }
-}
-@media (max-width: 500px) {
-  section.film { padding-left: 5%; padding-right: 5%; }
-  section.film > p { font-size: 0.8rem; }
-  section#content { margin-left: 5%; margin-right: 5%; }
-  section#content > div.location > div.description { padding: 0 15px 15px 15px; }
-  section#content > div.location > div.scenes { padding: 10px 10px; }
-  section#content > div.location > div.scenes > div { margin: 5px 0; width: calc(50% - 5px); }
-}
+// @media (max-width: 700px) {
+//   section.film { padding-left: 10%; padding-right: 10%; }
+//   section.scenes { margin-left: 10%; margin-right: 10%; }
+// }
+// @media (max-width: 500px) {
+//   section.film { padding-left: 5%; padding-right: 5%; }
+//   section.film > p { font-size: 0.8rem; }
+//   section#content { margin-left: 5%; margin-right: 5%; }
+//   section#content > div.location > div.description { padding: 0 15px 15px 15px; }
+//   section#content > div.location > div.scenes { padding: 10px 10px; }
+//   section#content > div.location > div.scenes > div { margin: 5px 0; width: calc(50% - 5px); }
+// }
