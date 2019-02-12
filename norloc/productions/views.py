@@ -16,6 +16,8 @@ from django.conf import settings
 from uuid_upload_path import upload_to_factory
 
 from lib.tmdb import TMDb
+from lib.image_from_url import ImageFileFromUrl
+
 from .models import Production, Scene, Shot, Person
 
 
@@ -54,10 +56,9 @@ def person(request, slug):
     person = get_object_or_404(Person, slug=slug)
 
     # Render template
-    template = loader.get_template('person.html')
-    context = {'person': person}
-    
-    return HttpResponse(template.render(context, request))
+    return render(request, 'person.html', {
+        'person': person
+    })
 
 
 # View: Import production
@@ -81,54 +82,76 @@ def import_production(request, tmdb_id=None):
     try:
         details = TMDb().details(tmdb_id)
         is_valid = 'NO' in details.get('production_countries', {}).keys()
+    
     except:
         logger.exception('Could not get TMDb details')
+        return error(request)
+
     else:
         # Check if allowed production country
-        if details and is_valid and not existing:
-            # Create production instance
-            try:
-                p = Production(**{
-                    'type': 'film', 
-                    'title': details.get('title'),
-                    'release': details.get('release'),
-                    'summary': details.get('overview'),
-                    'runtime': details.get('runtime'),
-                    'imdb_id': details.get('imdb_id'),
-                    'tmdb_id': details.get('tmdb_id'),
-                })
-                print p
-                # p.save()
+        if not details or not is_valid or existing:
+            logger.error('Importing production aborted, no details, not valid or exists')
+            return error(request)
 
-            except:
-                logger.exception('Could not create production instance')
+        # Create production instance
+        try:
+            logger.info('Creating new production object, title=%s' % (details.get('title')))
 
-            else:
-                # Save poster
-                try:
-                    r = get(details.get('poster'))
-                    img_temp = NamedTemporaryFile()
-                    img_temp.write(r.content)
-                    img_temp.flush()
-                    p.poster.save('poster', File(img_temp), save=False)
+            p = Production(**{
+                'type': 'film', 
+                'title': details.get('title'),
+                'release': details.get('release'),
+                'summary': details.get('overview'),
+                'runtime': details.get('runtime'),
+                'imdb_id': details.get('imdb_id'),
+                'tmdb_id': details.get('tmdb_id'),
+            })
 
-                except:
-                    logger.exception('Could not save poster')
+            p.save()
 
+        except:
+            logger.exception('Could not create production instance')
+            return error(request)
 
         else:
-            logger.error('No details found or not valid')
+            # Save poster
+            try:
+                logger.info('Adding poster, %s' % (details.get('poster')))
+                p.poster.save('poster.jpg', ImageFileFromUrl(details.get('poster')), save=True)
+
+            except:
+                logger.exception('Could not save poster')
+
+            # Add crew
+            for job in ['directors', 'writers', 'photographers']:
+                logger.info('Adding %d %s to production' % (len(details.get(job, [])), job))
+
+                for person in details.get(job, []):
+                    try:
+                        # Get existing, or create, person object
+                        pr, created = Person.objects.get_or_create(tmdb_id=person['tmdb_id'], defaults={
+                            'name': person['name']
+                        })
+
+                        people = getattr(p, job)
+                        people.add(pr)
+
+                    except:
+                        logger.exception('Could not add person')
+
+
+            # Redirect to production view
+            return redirect(production, slug=p.slug)
 
     # Error occured
-    print '!!!'
-    return render(request, 'error.html', {'message': 'Noe gikk galt under import!'})
+    return error(request)
 
     
 # View: Error
 def error(request, message=None):
     # Render template  
     return render(request, 'error.html', {
-        'message': message
+        'message': message if message else ':(('
     })
 
 

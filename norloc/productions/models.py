@@ -28,10 +28,12 @@ class Production(models.Model):
     summary = models.TextField(max_length=1000)
     summary_credit = models.CharField(max_length=50, blank=True)
     directors = models.ManyToManyField('Person', blank=True, related_name='directors')
+    
     writers = models.ManyToManyField('Person', blank=True, related_name='writers')
     photographers = models.ManyToManyField('Person', blank=True, related_name='photographers')
     producers = models.ManyToManyField('Company', blank=True, related_name='producers')
     distributors = models.ManyToManyField('Company', blank=True, related_name='distributors')
+    
     runtime = models.IntegerField(default=0, blank=True)
 
     poster = models.ImageField(upload_to=upload_to_posters, blank=True)
@@ -110,7 +112,7 @@ class Person(models.Model):
     bio = models.TextField(max_length=1000, blank=True)
     bio_credit = models.CharField(max_length=50, blank=True)
 
-    tmdb_id = models.CharField(max_length=10, blank=True)#False, unique=True)
+    tmdb_id = models.CharField(max_length=10, blank=False, unique=True)
     imdb_id = models.CharField(max_length=10, blank=True)
 
     slug = AutoSlugField(populate_from='name', editable=True, unique=True, always_update=True)

@@ -67,20 +67,20 @@ class TMDb(object):
             } for company in details.get('production_companies')],
             'runtime': details.get('runtime'),
             'directors': [{
-                'tmdb_id': person.get('id'),
-                'name': person.get('name'),
-                'image': poster_base + person.get('profile_path') if person.get('profile_path') else None,
-            } for person in crew if person.get('job') == 'Director'],
+                'tmdb_id': p.get('id'),
+                'name': p.get('name'),
+                'image': poster_base + p.get('profile_path') if p.get('profile_path') else None,
+            } for p in crew if p.get('job') == 'Director'],
             'writers': [{
-                'tmdb_id': person.get('id'),
-                'name': person.get('name'),
-                'image': poster_base + person.get('profile_path') if person.get('profile_path') else None,
-            } for person in crew if person.get('job') == 'Screenplay'],
+                'tmdb_id': p.get('id'),
+                'name': p.get('name'),
+                'image': poster_base + p.get('profile_path') if p.get('profile_path') else None,
+            } for p in crew if p.get('job') in ['Writer', 'Screenplay']],
             'photographers': [{
-                'tmdb_id': person.get('id'),
-                'name': person.get('name'),
-                'image': poster_base + person.get('profile_path') if person.get('profile_path') else None,
-            } for person in crew if person.get('job') == 'Director of Photography'],
+                'tmdb_id': p.get('id'),
+                'name': p.get('name'),
+                'image': poster_base + p.get('profile_path') if p.get('profile_path') else None,
+            } for p in crew if p.get('job') == 'Director of Photography'],
         }
 
         return details

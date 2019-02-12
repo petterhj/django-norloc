@@ -11,9 +11,11 @@ class ProductionAdmin(admin.ModelAdmin):
     list_display_links = ('poster_thumb', 'title',)
 
     def poster_thumb(self, obj):
+        if not obj.poster:
+            return 'NOP'
         return '<img src="' + obj.poster.url + '" alt="thumb" style="margin: -4px -5px -5px 0; height: 22px;" />'
 
-    poster_thumb.short_description = 'Shot'
+    poster_thumb.short_description = 'Poster'
     poster_thumb.allow_tags = True
 
     # Fieldsets
@@ -89,7 +91,16 @@ class ShotAdmin(admin.ModelAdmin):
 # ModelAdmin: Person
 class PersonAdmin(admin.ModelAdmin):
     # List
-    list_display = ('name', 'imdb_id')
+    list_display = ('headshot_thumb', 'name', 'slug', 'tmdb_id', 'imdb_id')
+    list_display_links = ('name',)
+
+    def headshot_thumb(self, obj):
+        if not obj.headshot:
+            return ''
+        return '<img src="' + obj.headshot.url + '" alt="thumb" style="margin: -4px -5px -5px 0; height: 22px; border-radius: 50%;" />'
+
+    headshot_thumb.short_description = 'Poster'
+    headshot_thumb.allow_tags = True
 
 
 # ModelAdmin: Company
