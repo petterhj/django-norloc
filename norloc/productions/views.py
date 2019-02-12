@@ -11,6 +11,7 @@ from django.core.files.temp import NamedTemporaryFile
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from uuid_upload_path import upload_to_factory
@@ -44,8 +45,16 @@ def production(request, slug):
     # Production
     production = get_object_or_404(Production, slug=slug)
 
+    edit_request = bool(request.GET.get('edit', False))
+    edit_mode = edit_request and request.user.is_authenticated()
+
+    logger.info('Rendering production, slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
+        production.slug, edit_mode, edit_request, request.user.is_authenticated()
+    ))
+
     # Render template
     return render(request, 'production.html', {
+        'edit_mode': edit_mode,
         'production': production
     })
 
@@ -76,7 +85,7 @@ def import_production(request, tmdb_id=None):
     if existing:
         # Redirect to production
         logger.info('Production (tmdb_id=%s) already exists, redirecting' % (tmdb_id))
-        return redirect(production, slug=existing.slug)
+        return redirect(reverse('production', args=[existing.slug]) + '?edit=true')
 
     # Get details
     try:

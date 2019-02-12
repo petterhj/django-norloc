@@ -114,7 +114,7 @@ section#caption {
 			&:first-of-type { font-weight: bold; }
 			&:first-of-type + span { margin-left: 5px; }
 			&:hover:not(.icon) { background-color: #DDD; }
-			&.right { float: right; }
+			&.right { float: right; margin-left: 10px; }
 		}
 
 		i.zmdi { 
@@ -138,20 +138,20 @@ section#header {
 	@include respond-to(medium-screens) { padding: 30px 20%; }
 	@include respond-to(wide-screens) { padding: 30px 30%; }
 
-	> img {
+	img {
 		width: 180px; height: 267px;
 		margin-top: 45px; margin-bottom: 25px; 
 		border-radius: 4px; 
 	}
 
-	> h1 {
+	h1 {
 		margin: 10px 0;
 	    font: 1.7rem $font-sans-serif; color: $color-accent;
 	    text-transform: uppercase; text-align: center;
 	}
-	> h3, > h4 { color: #666; }
-	> h3 { margin: 20px 0 10px 0; }
-	> h4 { 
+	h3, h4 { color: #666; }
+	h3 { margin: 20px 0 10px 0; }
+	h4 { 
 		font-family: $font-sans-serif; 
 		// margin-bottom: 25px;
 		padding: 0 15%;
@@ -169,7 +169,7 @@ section#header {
 		}
 	}
 
-	> p {
+	p {
 		margin: 15px auto 25px auto;
 		font: 1.2rem $font-serif; color: #666; 
 		text-align: justify; line-height: 1.7rem;
@@ -187,10 +187,10 @@ section#header {
 		display: grid;
 		grid-template-columns: 1fr auto;
 		grid-column-gap: 10px; grid-row-gap: 0;
+	}
 
-		input, textarea, select {
-			background: #EFEFEF;
-		}
+	input, textarea, select {
+		background: #EFEFEF;
 	}
 }
 
@@ -218,9 +218,29 @@ body[data-view="index"] > section#header {
 	}
 }
 
-// View: Person
+// View: Production
 body[data-view="production"] > section#header {
 	padding-bottom: 60px;
+}
+body[data-view="production"][data-edit="true"] > section#header {
+	input { padding: 5px 10px; color: #666; }
+	input[name="title"] {
+		width: 100%; margin: 5px 0;
+		font: 1.7rem $font-sans-serif; color: $color-accent; 
+		text-align: center; text-transform: uppercase;
+	}
+	input[name="release"] {
+		display: inline-block; margin: 5px 0 10px 0;
+		font: 1.2rem $font-sans-serif; text-align: center;
+	}
+	textarea[name="summary"] {
+		width: 100%; height: 330px; resize: vertical;
+		font: 1.2rem $font-serif; color: #666; 
+		text-align: justify; line-height: 1.7rem;
+	}
+	input[name="summary_credit"] {
+		font: 1rem $font-serif;
+	}
 }
 
 // View: Person

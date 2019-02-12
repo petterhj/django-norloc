@@ -8,8 +8,13 @@
 {% block navigation %}
  <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> {{production.title}}
 
- {% if user.is_authenticated %}
-  <a href="" class="right icon" title="Rediger produksjon"><i class="zmdi zmdi-edit"></i></a>
+ {% if edit_mode %}
+  <a href="{%url 'production' production.slug %}" class="right icon" title="Avbryt endringer"><i class="zmdi zmdi-close"></i></a>
+  <a href="" class="right icon" title="Lagre endringer"><i class="zmdi zmdi-save"></i></a>
+ {% else %}
+  {% if user.is_authenticated %}
+   <a href="?edit=true" class="right icon" title="Rediger produksjon"><i class="zmdi zmdi-edit"></i></a>
+  {% endif %}
  {% endif %}
 {% endblock %}
 
@@ -19,8 +24,16 @@
  {% if production.poster %}
   <img src="{{production.poster.url}}">
  {% endif %}
- <h1>{{production.title}}</h1>
- <h3>{{production.release.year}}</h3>
+ {% if edit_mode %}
+  <input type="text" name="title" value="{{production.title}}" placeholder="Tittel">
+ {% else %}
+  <h1>{{production.title}}</h1>
+ {% endif %}
+ {% if edit_mode %}
+  <input type="text" name="release" value="{{production.release|date:"Y-m-d"}}" placeholder="Premiere">
+ {% else %}
+  <h3>{{production.release.year}}</h3>
+ {% endif %}
  <h4>
   {% for director in production.directors.all %}
    <a href="{%url 'person' director.slug %}" title="Regissør">{{director.name}}</a>
@@ -40,9 +53,14 @@
    {% endfor %}
   {% endif %}
  </h4>
- <p>
-  {{production.summary|safe}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
- </p>
+ {% if edit_mode %}
+  <textarea name="summary" placeholder="Sammendrag">{{production.summary|safe}}</textarea>
+  <input name="summary_credit" placeholder="Kreditering (sammendrag)">
+ {% else %}
+  <p>
+   {{production.summary|safe}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
+  </p>
+ {% endif %}
  <div class="meta">
   <span class="tag" title="Premiereår"><i class="zmdi zmdi-calendar-alt"></i><span>{{production.release}}</span></span>
   <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i><span>{{production.runtime}} min.</span></span>

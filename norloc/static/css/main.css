@@ -146,6 +146,7 @@ section#caption nav a:hover:not(.icon) {
 }
 section#caption nav a.right {
   float: right;
+  margin-left: 10px;
 }
 section#caption nav i.zmdi {
   color: #999;
@@ -173,72 +174,72 @@ section#header {
     padding: 30px 30%;
   }
 }
-section#header > img {
+section#header img {
   width: 180px;
   height: 267px;
   margin-top: 45px;
   margin-bottom: 25px;
   border-radius: 4px;
 }
-section#header > h1 {
+section#header h1 {
   margin: 10px 0;
   font: 1.7rem "Unica One", Helvetica, Arial, sans-serif;
   color: #C31;
   text-transform: uppercase;
   text-align: center;
 }
-section#header > h3, section#header > h4 {
+section#header h3, section#header h4 {
   color: #666;
 }
-section#header > h3 {
+section#header h3 {
   margin: 20px 0 10px 0;
 }
-section#header > h4 {
+section#header h4 {
   font-family: "Unica One", Helvetica, Arial, sans-serif;
   padding: 0 15%;
 }
-section#header > h4:first-of-type {
+section#header h4:first-of-type {
   font-size: 0.9rem;
 }
-section#header > h4:last-of-type {
+section#header h4:last-of-type {
   margin-bottom: 25px;
   font-size: 0.7rem;
   color: rgba(0, 0, 0, 0.6);
 }
-section#header > h4 i.zmdi {
+section#header h4 i.zmdi {
   margin-right: 5px;
   color: rgba(0, 0, 0, 0.1);
 }
-section#header > h4 a {
+section#header h4 a {
   display: inline-block;
   margin: 15px 15px 0 0;
   color: inherit;
   text-decoration: none;
 }
-section#header > h4 a:hover {
+section#header h4 a:hover {
   text-decoration: underline;
 }
-section#header > h4 a:last-of-type {
+section#header h4 a:last-of-type {
   margin-right: 0;
 }
-section#header > p {
+section#header p {
   margin: 15px auto 25px auto;
   font: 1.2rem "Vollkorn", serif;
   color: #666;
   text-align: justify;
   line-height: 1.7rem;
 }
-section#header > p .source {
+section#header p .source {
   color: #999;
   font-size: 12px;
   font-style: italic;
 }
-section#header > p a {
+section#header p a {
   opacity: 0.8;
   color: #C31;
   text-decoration: none;
 }
-section#header > p a:hover {
+section#header p a:hover {
   opacity: 1;
 }
 section#header form {
@@ -247,7 +248,7 @@ section#header form {
   grid-column-gap: 10px;
   grid-row-gap: 0;
 }
-section#header form input, section#header form textarea, section#header form select {
+section#header input, section#header textarea, section#header select {
   background: #EFEFEF;
 }
 
@@ -278,6 +279,37 @@ body[data-view=index] > section#header .title input {
 
 body[data-view=production] > section#header {
   padding-bottom: 60px;
+}
+
+body[data-view=production][data-edit=true] > section#header input {
+  padding: 5px 10px;
+  color: #666;
+}
+body[data-view=production][data-edit=true] > section#header input[name=title] {
+  width: 100%;
+  margin: 5px 0;
+  font: 1.7rem "Unica One", Helvetica, Arial, sans-serif;
+  color: #C31;
+  text-align: center;
+  text-transform: uppercase;
+}
+body[data-view=production][data-edit=true] > section#header input[name=release] {
+  display: inline-block;
+  margin: 5px 0 10px 0;
+  font: 1.2rem "Unica One", Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+body[data-view=production][data-edit=true] > section#header textarea[name=summary] {
+  width: 100%;
+  height: 330px;
+  resize: vertical;
+  font: 1.2rem "Vollkorn", serif;
+  color: #666;
+  text-align: justify;
+  line-height: 1.7rem;
+}
+body[data-view=production][data-edit=true] > section#header input[name=summary_credit] {
+  font: 1rem "Vollkorn", serif;
 }
 
 body[data-view=person] > section#header {

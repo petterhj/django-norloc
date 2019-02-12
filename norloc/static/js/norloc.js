@@ -26,6 +26,11 @@ var NORLOC = NORLOC || {
         $('[data-href]').on('click', function() {
             window.location.href = $(this).data('href');
         });
+
+        // Edit mode
+        if (getURLParameter('edit') === 'true') {
+            $('body').attr('data-edit', true);
+        }
     },
 
     // View: Index
@@ -189,6 +194,7 @@ var NORLOC = NORLOC || {
                                     .find('span').text(countries.join(', '));
 
                                 if (countries.includes('NO')) {
+                                    rendered.appendTo($('div#focused'));
                                     rendered.removeClass('minified faded');
                                     rendered.find('.add').show().on('click', function() {
                                         // Select film
