@@ -174,7 +174,7 @@ section#header {
     padding: 30px 30%;
   }
 }
-section#header img {
+section#header > img {
   width: 180px;
   height: 267px;
   margin-top: 45px;
@@ -302,14 +302,26 @@ body[data-view=production][data-edit=true] > section#header input[name=release] 
 body[data-view=production][data-edit=true] > section#header textarea[name=summary] {
   width: 100%;
   height: 330px;
+  margin: 15px 0 5px 0;
   resize: vertical;
   font: 1.2rem "Vollkorn", serif;
   color: #666;
   text-align: justify;
   line-height: 1.7rem;
 }
-body[data-view=production][data-edit=true] > section#header input[name=summary_credit] {
+body[data-view=production][data-edit=true] > section#header input[name=summary_credit], body[data-view=production][data-edit=true] > section#header input[name$=_id] {
+  margin: 10px 0;
   font: 1rem "Vollkorn", serif;
+}
+body[data-view=production][data-edit=true] > section#header div.production_ids {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 0;
+}
+body[data-view=production][data-edit=true] > section#header div.production_ids > input {
+  display: inline-block;
+  width: 100%;
 }
 
 body[data-view=person] > section#header {

@@ -27,15 +27,14 @@ class Production(models.Model):
     release = models.DateField('Released')
     summary = models.TextField(max_length=1000)
     summary_credit = models.CharField(max_length=50, blank=True)
-    directors = models.ManyToManyField('Person', blank=True, related_name='directors')
+    runtime = models.IntegerField(default=0, blank=True)
     
+    directors = models.ManyToManyField('Person', blank=True, related_name='directors')
     writers = models.ManyToManyField('Person', blank=True, related_name='writers')
     photographers = models.ManyToManyField('Person', blank=True, related_name='photographers')
     producers = models.ManyToManyField('Company', blank=True, related_name='producers')
     distributors = models.ManyToManyField('Company', blank=True, related_name='distributors')
     
-    runtime = models.IntegerField(default=0, blank=True)
-
     poster = models.ImageField(upload_to=upload_to_posters, blank=True)
     backdrop = models.ImageField(upload_to=upload_to_backdrops, blank=True)
 

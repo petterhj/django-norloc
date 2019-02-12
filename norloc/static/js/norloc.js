@@ -101,7 +101,65 @@ var NORLOC = NORLOC || {
 
             // Move add button
             $('section#content').append($('div.location.add').show());
-        }); 
+        });
+
+        // Edit mode
+        if ($('body').data('edit')) {
+
+            var tpl = Handlebars.compile($('#test').html());
+            var test = new M2MField($('input[name="directors2"]')[0], tpl, {});
+            test.addObject({
+                headshot: 'people/CHLM9r_qQUOT0QR72fgbng.jpg',
+                name: 'Terje Ragnes'
+            });
+
+
+            var directors = new Tagify($('input.tagify')[0], {
+                tagTemplate : function(v, data){
+                    return `<tag title='${v}'>
+                             <x title=''></x>
+                             <div class="person">
+                              <img src='/media/${data.headshot}'>
+                              <span class='tagify__tag-text'>${v}</span>
+                             </div>
+                            </tag>`;
+                },
+                dropdown : {
+                    enabled: 1,
+                    classname : 'extra-properties',
+                    itemTemplate : function(tagData){
+                    return `<div class='tagify__dropdown__item ${tagData.class ? tagData.class : ""}'>
+                             <div class="person">
+                              <img src='/media/${tagData.headshot}'>
+                              <span>${tagData.value}</span>
+                             </div>
+                            </div>`
+                    }
+                },
+                mapValueToProp : 'tmdb_id',
+                whitelist : [
+                    {'pk': 9, 'value': 'Terje Rangnes', 
+                     'headshot': 'people/CHLM9r_qQUOT0QR72fgbng.jpg',
+                     'tmdb_id': 12345},
+                    {'pk': 19, 'value': 'Tarald Nilsen', 
+                     'headshot': 'people/VkFJ78RmRh-GhlLVLQ3X8Q.jpg',
+                     'tmdb_id': 56363},
+                    {'pk': 22, 'value': 'Tilse Pilse', 
+                     'headshot': 'people/EQ-CLMddSduZY38Q2i_mqw.jpg',
+                     'tmdb_id': 4234234}
+                ],
+                enforceWhitelist: true,
+                keepInvalidTags: false,
+                maxTags: 10,
+                addTagOnBlur: true
+            });
+
+            directors.addTags([{
+                'pk': 9, 'value': 'Terje Rangnes', 
+                'headshot': 'people/CHLM9r_qQUOT0QR72fgbng.jpg',
+                'tmdb_id': 12345
+            }]);
+        }
     },
 
     // View: Map

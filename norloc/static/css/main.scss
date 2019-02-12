@@ -138,7 +138,7 @@ section#header {
 	@include respond-to(medium-screens) { padding: 30px 20%; }
 	@include respond-to(wide-screens) { padding: 30px 30%; }
 
-	img {
+	> img {
 		width: 180px; height: 267px;
 		margin-top: 45px; margin-bottom: 25px; 
 		border-radius: 4px; 
@@ -234,12 +234,21 @@ body[data-view="production"][data-edit="true"] > section#header {
 		font: 1.2rem $font-sans-serif; text-align: center;
 	}
 	textarea[name="summary"] {
-		width: 100%; height: 330px; resize: vertical;
+		width: 100%; height: 330px; margin: 15px 0 5px 0; resize: vertical;
 		font: 1.2rem $font-serif; color: #666; 
 		text-align: justify; line-height: 1.7rem;
 	}
-	input[name="summary_credit"] {
+	input[name="summary_credit"], input[name$="_id"] {
+		margin: 10px 0;
 		font: 1rem $font-serif;
+	}
+
+	div.production_ids {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		grid-column-gap: 10px; grid-row-gap: 0;
+
+		> input { display: inline-block; width: 100%; }
 	}
 }
 

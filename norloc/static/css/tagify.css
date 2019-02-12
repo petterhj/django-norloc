@@ -1,0 +1,225 @@
+
+.m2m_input {
+    display: block; position: relative;
+    margin: 15px 0;
+    overflow: auto;
+    background: #FFF; border-radius: 4px;
+    font: 0.8rem "Vollkorn", serif;
+    color: #666;
+    background: #EFEFEF;
+    text-align: left;
+}
+.m2m_object {
+    position: relative; display: inline-block;
+    float: left; overflow: hidden;
+    margin: 5px; padding: 5px 23px 5px 7px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+.m2m_object > .close {
+    position: absolute;
+    top: 8px; right: 15px;
+}
+.m2m_object > .close:after { 
+    position: absolute;
+    content: '\00D7';
+}
+.m2m_object > .close:hover:after { color: #C31; cursor: pointer; }
+.m2m_object > .close:hover + div > * { opacity: .5; }
+
+
+.m2m_object > div { user-select: none; cursor: default; }
+
+.m2m_object > div > img {
+    height: 22px;
+    border-radius: 50%;
+    float: left;
+}
+.m2m_object > div > span {
+    height: 22px;
+    line-height: 25px;
+    float: left;
+    margin-left: 7px;
+}
+
+
+
+.tagify, .tagify__dropdown  {
+    font: 0.8rem "Vollkorn", serif;
+    color: #666;
+}
+
+.tagify {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    background: #EFEFEF;
+    border-radius: 4px;
+    padding: 0;
+    cursor: text;
+}
+
+.tagify + input.tagify, .tagify + textarea.tagify { display: none; }
+
+.tagify tag {
+    position: relative; display: inline-block;
+    height: 32px; max-height: 32px;
+    margin: 5px 0 5px 5px;
+    z-index: 1;
+    cursor: default;
+}
+
+/* Person */
+div.person {
+    vertical-align: top;
+    position: relative;
+    max-width: 100%;
+    padding: 6px 23px 4px 5px;
+    border-radius: 4px;
+    user-select: none;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+div.person > * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: top
+}
+div.person > img { 
+    height: 20px; width: 20px; 
+    border-radius: 50%;
+}
+div.person > span { 
+    height: 20px; line-height: 20px;
+    margin: 1px 0 0 5px;
+}
+
+.tagify tag > div::before {
+    content: '';
+    position: absolute;
+    border-radius: inherit;
+    left: 0; top: 0;
+    right: 0; bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.tagify tag:hover:not([readonly]) div::before {
+    top: -2px; right: -2px;
+    bottom: -2px; left: -2px;
+}
+
+.tagify tag.tagify--hide {
+    width: 0 !important;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    opacity: 0;
+}
+
+.tagify tag.tagify--mark div::before {}
+.tagify tag.tagify--notAllowed div > span { opacity: .5 }
+.tagify tag.tagify--notAllowed div::before {}
+.tagify tag[readonly] x {display: none; }
+.tagify tag[readonly] > div { padding: .3em .5em }
+.tagify tag[readonly] > div::before {  }
+
+.tagify tag x {
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+    right: calc(.5em - 2px);
+    top: calc(50% - 8px);
+    cursor: pointer;
+}
+
+.tagify tag x::after { content: '\00D7'; }
+.tagify tag x:hover { color: #C31; }
+.tagify tag x:hover + div > * { opacity: .5; }
+.tagify tag x:hover + div::before {}
+
+.tagify__input {
+    position: relative;
+    margin: 5px; padding: 0 5px 0 5px; 
+    height: 32px; max-height: 32px;
+    line-height: 32px;
+    border-radius: 4px;
+    background: pink;
+}
+.tagify__input:empty::before {}
+.tagify__input:focus { outline: 0; }
+.tagify__input:focus::before { display: none; }
+.tagify__input:focus:empty::before { display: inline-block; }
+
+.tagify__input::before {
+    position: absolute;
+    content: '';
+    top: 3px;
+    height: 20px; line-height: 20px;
+    z-index: 1;
+    /*color: #000;*/
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.tagify__input::after {
+    content: attr(data-suggest);
+    color: #000;
+    opacity: .3;
+    pointer-events: none
+}
+
+.tagify__input tag {
+    margin: 0 2.5px
+}
+
+.tagify__input tag>div {
+    padding-top: 0;
+    padding-bottom: 0
+}
+
+.tagify__input tag>div::before {
+    top: -3px;
+    bottom: -3px
+}
+
+.tagify__input tag:hover:not([readonly])>div::before {
+    top: -3px;
+    bottom: -3px;
+    left: 0;
+    right: 0
+}
+
+.tagify--mix .tagify__input {
+    padding: 5px;
+    margin: 0;
+    width: 100%;
+    height: 100%
+}
+
+/* Dropdown (suggestions) */
+.tagify__dropdown {
+    position: absolute; max-height: 300px;
+    overflow: auto; z-index: 999;
+    background: #FFF;
+    padding: 5px;
+    border: 1px solid #999;
+    border-radius: 0 0 4px 4px;
+}
+
+.tagify__dropdown__item {
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    position: relative
+}
+.tagify__dropdown__item:last-of-type { margin: 0; }
+
+.tagify__dropdown__item--active { background: pink; }
+.tagify__dropdown__item:active { background: lime; }
