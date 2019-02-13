@@ -243,6 +243,32 @@ body[data-view="production"][data-edit="true"] > section#header {
 		font: 1rem $font-serif;
 	}
 
+	div.people {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-column-gap: 10px; grid-row-gap: 0;
+
+		> .tagify { 
+			margin-bottom: 10px; 
+
+			&:before {
+			    position: absolute; left: -6px; top: 13px;
+			    width: 16px; height: 16px;
+			    content: '';
+			    border-radius: 50%; 
+			    background: #EFEFEF;
+			    font-size: 10px; line-height: 17px; 
+			}
+			&:first-of-type { grid-column: 1 / -1; }
+
+			> label { 
+				position: absolute; top: 3px; right: 5px; 
+				font-size: 0.8rem;
+				color: #B3B3B3;
+			}
+		}
+
+	}
 	div.production_ids {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);

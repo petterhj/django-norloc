@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^json/production/(?P<ppk>\d+)/locations/$', prd.locations, name='production_locations'),
     url(r'^json/shots/$', prd.shots, name='shots'),
     url(r'^json/scenes/$', prd.scenes, name='scenes'),
+    url(r'^json/tags/people/$', prd.people_tags, name='people_tags'),
     url(r'^json/tmdb/search/$', prd.tmdb_search, name='tmdb_search'),
     url(r'^json/tmdb/details/(?P<tmdb_id>\d+)$', prd.tmdb_details, name='tmdb_details'),
 

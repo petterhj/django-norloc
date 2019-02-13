@@ -248,6 +248,18 @@ def scenes(request):
     return JsonResponse(scenes)
 
 
+# JSON: People tags
+def people_tags(request):
+    # Return JSON
+    return JsonResponse({
+        'people': [{
+            'pk': p.pk,
+            'value': p.name,
+            'image': p.headshot.url if p.headshot else None
+        } for p in Person.objects.all()]
+    })
+
+
 # JSON: TMDb search
 @login_required
 def tmdb_search(request):

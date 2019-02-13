@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load custom_tags %}
 
 {% block view %}production{% endblock %}
 {% block content_pk %}{{ production.pk }}{% endblock %}
@@ -39,21 +40,14 @@
  {% endif %}
  <!-- People -->
  {% if edit_mode %}
-
-  {% verbatim %}
-  <script id="test" type="text/x-handlebars-template">
-   <div class="person2">
-    <img src="/media/{{headshot}}">
-    <span>{{name}}</name>
-   </div>
-  </script>
-  {% endverbatim %}
-
-  <input name="directors2" placeholder="Regissører">
-
-  <hr style="margin: 30px 0;">
-
-  <input name="directors" class="tagify" placeholder="Regissører">
+  <div class="people">
+   <label for="directors" title="Regi"><i class="zmdi zmdi-comment-video"></i></label>
+   <input name="directors" data-icon="\f288" class="tagify" value="{{ production.directors|as_tags:"name,headshot" }}">
+   <label for="writers" title="Manus"><i class="zmdi zmdi-edit"></i></label>
+   <input name="writers" class="tagify" value="{{ production.writers|as_tags:"name,headshot" }}">
+   <label for="photographers" title="Foto"><i class="zmdi zmdi-videocam"></i></label>
+   <input name="photographers" class="tagify" value="{{ production.photographers|as_tags:"name,headshot" }}">
+  </div>
  {% else %}
   <h4>
    {% for director in production.directors.all %}
@@ -68,7 +62,7 @@
     {% endfor %}
    {% endif %}
    {% if production.photographers.count > 0 %}
-    <i class="zmdi zmdi-camera" title="Foto"></i>
+    <i class="zmdi zmdi-videocam" title="Foto"></i>
     {% for photographer in production.photographers.all %}
      <a href="{%url 'person' photographer.slug %}" title="Foto">{{photographer.name}}</a>
     {% endfor %}
@@ -156,6 +150,19 @@
   </div>
  </script>
  {% endverbatim %}
+ 
+ {% if edit_mode %}
+  {% verbatim %}
+   <script id="tag-template" type="text/x-handlebars-template">
+    <div class="tag-content">
+     {{#if image}}
+      <img src="{{image}}">
+     {{/if}}
+     <span>{{value}}</span>
+    </div>
+   </script>
+  {% endverbatim %}
+ {% endif %}
 
  {% if user.is_authenticated %}
   <!--div class="location double add">

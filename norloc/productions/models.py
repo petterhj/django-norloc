@@ -60,7 +60,7 @@ class Production(models.Model):
 
     @property
     def title_with_year(self):
-        return '%s%s' % (self.title, ' (%s)' % (str(self.release.year) if self.release else ''))   
+        return '%s%s' % (self.title, ' (%s)' % (str(self.release.year) if self.release else ''))
 
     # Representation
     def __unicode__(self):
