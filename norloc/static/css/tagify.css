@@ -92,7 +92,7 @@ div.tag-content > span {
 
 .tagify__input {
     position: relative;
-    margin: 5px 5px 0 5px; padding: 0 5px 0 5px; 
+    margin: 5px 5px 0 5px; padding: 0 0 0 5px; 
     height: 32px; max-height: 32px;
     line-height: 32px; border-radius: 4px;
 }

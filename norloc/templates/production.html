@@ -75,10 +75,36 @@
   <input name="summary_credit" placeholder="Kreditering (sammendrag)">
 
   <div class="production_ids">
-   <input name="imdb_id" placeholder="IMDb ID" value="{{production.imdb_id}}">
-   <input name="tmdb_id" placeholder="TMDb ID" value="{{production.tmdb_id}}">
-   <input name="nbdb_id" placeholder="NBdb ID" value="{{production.nbdb_id}}">
-   <input name="tvdb_id" placeholder="TVdb ID" value="{{production.tvdb_id}}">
+   <div>
+    <input name="imdb_id" placeholder="IMDb ID" value="{{production.imdb_id}}">
+    <a href="https://www.imdb.com/" target="_blank">Besøk</a>
+    {% if production.imdb_id %}
+     | <a href="https://www.imdb.com/title/{{production.imdb_id}}" target="_blank">Detaljer</a> 
+     | <a href="">Oppdater</a>
+    {% endif %}
+   </div>
+   <div>
+    <input name="tmdb_id" placeholder="TMDb ID" value="{{production.tmdb_id}}">
+    <a href="https://www.themoviedb.org/" target="_blank">Besøk</a>
+    {% if production.tmdb_id %}
+     | <a href="https://www.themoviedb.org/movie/{{production.tmdb_id}}" target="_blank">Detaljer</a> 
+     | <a href="">Oppdater</a>
+    {% endif %}
+   </div>
+   <div>
+    <input name="nbdb_id" placeholder="NBdb ID" value="{{production.nbdb_id}}">
+    <a href="https://www.nb.no/filmografi/" target="_blank">Besøk</a>
+    {% if production.nbdb_id %}
+     | <a href="https://www.nb.no/filmografi/show?id={{production.nbdb_id}}" target="_blank">Detaljer</a> 
+     | <a href="">Oppdater</a>
+    {% endif %}
+   </div>
+   {% if production.type == "show" %}
+    <div>
+     <input name="tvdb_id" placeholder="TVdb ID" value="{{production.tvdb_id}}">
+     {% if production.tvdb_id %}<a href="">Detaljer</a>{% endif %}
+    </div>
+   {% endif %}
   </div>
  {% else %}
   <p>

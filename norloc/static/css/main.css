@@ -295,14 +295,14 @@ body[data-view=production][data-edit=true] > section#header input[name=title] {
 }
 body[data-view=production][data-edit=true] > section#header input[name=release] {
   display: inline-block;
-  margin: 5px 0 10px 0;
+  margin: 5px 0 20px 0;
   font: 1.2rem "Unica One", Helvetica, Arial, sans-serif;
   text-align: center;
 }
 body[data-view=production][data-edit=true] > section#header textarea[name=summary] {
   width: 100%;
   height: 330px;
-  margin: 15px 0 5px 0;
+  margin: 10px 0 5px 0;
   resize: vertical;
   font: 1.2rem "Vollkorn", serif;
   color: #666;
@@ -317,7 +317,6 @@ body[data-view=production][data-edit=true] > section#header div.people {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
-  grid-row-gap: 0;
 }
 body[data-view=production][data-edit=true] > section#header div.people > .tagify {
   margin-bottom: 10px;
@@ -348,11 +347,27 @@ body[data-view=production][data-edit=true] > section#header div.production_ids {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 10px;
-  grid-row-gap: 0;
+  margin-bottom: 15px;
+  color: #666;
+  text-align: left;
+  font-size: 0.6rem;
+  font-family: "Unica One", Helvetica, Arial, sans-serif;
 }
-body[data-view=production][data-edit=true] > section#header div.production_ids > input {
+body[data-view=production][data-edit=true] > section#header div.production_ids > div, body[data-view=production][data-edit=true] > section#header div.production_ids input {
   display: inline-block;
   width: 100%;
+}
+body[data-view=production][data-edit=true] > section#header div.production_ids input {
+  margin-bottom: 3px;
+  height: 32px;
+}
+body[data-view=production][data-edit=true] > section#header div.production_ids a {
+  color: #999;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+body[data-view=production][data-edit=true] > section#header div.production_ids a:hover {
+  color: #666;
 }
 
 body[data-view=person] > section#header {

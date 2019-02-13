@@ -230,11 +230,11 @@ body[data-view="production"][data-edit="true"] > section#header {
 		text-align: center; text-transform: uppercase;
 	}
 	input[name="release"] {
-		display: inline-block; margin: 5px 0 10px 0;
+		display: inline-block; margin: 5px 0 20px 0;
 		font: 1.2rem $font-sans-serif; text-align: center;
 	}
 	textarea[name="summary"] {
-		width: 100%; height: 330px; margin: 15px 0 5px 0; resize: vertical;
+		width: 100%; height: 330px; margin: 10px 0 5px 0; resize: vertical;
 		font: 1.2rem $font-serif; color: #666; 
 		text-align: justify; line-height: 1.7rem;
 	}
@@ -246,7 +246,7 @@ body[data-view="production"][data-edit="true"] > section#header {
 	div.people {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		grid-column-gap: 10px; grid-row-gap: 0;
+		grid-column-gap: 10px;
 
 		> .tagify { 
 			margin-bottom: 10px; 
@@ -272,9 +272,13 @@ body[data-view="production"][data-edit="true"] > section#header {
 	div.production_ids {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
-		grid-column-gap: 10px; grid-row-gap: 0;
+		grid-column-gap: 10px; margin-bottom: 15px; color: #666;
+		text-align: left; font-size: 0.6rem; font-family: $font-sans-serif;
 
-		> input { display: inline-block; width: 100%; }
+		> div, input { display: inline-block; width: 100%; }
+		input { margin-bottom: 3px; height: 32px; }
+		a { color: #999; text-decoration: none; text-transform: uppercase; }
+		a:hover { color: #666; }
 	}
 }
 
