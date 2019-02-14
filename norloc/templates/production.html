@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load markdownify %}
+
 {% block view %}production{% endblock %}
 {% block content_pk %}{{ production.pk }}{% endblock %}
 {% block title %}{{production.title}} ({{production.release.year}}) | {% endblock %}
@@ -50,7 +52,7 @@
   </h4>
 
   <p>
-   {{production.summary|safe}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
+   {{production.summary|markdownify}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
   </p>
  {% else %}
   <form id="production_form" method="post">

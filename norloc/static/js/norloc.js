@@ -110,13 +110,13 @@ var NORLOC = NORLOC || {
             TagInput($('input[name="writers"]'), $('#tag-template'), '/json/tags/people');
             TagInput($('input[name="photographers"]'), $('#tag-template'), '/json/tags/people');
 
-            // Save
+            // Process form
             $(document).bind('keydown', 'ctrl+s', function(e) {
                 e.preventDefault();
                 $('form#production_form').submit();
             }).bind('keydown', 'esc', function(e) {
                 e.preventDefault();
-                alert('!!!');
+                window.location = $('section#caption i.zmdi-close').parent().attr('href');
             });
 
             $('section#caption i.zmdi-save').on('click', function(e) {
