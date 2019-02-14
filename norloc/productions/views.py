@@ -46,16 +46,15 @@ def production(request, slug):
     # Production
     production = get_object_or_404(Production, slug=slug)
 
-    print '='*50
-    print 'METHOD', request.method
-    print 'PRODCT', production.title
-    print '='*50
+    # print '='*50
+    # print 'METHOD', request.method
+    # print 'PRODCT', production.title
+    # print '='*50
 
     # Update production (POST)
     if request.method == 'POST' and request.user.is_authenticated():
-        print '~'*50
-        
-        print request.POST#.get("title", "")
+        print '='*50
+        # print request.POST#.get("title", "")
 
         form = ProductionForm(instance=production, data=request.POST)
         
@@ -66,8 +65,12 @@ def production(request, slug):
         if form.is_valid():
             print 'SAVING'
             form.save()
+            # form.save_m2m()
             print 'NEW TITLE', form.instance.title
             print 'NEW SLUG', form.instance.slug
+        else:
+            print form.errors
+            print 'NOT VALID!!!!!!!!!!!!'
 
 
         # Disable edit mode

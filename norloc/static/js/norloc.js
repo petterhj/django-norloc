@@ -111,15 +111,17 @@ var NORLOC = NORLOC || {
             TagInput($('input[name="photographers"]'), $('#tag-template'), '/json/tags/people');
 
             // Save
+            $(document).bind('keydown', 'ctrl+s', function(e) {
+                e.preventDefault();
+                $('form#production_form').submit();
+            }).bind('keydown', 'esc', function(e) {
+                e.preventDefault();
+                alert('!!!');
+            });
+
             $('section#caption i.zmdi-save').on('click', function(e) {
                 e.preventDefault();
-                console.log('SAVE!');
-
                 $('form#production_form').submit();
-
-                // $.post(window.location.href, {
-                //     'foo': 'bar'
-                // });
             });
         }   
     },

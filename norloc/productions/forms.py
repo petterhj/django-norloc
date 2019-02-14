@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 
 # Imports
-from json import dumps
+from json import dumps, loads
 from django import forms
 from django.apps import apps
-from django.forms.widgets import CheckboxSelectMultiple
 
 from .models import Production, Person
 
 
-class TagsField(forms.MultipleChoiceField):
-    pass
-    # def __init__(self, *args, **kwargs):
-    #     super(TagsField, self).__init__(*args, **kwargs)
-
-
+# Widget: TagsInput
 class TagsInput(forms.TextInput):
+    '''
+    Partly inspired by "django-searchable-select"
+    '''
+
     # Init
     def __init__(self, *args, **kwargs):
         self.model = kwargs.pop('model')
@@ -25,12 +23,6 @@ class TagsInput(forms.TextInput):
 
     # Render
     def render(self, name, value, attrs=None):
-        print '~'*50
-        print name, type(value), attrs
-        # values = get_model(self.model).objects.filter(pk__in=value)
-        # print self.queryset.objects.filter(pk__in=value)
-        # print self.queryset.directors.all()
-
         # Model
         model = apps.get_model(self.model)
 
@@ -53,19 +45,24 @@ class TagsInput(forms.TextInput):
         return super(TagsInput, self).render(name, dumps(tags), attrs=None)
 
 
+    # Value from data
+    def value_from_datadict(self, data, files, name):
+        value = data.get(name)
+        if value:
+            return [o['pk'] for o in loads(value)]
+        return []
+
+
 
 # ModelForm: Production
 class ProductionForm(forms.ModelForm):
-    # Fields
-    # directors = TagsField(queryset=Person.objects.all())
-
     # Meta
     class Meta:
         model = Production
 
         fields = [
             'title', 'release', 'summary', 'summary_credit',
-            'directors',
+            'directors', 'writers', 'photographers',
             'imdb_id', 'tmdb_id', 'nbdb_id', 'tvdb_id'
         ]
 
@@ -78,10 +75,18 @@ class ProductionForm(forms.ModelForm):
             'directors': TagsInput(**{
                 'model': 'productions.Person',
                 'fields': {'value': 'name', 'image': 'headshot'},
-                'attrs': {'class': 'tagify'}
+                'attrs': {'class': 'tagify', 'placeholder': 'Regi'}
             }),
-            # 'directors': CheckboxSelectMultiple(),
-            # 'directors': TagsInput({'placeholder': 'Regissører'}),
+            'writers': TagsInput(**{
+                'model': 'productions.Person',
+                'fields': {'value': 'name', 'image': 'headshot'},
+                'attrs': {'class': 'tagify', 'placeholder': 'Manus'}
+            }),
+            'photographers': TagsInput(**{
+                'model': 'productions.Person',
+                'fields': {'value': 'name', 'image': 'headshot'},
+                'attrs': {'class': 'tagify', 'placeholder': 'Foto'}
+            }),
 
             'imdb_id': forms.TextInput({'placeholder': 'IMDb ID'}),
             'tmdb_id': forms.TextInput({'placeholder': 'TMDb ID'}),
@@ -89,20 +94,18 @@ class ProductionForm(forms.ModelForm):
             'tvdb_id': forms.TextInput({'placeholder': 'TVDb ID'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super(ProductionForm, self).__init__(*args, **kwargs)
-
-        # self.fields["directors"].widget = CheckboxSelectMultiple()
-        # self.fields["directors"].queryset = Person.objects.all()
-
-
-
     # Save
     def save(self):
-        production = super(ProductionForm, self).save(commit=False)
-        # user.username = user.email
+        print '~'*50
+        print self.cleaned_data
+        print '~'*50
+
+        # Initial
+        production = super(ProductionForm, self).save(commit=True)
+        '''
 
         # Save
-        # production.save()
+        production.save()
 
         return production
+        '''

@@ -11,6 +11,8 @@ function TagInput(input, template, source_url) {
                     </tag>`;
         },
         dropdown : {
+            enabled: 3,
+            maxItems: 10,
             itemTemplate : function(data){
                 return `<div class="tagify__dropdown__item">
                          ${template(data)}
@@ -24,11 +26,7 @@ function TagInput(input, template, source_url) {
         addTagOnBlur: true
     });
 
-    var label = $('label[for="{0}"]'.format(input.attr('name')));
-
-    if (label.length >  0) {
-        $(taginput.DOM.scope).prepend(label);
-    }
+    $(taginput.DOM.scope).attr('placeholder', $(input).attr('placeholder'));
 
     taginput.on('input', function(event) {
         var value = event.detail;

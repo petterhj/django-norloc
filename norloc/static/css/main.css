@@ -298,7 +298,7 @@ body[data-view=production][data-edit=true] > section#header input[name=release] 
 body[data-view=production][data-edit=true] > section#header textarea[name=summary] {
   width: 100%;
   height: 330px;
-  margin: 10px 0 5px 0;
+  margin: 0 0 5px 0;
   resize: vertical;
   font: 1.2rem "Vollkorn", serif;
   color: #666;
@@ -307,7 +307,7 @@ body[data-view=production][data-edit=true] > section#header textarea[name=summar
 }
 body[data-view=production][data-edit=true] > section#header input[name=summary_credit], body[data-view=production][data-edit=true] > section#header input[name$=_id] {
   margin: 10px 0;
-  font: 1rem "Vollkorn", serif;
+  font: 0.8rem "Vollkorn", serif;
 }
 body[data-view=production][data-edit=true] > section#header div.people {
   display: grid;
@@ -315,7 +315,7 @@ body[data-view=production][data-edit=true] > section#header div.people {
   grid-column-gap: 10px;
 }
 body[data-view=production][data-edit=true] > section#header div.people > .tagify {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 body[data-view=production][data-edit=true] > section#header div.people > .tagify:before {
   position: absolute;
@@ -326,8 +326,19 @@ body[data-view=production][data-edit=true] > section#header div.people > .tagify
   content: "";
   border-radius: 50%;
   background: #EFEFEF;
-  font-size: 10px;
-  line-height: 17px;
+}
+body[data-view=production][data-edit=true] > section#header div.people > .tagify:after {
+  position: absolute;
+  left: 0;
+  top: -8px;
+  height: 16px;
+  padding: 0 8px;
+  content: attr(placeholder);
+  border-radius: 4px;
+  background: #EFEFEF;
+  color: #ADADAD;
+  font: 0.4rem "Monda", sans-serif;
+  text-transform: uppercase;
 }
 body[data-view=production][data-edit=true] > section#header div.people > .tagify:first-of-type {
   grid-column: 1/-1;
