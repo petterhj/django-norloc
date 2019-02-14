@@ -28,7 +28,6 @@ $break-large: 1200px;
 html, body { height: 100%; }
 body { margin: 0; background: $color-background-main; }
 
-form { overflow: auto; }
 input, button, textarea, select { border: 0; outline: 0; }
 input, textarea, select, button {
 	display: block;
@@ -183,12 +182,6 @@ section#header {
 		}
 	}
 
-	form {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		grid-column-gap: 10px; grid-row-gap: 0;
-	}
-
 	input, textarea, select {
 		background: #EFEFEF;
 	}
@@ -215,6 +208,12 @@ body[data-view="index"] > section#header {
 		}
 
 		input { width: 100%; }
+	}
+
+	form {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		grid-column-gap: 10px; grid-row-gap: 0;
 	}
 }
 
@@ -252,7 +251,7 @@ body[data-view="production"][data-edit="true"] > section#header {
 			margin-bottom: 10px; 
 
 			&:before {
-			    position: absolute; left: -6px; top: 13px;
+			    position: absolute; left: -4px; top: 13px;
 			    width: 16px; height: 16px;
 			    content: '';
 			    border-radius: 50%; 

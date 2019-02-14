@@ -12,10 +12,6 @@ body {
   background: #1A1919;
 }
 
-form {
-  overflow: auto;
-}
-
 input, button, textarea, select {
   border: 0;
   outline: 0;
@@ -242,12 +238,6 @@ section#header p a {
 section#header p a:hover {
   opacity: 1;
 }
-section#header form {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-column-gap: 10px;
-  grid-row-gap: 0;
-}
 section#header input, section#header textarea, section#header select {
   background: #EFEFEF;
 }
@@ -275,6 +265,12 @@ body[data-view=index] > section#header .title h1 {
 }
 body[data-view=index] > section#header .title input {
   width: 100%;
+}
+body[data-view=index] > section#header form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 0;
 }
 
 body[data-view=production] > section#header {
@@ -323,7 +319,7 @@ body[data-view=production][data-edit=true] > section#header div.people > .tagify
 }
 body[data-view=production][data-edit=true] > section#header div.people > .tagify:before {
   position: absolute;
-  left: -6px;
+  left: -4px;
   top: 13px;
   width: 16px;
   height: 16px;

@@ -11,7 +11,7 @@ from locations.models import Location
 
 
 # Upload factories
-MIGRATE = False
+MIGRATE = True
 upload_to_people = upload_to_factory('people') if not MIGRATE else 'people'
 upload_to_posters = upload_to_factory('posters') if not MIGRATE else 'posters'
 upload_to_backdrops = upload_to_factory('backdrops') if not MIGRATE else 'backdrops'
@@ -43,7 +43,7 @@ class Production(models.Model):
     nbdb_id = models.CharField(max_length=10, blank=True)
     tvdb_id = models.CharField(max_length=10, blank=True)
 
-    slug = AutoSlugField(populate_from='title', editable=True, unique=True, always_update=True)
+    slug = AutoSlugField(populate_from='title', editable=True, unique_with='release__year')#, always_update=True)
 
     @property
     def locations(self):
@@ -65,6 +65,7 @@ class Production(models.Model):
     # Representation
     def __unicode__(self):
         return self.title
+
 
 
 # Model: Scene

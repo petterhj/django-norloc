@@ -26,29 +26,10 @@
  {% if production.poster %}
   <img src="{{production.poster.url}}">
  {% endif %}
- <!-- Title -->
- {% if edit_mode %}
-  <input type="text" name="title" placeholder="Tittel" value="{{production.title}}">
- {% else %}
+ 
+ {% if not edit_mode %}
   <h1>{{production.title}}</h1>
- {% endif %}
- <!-- Release -->
- {% if edit_mode %}
-  <input type="text" name="release" placeholder="Premiere" value="{{production.release|date:"Y-m-d"}}">
- {% else %}
   <h3>{{production.release.year}}</h3>
- {% endif %}
- <!-- People -->
- {% if edit_mode %}
-  <div class="people">
-   <label for="directors" title="Regi"><i class="zmdi zmdi-comment-video"></i></label>
-   <input name="directors" data-icon="\f288" class="tagify" value="{{ production.directors|as_tags:"name,headshot" }}">
-   <label for="writers" title="Manus"><i class="zmdi zmdi-edit"></i></label>
-   <input name="writers" class="tagify" value="{{ production.writers|as_tags:"name,headshot" }}">
-   <label for="photographers" title="Foto"><i class="zmdi zmdi-videocam"></i></label>
-   <input name="photographers" class="tagify" value="{{ production.photographers|as_tags:"name,headshot" }}">
-  </div>
- {% else %}
   <h4>
    {% for director in production.directors.all %}
     <a href="{%url 'person' director.slug %}" title="Regissør">{{director.name}}</a>
@@ -68,15 +49,32 @@
     {% endfor %}
    {% endif %}
   </h4>
- {% endif %}
- <!-- Summary -->
- {% if edit_mode %}
-  <textarea name="summary" placeholder="Sammendrag">{{production.summary|safe}}</textarea>
-  <input name="summary_credit" placeholder="Kreditering (sammendrag)">
+
+  <p>
+   {{production.summary|safe}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
+  </p>
+ {% else %}
+  <form id="production_form" method="post">
+  {% csrf_token %}
+  {{production_form.title}}
+  {{production_form.release}}
+
+  <div class="people">
+   <label for="directors" title="Regi"><i class="zmdi zmdi-comment-video"></i></label>
+   {{production_form.directors}}
+   {# <input name="directors" class="tagify3" value="{{ production.directors|as_tags:"name,headshot" }}"> #}
+   {# <label for="writers" title="Manus"><i class="zmdi zmdi-edit"></i></label> #}
+   {# <input name="writers" class="tagify" value="{{ production.writers|as_tags:"name,headshot" }}"> #}
+   {# <label for="photographers" title="Foto"><i class="zmdi zmdi-videocam"></i></label> #}
+   {# <input name="photographers" class="tagify" value="{{ production.photographers|as_tags:"name,headshot" }}"> #}
+  </div>
+
+  {{production_form.summary}}
+  {{production_form.summary_credit}}
 
   <div class="production_ids">
    <div>
-    <input name="imdb_id" placeholder="IMDb ID" value="{{production.imdb_id}}">
+    {{production_form.imdb_id}}
     <a href="https://www.imdb.com/" target="_blank">Besøk</a>
     {% if production.imdb_id %}
      | <a href="https://www.imdb.com/title/{{production.imdb_id}}" target="_blank">Detaljer</a> 
@@ -84,7 +82,7 @@
     {% endif %}
    </div>
    <div>
-    <input name="tmdb_id" placeholder="TMDb ID" value="{{production.tmdb_id}}">
+    {{production_form.tmdb_id}}
     <a href="https://www.themoviedb.org/" target="_blank">Besøk</a>
     {% if production.tmdb_id %}
      | <a href="https://www.themoviedb.org/movie/{{production.tmdb_id}}" target="_blank">Detaljer</a> 
@@ -92,7 +90,7 @@
     {% endif %}
    </div>
    <div>
-    <input name="nbdb_id" placeholder="NBdb ID" value="{{production.nbdb_id}}">
+    {{production_form.nbdb_id}}
     <a href="https://www.nb.no/filmografi/" target="_blank">Besøk</a>
     {% if production.nbdb_id %}
      | <a href="https://www.nb.no/filmografi/show?id={{production.nbdb_id}}" target="_blank">Detaljer</a> 
@@ -101,15 +99,12 @@
    </div>
    {% if production.type == "show" %}
     <div>
-     <input name="tvdb_id" placeholder="TVdb ID" value="{{production.tvdb_id}}">
+     {{production_form.tvdb_id}}
      {% if production.tvdb_id %}<a href="">Detaljer</a>{% endif %}
     </div>
    {% endif %}
   </div>
- {% else %}
-  <p>
-   {{production.summary|safe}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
-  </p>
+  </form>
  {% endif %}
  <div class="meta">
   <span class="tag" title="Premiereår"><i class="zmdi zmdi-calendar-alt"></i><span>{{production.release}}</span></span>

@@ -20,6 +20,7 @@ from lib.tmdb import TMDb
 from lib.image_from_url import ImageFileFromUrl
 
 from .models import Production, Scene, Shot, Person
+from .forms import ProductionForm
 
 
 # Logger
@@ -45,6 +46,36 @@ def production(request, slug):
     # Production
     production = get_object_or_404(Production, slug=slug)
 
+    print '='*50
+    print 'METHOD', request.method
+    print 'PRODCT', production.title
+    print '='*50
+
+    # Update production (POST)
+    if request.method == 'POST' and request.user.is_authenticated():
+        print '~'*50
+        
+        print request.POST#.get("title", "")
+
+        form = ProductionForm(instance=production, data=request.POST)
+        
+        print 'VALID', form.is_valid()
+        print 'MF TITLE', form.instance.title
+        print 'SLUG', form.instance.slug
+
+        if form.is_valid():
+            print 'SAVING'
+            form.save()
+            print 'NEW TITLE', form.instance.title
+            print 'NEW SLUG', form.instance.slug
+
+
+        # Disable edit mode
+        # return redirect('production', slug=form.instance.slug)
+        return redirect(reverse('production', args=[form.instance.slug]) + '?edit=true')
+
+
+    # View production (GET)
     edit_request = bool(request.GET.get('edit', False))
     edit_mode = edit_request and request.user.is_authenticated()
 
@@ -52,9 +83,12 @@ def production(request, slug):
         production.slug, edit_mode, edit_request, request.user.is_authenticated()
     ))
 
+    print 'M TITLE', production.title
+
     # Render template
     return render(request, 'production.html', {
         'edit_mode': edit_mode,
+        'production_form': ProductionForm(instance=production) if edit_mode else None,
         'production': production
     })
 

@@ -105,9 +105,22 @@ var NORLOC = NORLOC || {
 
         // Edit mode
         if ($('body').data('edit')) {
+            // Tags
             TagInput($('input[name="directors"]'), $('#tag-template'), '/json/tags/people');
             TagInput($('input[name="writers"]'), $('#tag-template'), '/json/tags/people');
             TagInput($('input[name="photographers"]'), $('#tag-template'), '/json/tags/people');
+
+            // Save
+            $('section#caption i.zmdi-save').on('click', function(e) {
+                e.preventDefault();
+                console.log('SAVE!');
+
+                $('form#production_form').submit();
+
+                // $.post(window.location.href, {
+                //     'foo': 'bar'
+                // });
+            });
         }   
     },
 
