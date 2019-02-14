@@ -6,6 +6,7 @@ from json import dumps as json_dumps
 from django.db import models
 from autoslug import AutoSlugField
 from uuid_upload_path import upload_to_factory
+from autoslug.settings import slugify
 
 from locations.models import Location
 
@@ -43,7 +44,7 @@ class Production(models.Model):
     nbdb_id = models.CharField(max_length=10, blank=True)
     tvdb_id = models.CharField(max_length=10, blank=True)
 
-    slug = AutoSlugField(populate_from='title', editable=True, unique=True)#, always_update=True)
+    slug = AutoSlugField(populate_from='slugified_title', editable=True, unique=True)#, always_update=True)
 
     @property
     def locations(self):
@@ -62,9 +63,19 @@ class Production(models.Model):
     def title_with_year(self):
         return '%s%s' % (self.title, ' (%s)' % (str(self.release.year) if self.release else ''))
 
+    @property
+    def slugified_title(self):
+        populate_from = self.title
+
+        if Production.objects.filter(slug=slugify(populate_from)):
+            # populate_from = '%s-%s' % (self.title, self.release.year)
+            populate_from = '%s-%s' % (self.title, self.release.split('-')[0])
+
+        return slugify(populate_from)
+
     # Representation
     def __unicode__(self):
-        return self.title
+        return '%s (%s)' % (self.title, self.release.year)
 
 
 
