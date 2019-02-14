@@ -299,6 +299,11 @@ body[data-view="person"] > section#header {
 	}
 }
 
+// View: Import production
+body[data-view="import_production"] > section#header {
+	input, button { display: inline-block; }
+}
+
 
 
 /* ========================================================================

@@ -25,7 +25,7 @@ class Production(models.Model):
 
     title = models.CharField(max_length=50)
     release = models.DateField('Released')
-    summary = models.TextField(max_length=1000)
+    summary = models.TextField(max_length=1000, blank=True)
     summary_credit = models.CharField(max_length=50, blank=True)
     runtime = models.IntegerField(default=0, blank=True)
     
@@ -43,7 +43,7 @@ class Production(models.Model):
     nbdb_id = models.CharField(max_length=10, blank=True)
     tvdb_id = models.CharField(max_length=10, blank=True)
 
-    slug = AutoSlugField(populate_from='title', editable=True, unique_with='release__year')#, always_update=True)
+    slug = AutoSlugField(populate_from='title', editable=True, unique=True)#, always_update=True)
 
     @property
     def locations(self):

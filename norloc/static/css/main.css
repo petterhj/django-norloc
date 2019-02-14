@@ -386,6 +386,10 @@ body[data-view=person] > section#header > img {
   border-radius: 50%;
 }
 
+body[data-view=import_production] > section#header input, body[data-view=import_production] > section#header button {
+  display: inline-block;
+}
+
 /* ========================================================================
     Content
    ======================================================================== */
