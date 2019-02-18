@@ -77,10 +77,6 @@ div.meta {
 div.meta a {
   text-decoration: none;
   color: #C31;
-  opacity: 0.8;
-}
-div.meta a:hover {
-  opacity: 1;
 }
 div.meta .tag {
   float: left;
