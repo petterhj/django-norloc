@@ -105,10 +105,25 @@ var NORLOC = NORLOC || {
 
         // Edit mode
         if ($('body').data('edit')) {
+            // Poster
+            $('input[name="poster"]').on('change', function(e) {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('section#header img.poster').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
             // Tags
             TagInput($('input[name="directors"]'), $('#tag-template'), '/json/tags/people');
             TagInput($('input[name="writers"]'), $('#tag-template'), '/json/tags/people');
             TagInput($('input[name="photographers"]'), $('#tag-template'), '/json/tags/people');
+            TagInput($('input[name="producers"]'), $('#tag-template'), '/json/tags/companies');
+            TagInput($('input[name="distributors"]'), $('#tag-template'), '/json/tags/companies');
 
             // Process form
             $(document).bind('keydown', 'ctrl+s', function(e) {

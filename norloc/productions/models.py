@@ -12,11 +12,12 @@ from locations.models import Location
 
 
 # Upload factories
-MIGRATE = True
-upload_to_people = upload_to_factory('people') if not MIGRATE else 'people'
+MIGRATE = False
 upload_to_posters = upload_to_factory('posters') if not MIGRATE else 'posters'
 upload_to_backdrops = upload_to_factory('backdrops') if not MIGRATE else 'backdrops'
 upload_to_shots = upload_to_factory('shots') if not MIGRATE else 'shots'
+upload_to_people = upload_to_factory('people') if not MIGRATE else 'people'
+upload_to_logos = upload_to_factory('logos') if not MIGRATE else 'logos'
 
 
 # Model: Production
@@ -37,7 +38,6 @@ class Production(models.Model):
     distributors = models.ManyToManyField('Company', blank=True, related_name='distributors')
     
     poster = models.ImageField(upload_to=upload_to_posters, blank=True)
-    backdrop = models.ImageField(upload_to=upload_to_backdrops, blank=True)
 
     imdb_id = models.CharField(max_length=10, blank=False, unique=True)
     tmdb_id = models.CharField(max_length=10, blank=False, unique=True)
@@ -157,6 +157,7 @@ class Person(models.Model):
 class Company(models.Model):
     # Fields
     name = models.CharField(max_length=80, unique=True)
+    logo = models.ImageField(upload_to=upload_to_logos, blank=True)
     website = models.CharField(max_length=100, blank=True)
     twitter = models.CharField(max_length=20, blank=True)
 

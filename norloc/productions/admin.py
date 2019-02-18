@@ -28,7 +28,7 @@ class ProductionAdmin(admin.ModelAdmin):
             ]
         }),
         ('Images', {
-            'fields': ['poster', 'backdrop']
+            'fields': ['poster']
         }),
         ('External information', {
             'fields': ['imdb_id', 'tmdb_id', 'nbdb_id', 'tvdb_id']

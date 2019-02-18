@@ -170,7 +170,7 @@ section#header {
     padding: 30px 30%;
   }
 }
-section#header > img {
+section#header img.poster {
   width: 180px;
   height: 267px;
   margin-top: 45px;
@@ -277,9 +277,15 @@ body[data-view=production] > section#header {
   padding-bottom: 60px;
 }
 
+body[data-view=production][data-edit=true] > section#header img.poster:hover {
+  cursor: pointer;
+}
 body[data-view=production][data-edit=true] > section#header input {
   padding: 5px 10px;
   color: #666;
+}
+body[data-view=production][data-edit=true] > section#header input[name=poster] {
+  display: none;
 }
 body[data-view=production][data-edit=true] > section#header input[name=title] {
   width: 100%;
@@ -309,15 +315,15 @@ body[data-view=production][data-edit=true] > section#header input[name=summary_c
   margin: 10px 0;
   font: 0.8rem "Vollkorn", serif;
 }
-body[data-view=production][data-edit=true] > section#header div.people {
+body[data-view=production][data-edit=true] > section#header div.people, body[data-view=production][data-edit=true] > section#header div.companies {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
 }
-body[data-view=production][data-edit=true] > section#header div.people > .tagify {
+body[data-view=production][data-edit=true] > section#header div.people > .tagify, body[data-view=production][data-edit=true] > section#header div.companies > .tagify {
   margin-bottom: 20px;
 }
-body[data-view=production][data-edit=true] > section#header div.people > .tagify:before {
+body[data-view=production][data-edit=true] > section#header div.people > .tagify:before, body[data-view=production][data-edit=true] > section#header div.companies > .tagify:before {
   position: absolute;
   left: -4px;
   top: 13px;
@@ -327,7 +333,7 @@ body[data-view=production][data-edit=true] > section#header div.people > .tagify
   border-radius: 50%;
   background: #EFEFEF;
 }
-body[data-view=production][data-edit=true] > section#header div.people > .tagify:after {
+body[data-view=production][data-edit=true] > section#header div.people > .tagify:after, body[data-view=production][data-edit=true] > section#header div.companies > .tagify:after {
   position: absolute;
   left: 0;
   top: -8px;
@@ -340,15 +346,18 @@ body[data-view=production][data-edit=true] > section#header div.people > .tagify
   font: 0.4rem "Monda", sans-serif;
   text-transform: uppercase;
 }
-body[data-view=production][data-edit=true] > section#header div.people > .tagify:first-of-type {
-  grid-column: 1/-1;
-}
-body[data-view=production][data-edit=true] > section#header div.people > .tagify > label {
+body[data-view=production][data-edit=true] > section#header div.people > .tagify > label, body[data-view=production][data-edit=true] > section#header div.companies > .tagify > label {
   position: absolute;
   top: 3px;
   right: 5px;
   font-size: 0.8rem;
   color: #B3B3B3;
+}
+body[data-view=production][data-edit=true] > section#header div.people.companies, body[data-view=production][data-edit=true] > section#header div.companies.companies {
+  margin-top: 30px;
+}
+body[data-view=production][data-edit=true] > section#header div.people.people > .tagify:first-of-type, body[data-view=production][data-edit=true] > section#header div.companies.people > .tagify:first-of-type {
+  grid-column: 1/-1;
 }
 body[data-view=production][data-edit=true] > section#header div.production_ids {
   display: grid;
@@ -365,7 +374,7 @@ body[data-view=production][data-edit=true] > section#header div.production_ids >
   width: 100%;
 }
 body[data-view=production][data-edit=true] > section#header div.production_ids input {
-  margin-bottom: 3px;
+  margin: 0 0 3px 0;
   height: 32px;
 }
 body[data-view=production][data-edit=true] > section#header div.production_ids a {

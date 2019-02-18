@@ -38,7 +38,7 @@ function TagInput(input, template, source_url) {
         fetch(source_url, {signal: controller.signal})
             .then(RES => RES.json())
             .then(function(whitelist) {
-                taginput.settings.whitelist = whitelist.people;
+                taginput.settings.whitelist = whitelist.tags;
                 taginput.dropdown.show.call(taginput, value); // render the suggestions dropdown
             });
     });

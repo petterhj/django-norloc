@@ -23,12 +23,11 @@
 
 {# Header #}
 {% block header %}
- <!-- Poster -->
- {% if production.poster %}
-  <img src="{{production.poster.url}}">
- {% endif %}
- 
  {% if not edit_mode %}
+  <!-- Poster -->
+  {% if production.poster %}
+   <img src="{{production.poster.url}}" class="poster" alt="poster">
+  {% endif %}
   <h1>{{production.title}}</h1>
   <h3>{{production.release.year}}</h3>
   <h4>
@@ -55,8 +54,17 @@
    {{production.summary|markdownify}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
   </p>
  {% else %}
-  <form id="production_form" method="post">
+  <form id="production_form" method="post" enctype="multipart/form-data">
   {% csrf_token %}
+
+  {% if production.poster %}
+   <label for="id_poster">
+    <img src="{{production.poster.url}}" class="poster" alt="poster">
+   </label>
+  {% endif %}
+
+  {{production_form.poster}}
+
   {{production_form.title}}
   {{production_form.release}}
 
@@ -73,6 +81,11 @@
 
   {{production_form.summary}}
   {{production_form.summary_credit}}
+
+  <div class="companies">
+   {{production_form.producers}}
+   {{production_form.distributors}}
+  </div>
 
   <div class="production_ids">
    <div>

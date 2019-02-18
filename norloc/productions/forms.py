@@ -61,12 +61,13 @@ class ProductionForm(forms.ModelForm):
         model = Production
 
         fields = [
-            'title', 'release', 'summary', 'summary_credit',
-            'directors', 'writers', 'photographers',
+            'poster', 'title', 'release', 'summary', 'summary_credit',
+            'directors', 'writers', 'photographers', 'producers', 'distributors',
             'imdb_id', 'tmdb_id', 'nbdb_id', 'tvdb_id'
         ]
 
         widgets = {
+            'poster': forms.FileInput(),
             'title': forms.TextInput({'placeholder': 'Tittel'}),
             'release': forms.TextInput({'placeholder': 'Permiere'}),
             'summary': forms.Textarea({'placeholder': 'Sammendrag'}),
@@ -86,6 +87,17 @@ class ProductionForm(forms.ModelForm):
                 'model': 'productions.Person',
                 'fields': {'value': 'name', 'image': 'headshot'},
                 'attrs': {'class': 'tagify', 'placeholder': 'Foto'}
+            }),
+
+            'producers': TagsInput(**{
+                'model': 'productions.Company',
+                'fields': {'value': 'name', 'image': 'logo'},
+                'attrs': {'class': 'tagify', 'placeholder': 'Produksjon'}
+            }),
+            'distributors': TagsInput(**{
+                'model': 'productions.Company',
+                'fields': {'value': 'name', 'image': 'logo'},
+                'attrs': {'class': 'tagify', 'placeholder': 'Distribusjon'}
             }),
 
             'imdb_id': forms.TextInput({'placeholder': 'IMDb ID'}),

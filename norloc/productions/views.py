@@ -4,22 +4,20 @@
 from __future__ import unicode_literals
 
 import logging
-import tmdbsimple as tmdb
-from requests import get
-from django.core.files import File
-from django.core.files.temp import NamedTemporaryFile
+# import tmdbsimple as tmdb
+# from requests import get
+# from django.core.files import File
+# from django.core.files.temp import NamedTemporaryFile
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
+from django.http import JsonResponse#, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
-from django.conf import settings
-from uuid_upload_path import upload_to_factory
 
 from lib.tmdb import TMDb
 from lib.image_from_url import ImageFileFromUrl
 
-from .models import Production, Scene, Shot, Person
+from .models import Production, Scene, Shot, Person, Company
 from .forms import ProductionForm
 
 
@@ -54,13 +52,15 @@ def production(request, slug):
     # Update production (POST)
     if request.method == 'POST' and request.user.is_authenticated():
         print '='*50
-        # print request.POST#.get("title", "")
+        print request.POST#.get("title", "")
+        print request.FILES
 
-        form = ProductionForm(instance=production, data=request.POST)
+        form = ProductionForm(instance=production, data=request.POST, files=request.FILES)
         
         print 'VALID', form.is_valid()
         print 'MF TITLE', form.instance.title
         print 'SLUG', form.instance.slug
+        print 'PSTR', form.instance.poster
 
         if form.is_valid():
             print 'SAVING'
@@ -68,6 +68,7 @@ def production(request, slug):
             # form.save_m2m()
             print 'NEW TITLE', form.instance.title
             print 'NEW SLUG', form.instance.slug
+            print 'NEW PSTR', form.instance.poster
         else:
             print form.errors
             print 'NOT VALID!!!!!!!!!!!!'
@@ -289,11 +290,23 @@ def scenes(request):
 def people_tags(request):
     # Return JSON
     return JsonResponse({
-        'people': [{
+        'tags': [{
             'pk': p.pk,
             'value': p.name,
             'image': p.headshot.url if p.headshot else None
         } for p in Person.objects.all()]
+    })
+
+
+# JSON: Companies tags
+def companies_tags(request):
+    # Return JSON
+    return JsonResponse({
+        'tags': [{
+            'pk': p.pk,
+            'value': p.name,
+            'image': p.logo.url if p.logo else None
+        } for p in Company.objects.all()]
     })
 
 

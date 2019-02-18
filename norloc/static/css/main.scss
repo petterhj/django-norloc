@@ -137,7 +137,7 @@ section#header {
 	@include respond-to(medium-screens) { padding: 30px 20%; }
 	@include respond-to(wide-screens) { padding: 30px 30%; }
 
-	> img {
+	img.poster {
 		width: 180px; height: 267px;
 		margin-top: 45px; margin-bottom: 25px; 
 		border-radius: 4px; 
@@ -222,7 +222,9 @@ body[data-view="production"] > section#header {
 	padding-bottom: 60px;
 }
 body[data-view="production"][data-edit="true"] > section#header {
+	img.poster:hover { cursor: pointer; }
 	input { padding: 5px 10px; color: #666; }
+	input[name="poster"] { display: none; }
 	input[name="title"] {
 		width: 100%; margin: 5px 0;
 		font: 1.7rem $font-sans-serif; color: $color-accent; 
@@ -242,7 +244,7 @@ body[data-view="production"][data-edit="true"] > section#header {
 		font: 0.8rem $font-serif;
 	}
 
-	div.people {
+	div.people, div.companies {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		grid-column-gap: 10px;
@@ -266,7 +268,6 @@ body[data-view="production"][data-edit="true"] > section#header {
 			    font: 0.4rem $font-sans-serif-simple;
 			    text-transform: uppercase;
 			}
-			&:first-of-type { grid-column: 1 / -1; }
 
 			> label { 
 				position: absolute; top: 3px; right: 5px; 
@@ -274,7 +275,8 @@ body[data-view="production"][data-edit="true"] > section#header {
 				color: #B3B3B3;
 			}
 		}
-
+		&.companies { margin-top: 30px; }
+		&.people > .tagify:first-of-type { grid-column: 1 / -1; }
 	}
 	div.production_ids {
 		display: grid;
@@ -283,7 +285,7 @@ body[data-view="production"][data-edit="true"] > section#header {
 		text-align: left; font-size: 0.6rem; font-family: $font-sans-serif;
 
 		> div, input { display: inline-block; width: 100%; }
-		input { margin-bottom: 3px; height: 32px; }
+		input { margin: 0 0 3px 0; height: 32px; }
 		a { color: #999; text-decoration: none; text-transform: uppercase; }
 		a:hover { color: #666; }
 	}
