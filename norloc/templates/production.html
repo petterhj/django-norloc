@@ -81,6 +81,7 @@
 
   {{production_form.summary}}
   {{production_form.summary_credit}}
+  {{production_form.runtime}}
 
   <div class="companies">
    {{production_form.producers}}
@@ -126,7 +127,7 @@
   <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i><span>{{production.runtime}} min.</span></span>
   <span class="tag" title="Opptakssteder"><i class="zmdi zmdi-pin"></i><span>{{production.locations|length}} opptakssteder</span></span>
  </div>
- <div class="meta right">
+ <div class="meta">
   {% if production.producers.count > 0 %}
    <span class="tag"><i class="zmdi zmdi-case"></i>
     {% for company in production.producers.all %}

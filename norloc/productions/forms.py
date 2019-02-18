@@ -61,7 +61,7 @@ class ProductionForm(forms.ModelForm):
         model = Production
 
         fields = [
-            'poster', 'title', 'release', 'summary', 'summary_credit',
+            'poster', 'title', 'release', 'summary', 'summary_credit', 'runtime',
             'directors', 'writers', 'photographers', 'producers', 'distributors',
             'imdb_id', 'tmdb_id', 'nbdb_id', 'tvdb_id'
         ]
