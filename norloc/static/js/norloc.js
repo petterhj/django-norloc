@@ -179,13 +179,11 @@ var NORLOC = NORLOC || {
         var template = Handlebars.compile($('#production-result-template').html());
 
         // Search production
-        // $('form[name="search_production"]').on('submit', function(e) {
-            // var search_form = $(this);
+        $('form[name="search_production"]').on('submit', function(e) {
+            e.preventDefault();
+
             var search_form = $('form[name="search_production"]');
             var title = search_form.find('input[name="title"]').val();
-
-            // Prevent default submit handling
-            // e.preventDefault();
 
             if (!title) {
                 return;
@@ -194,7 +192,7 @@ var NORLOC = NORLOC || {
             UTIL.log('Searching for production: {0}'.format(title))
 
             // Remove any previous results
-            target.find('div.card.film').fadeOut(function() { $(this).remove(); })
+            target.find('div.production').fadeOut(function() { $(this).remove(); })
 
             // Temporarily disable inputs
             search_form.find(':input').prop('disabled', true);
@@ -203,8 +201,6 @@ var NORLOC = NORLOC || {
             $.getJSON('/json/tmdb/search/?title={0}'.format(title), function(results) {
                 // Append results
                 $.each(results.films, function(i, production) {
-                    console.log('---------------------------')
-                    console.log(production);
                     // Production
                     var rendered = $(template(production));
 
@@ -247,6 +243,6 @@ var NORLOC = NORLOC || {
                 // Re-enable inputs
                 search_form.find(':input').prop('disabled', false);
             });
-        // });
+        });
     }
 }

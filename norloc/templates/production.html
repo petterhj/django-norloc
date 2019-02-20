@@ -32,7 +32,7 @@
   <h3>{{production.release.year}}</h3>
   <h4>
    {% for director in production.directors.all %}
-    <a href="{%url 'person' director.slug %}" title="Regissør">{{director.name}}</a>
+    <a href="{%url 'person' director.slug %}" title="Regi">{{director.name}}</a>
    {% endfor %}
   </h4>
   <h4>
@@ -91,26 +91,29 @@
   <div class="production_ids">
    <div>
     {{production_form.imdb_id}}
-    <a href="https://www.imdb.com/" target="_blank">Besøk</a>
     {% if production.imdb_id %}
-     | <a href="https://www.imdb.com/title/{{production.imdb_id}}" target="_blank">Detaljer</a> 
+     <a href="https://www.imdb.com/title/{{production.imdb_id}}" target="_blank">Detaljer</a> 
      | <a href="">Oppdater</a>
+    {% else %}
+     <a href="https://www.imdb.com/" target="_blank">Søk</a>
     {% endif %}
    </div>
    <div>
     {{production_form.tmdb_id}}
-    <a href="https://www.themoviedb.org/" target="_blank">Besøk</a>
     {% if production.tmdb_id %}
-     | <a href="https://www.themoviedb.org/movie/{{production.tmdb_id}}" target="_blank">Detaljer</a> 
+     <a href="https://www.themoviedb.org/movie/{{production.tmdb_id}}" target="_blank">Detaljer</a> 
      | <a href="">Oppdater</a>
+    {% else %}
+     <a href="https://www.themoviedb.org/" target="_blank">Søk</a>
     {% endif %}
    </div>
    <div>
     {{production_form.nbdb_id}}
-    <a href="https://www.nb.no/filmografi/" target="_blank">Besøk</a>
     {% if production.nbdb_id %}
-     | <a href="https://www.nb.no/filmografi/show?id={{production.nbdb_id}}" target="_blank">Detaljer</a> 
+     <a href="https://www.nb.no/filmografi/show?id={{production.nbdb_id}}" target="_blank">Detaljer</a> 
      | <a href="">Oppdater</a>
+    {% else %}
+     <a href="https://www.nb.no/filmografi/" target="_blank">Søk</a>
     {% endif %}
    </div>
    {% if production.type == "show" %}

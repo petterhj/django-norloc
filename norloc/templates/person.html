@@ -8,13 +8,22 @@
 {# Navigation #}
 {% block navigation %}
  <a href="{% url 'index' %}">Folk</a> <span class="accent">&raquo;</span> {{person.name}}
+
+ {% if edit_mode %}
+  <a href="{%url 'person' person.slug %}" class="right icon" title="Avbryt endringer"><i class="zmdi zmdi-close"></i></a>
+  <a href="" class="right icon" title="Lagre endringer"><i class="zmdi zmdi-save"></i></a>
+ {% else %}
+  {% if user.is_authenticated %}
+   <a href="?edit=true" class="right icon" title="Rediger person"><i class="zmdi zmdi-edit"></i></a>
+  {% endif %}
+ {% endif %}
 {% endblock %}
 
 
 {# Header #}
 {% block header %}
  {% if person.headshot %}
-  <img src="{{person.headshot.url}}">
+  <img src="{{person.headshot.url}}" class="headshot">
  {% endif %}
  <h1>{{person.name}}</h1>
  <h3>{{person.job_title}}</h3>
@@ -37,11 +46,8 @@
  {% for production in person.productions %}
   <div class="production {%if production.locations|length == 0 %}faded{%endif%}" data-href="{%url 'production' production.slug%}" title="{{production.title}} ({{production.release.year}})">
    {%if production.poster %}
-    <img src="{{production.poster.url}}">
+    <img src="{{production.poster.url}}" alt="{{production.title}} ({{production.release.year}})">
    {%endif%}
-   <span class="title">
-    <a href="{%url 'production' production.slug %}">{{production.title}}</a>
-   </span>
   </div>
  {% endfor %}
  </section>
