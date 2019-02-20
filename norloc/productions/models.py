@@ -46,6 +46,10 @@ class Production(models.Model):
 
     slug = AutoSlugField(populate_from='slugified_title', editable=True, unique=True)#, always_update=True)
 
+    # Metadata
+    class Meta:
+        ordering = ['title']
+
     @property
     def locations(self):
         locations = {}
@@ -104,7 +108,6 @@ class Shot(models.Model):
     timecode = models.IntegerField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
-
 
     # Representation
     def __unicode__(self):
@@ -165,6 +168,7 @@ class Company(models.Model):
     class Meta:
         verbose_name = 'Company'
         verbose_name_plural = 'Companies'
+        ordering = ['name']
 
     # Representation
     def __unicode__(self):
@@ -190,57 +194,15 @@ class ProductionsQuerySet(models.QuerySet):
 class Production(models.Model):
     # Fields
     type            = models.CharField(max_length=4, choices=(('film', 'Film'), ('show', 'Serie')))
-
-    title           = models.CharField(max_length=50)
-    release         = models.DateField('Released')
-    summary         = models.TextField(max_length=800)
-    directors       = models.ManyToManyField(Director, blank=True)
-    producers       = models.ManyToManyField(Company, blank=True, related_name='producers')
-    distributors    = models.ManyToManyField(Company, blank=True, related_name='distributors')
-    runtime         = models.IntegerField(default=0)
-
-    poster          = models.ImageField(upload_to='posters/', blank=True)
-    backdrop        = models.ImageField(blank=True)
-
-    imdb_id         = models.CharField(max_length=10, blank=True)
-    tmdb_id         = models.CharField(max_length=10, blank=True)
-    nbdb_id         = models.CharField(max_length=10, blank=True)
-    tvdb_id         = models.CharField(max_length=10, blank=True)
+    
+    ...
 
     slug            = AutoSlugField(populate_from='title', editable=True, unique=True, always_update=True)
-
-    # Scene count
-    def scene_count(self):
-        return self.scene_set.count()
-
-    # Location count
-    def location_count(self):
-        location_count = 0
-
-        for scene in self.scene_set.all():
-            if scene.location:
-                location_count += 1
-
-        return location_count
-
-    # Locations
-    def locations(self):
-        locations = {}
-
-        for scene in self.scene_set.all():
-            if scene.location:
-                if scene.location in locations:
-                    locations[scene.location].append(scene)
-                else:
-                    locations[scene.location] = [scene]
-
-        return locations
+    
+    ...
 
     # Manager
     productions = ProductionsQuerySet.as_manager()
 
-    # Representation
-    def __unicode__(self):
-        return self.title
 
 '''

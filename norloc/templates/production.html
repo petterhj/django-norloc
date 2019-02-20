@@ -61,23 +61,23 @@
   </div>
   <div class="meta">
    {% if production.producers.count > 0 %}
-    <span class="tag"><i class="zmdi zmdi-case"></i>
+    <span class="tag" title="Produksjon"><i class="zmdi zmdi-case"></i>
      {% for company in production.producers.all %}
       {% if company.website %}
        <a href="{{company.website}}" target="_blank">{{company.name}}</a>
       {% else %}
-       {{company.name}}
+       <span>{{company.name}}</span>
       {% endif %}
      {% endfor %}
     </span>
    {% endif %}
    {% if production.distributors.count > 0 %}
-    <span class="tag"><i class="zmdi zmdi-city-alt"></i>
+    <span class="tag" title="Distribusjon"><i class="zmdi zmdi-city-alt"></i>
      {% for company in production.distributors.all %}
       {% if company.website %}
        <a href="{{company.website}}" target="_blank">{{company.name}}</a>
       {% else %}
-       {{company.name}}
+       <span>{{company.name}}</span>
       {% endif %}
      {% endfor %}
     </span>
