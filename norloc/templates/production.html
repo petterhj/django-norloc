@@ -82,7 +82,7 @@
      {% endfor %}
     </span>
    {% endif %}
-   <span class="tag" title="Ekstern informasjon"><i class="zmdi zmdi-info"></i>
+   <span class="tag" title="Ekstern informasjon"><i class="zmdi zmdi-info-outline"></i>
     {% if production.imdb_id %}<a href="https://www.imdb.com/title/{{production.imdb_id}}" title="Internet Movie Database" target="_blank">IMDb</a>{% endif %}
     {% if production.tmdb_id %}<a href="https://www.themoviedb.org/movie/{{production.tmdb_id}}" title="The Movie Database" target="_blank">TMDb</a>{% endif %}
     {% if production.nbdb_id %}<a href="https://www.nb.no/filmografi/show?id={{production.nbdb_id}}" title="Norsk filmografi (Nasjonalbiblioteket)" target="_blank">NBdb</a>{% endif %}
