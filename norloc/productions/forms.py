@@ -126,6 +126,13 @@ class ProductionForm(StyledModelForm):
             'nbdb_id': forms.TextInput({'placeholder': 'NBdb ID'}),
         }
 
+    # Clean
+    def clean_runtime(self):
+        runtime = self.cleaned_data['runtime']
+        if not runtime or runtime < 0:
+            runtime = 0
+        return runtime
+
     # # Save
     # def save(self):
     #     print '~'*50

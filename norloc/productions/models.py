@@ -49,6 +49,7 @@ class Production(models.Model):
     class Meta:
         ordering = ['title']
 
+    # Properties
     @property
     def locations(self):
         locations = {}
