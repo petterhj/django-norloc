@@ -97,34 +97,35 @@
     <img src="{%if production.poster%}{{production.poster.url}}{%else%}{% static "img/no-poster.png" %}{%endif%}" class="poster" alt="poster">
    </label>
 
-   {{production_form.poster}}
+   {{form.errors}}
 
-   {{production_form.title}}
-   {{production_form.release}}
+   {{form.poster}}
+   {{form.title}}
+   {{form.release}}
 
    <div class="people">
     {# <label for="directors" title="Regi"><i class="zmdi zmdi-comment-video"></i></label> #}
-    {{production_form.directors}}
+    {{form.directors}}
     {# <input name="directors" value="" class="tagify"> #}
     {# <input name="directors" value='[{"pk":2,"image":"/media/people/EQ-CLMddSduZY38Q2i_mqw.jpg","value":"Dag Johan Haugerud"},{"pk":15,"image":null,"value":"Sara Johnsen"}]' class="tagify"> #}
     {# <label for="writers" title="Manus"><i class="zmdi zmdi-edit"></i></label> #}
-    {{production_form.writers}}
+    {{form.writers}}
     {# <label for="photographers" title="Foto"><i class="zmdi zmdi-videocam"></i></label> #}
-    {{production_form.photographers}}
+    {{form.photographers}}
    </div>
 
-   {{production_form.summary}}
-   {{production_form.summary_credit}}
-   {{production_form.runtime}}
+   {{form.summary}}
+   {{form.summary_credit}}
+   {{form.runtime}}
 
    <div class="companies">
-    {{production_form.producers}}
-    {{production_form.distributors}}
+    {{form.producers}}
+    {{form.distributors}}
    </div>
 
    <div class="external_ids">
     <div>
-     {{production_form.imdb_id}}
+     {{form.imdb_id}}
      {% if production.imdb_id %}
       <a href="https://www.imdb.com/title/{{production.imdb_id}}" target="_blank">Detaljer</a> 
       | <a href="">Oppdater</a>
@@ -133,7 +134,7 @@
      {% endif %}
     </div>
     <div>
-     {{production_form.tmdb_id}}
+     {{form.tmdb_id}}
      {% if production.tmdb_id %}
       <a href="https://www.themoviedb.org/movie/{{production.tmdb_id}}" target="_blank">Detaljer</a> 
       | <a href="">Oppdater</a>
@@ -142,7 +143,7 @@
      {% endif %}
     </div>
     <div>
-     {{production_form.nbdb_id}}
+     {{form.nbdb_id}}
      {% if production.nbdb_id %}
       <a href="https://www.nb.no/filmografi/show?id={{production.nbdb_id}}" target="_blank">Detaljer</a> 
       | <a href="">Oppdater</a>

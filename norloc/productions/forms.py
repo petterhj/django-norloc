@@ -8,6 +8,28 @@ from django.apps import apps
 from .models import Production, Person
 
 
+# ModelForm: StyledModelForm
+class StyledModelForm(forms.ModelForm):
+    def is_valid(self, *args, **kwargs):
+        # Super
+        valid = super(StyledModelForm, self).is_valid(*args, **kwargs)
+
+        # Errors
+        errors = self.errors.as_data()
+
+        for field, validation_errors in errors.iteritems():
+            # Update field attributes
+            attr_class = self.fields[field].widget.attrs.get('class', '')
+            # attr_title = '\n'.join([u'%s (%s)' % (e.message, e.code) for e in validation_errors])
+
+            self.fields[field].widget.attrs.update({
+                'class': attr_class + ' error'
+            })
+            print self.fields[field].widget.attrs, '!!'*20
+
+        return valid
+
+
 # Widget: TagsInput
 class TagsInput(forms.TextInput):
     '''
@@ -53,9 +75,8 @@ class TagsInput(forms.TextInput):
         return []
 
 
-
 # ModelForm: Production
-class ProductionForm(forms.ModelForm):
+class ProductionForm(StyledModelForm):
     # Meta
     class Meta:
         model = Production

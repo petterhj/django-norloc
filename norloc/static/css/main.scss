@@ -5,6 +5,7 @@ $font-sans-serif-simple:	'Monda', sans-serif;
 
 $color-background-main:		#1A1919;
 $color-accent:				#C31;
+$color-accent-light:		#F5D8D1;
 
 
 $break-small: 500px;
@@ -28,7 +29,7 @@ $break-large: 1200px;
 html, body { height: 100%; }
 body { margin: 0; background: $color-background-main; }
 
-input, button, textarea, select { border: 0; outline: 0; }
+input, button, textarea, select { border: 1px solid transparent; outline: 0; }
 input, textarea, select, button {
 	display: block;
 	margin: 15px 0; padding: 15px 20px;
@@ -38,6 +39,7 @@ input, textarea, select, button {
 input::placeholder, textarea::placeholder {
 	color: rgba(0, 0, 0, 0.3);
 }
+input.error, textarea.error, select.error { border-color: $color-accent; }
 button { 
 	background: #E1E1E1;
     padding: 15px 20px 13px 20px; cursor: pointer;
@@ -58,6 +60,18 @@ h1, h2, h3, h4, h5 {
 .hidden { display: none; }
 .accent { color: $color-accent !important; }
 .uppercase { text-transform: uppercase; }
+
+.errorlist {
+	padding: 15px 40px;
+	background: $color-accent-light;
+	font: 0.9rem $font-serif; 
+	text-align: left; color: $color-accent;
+	border-radius: 4px;
+
+	> li { font-weight: bold; }
+	> li > ul { padding: 0 40px; }
+	> li > ul > li { font-weight: normal; }
+}
 
 [data-href] { cursor: pointer; }
 

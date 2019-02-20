@@ -12,7 +12,7 @@ from locations.models import Location
 
 
 # Upload factories
-MIGRATE = True
+MIGRATE = False
 upload_to_posters = upload_to_factory('posters') if not MIGRATE else 'posters'
 upload_to_backdrops = upload_to_factory('backdrops') if not MIGRATE else 'backdrops'
 upload_to_shots = upload_to_factory('shots') if not MIGRATE else 'shots'
