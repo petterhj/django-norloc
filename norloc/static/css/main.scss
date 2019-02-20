@@ -219,11 +219,12 @@ body[data-view="index"] > section#header {
 body[data-view="production"] > section#header {
 	padding-bottom: 60px;
 }
-body[data-view="production"][data-edit="true"] > section#header {
-	img.poster:hover { cursor: pointer; }
+body[data-view="production"][data-edit="true"] > section#header,
+body[data-view="person"][data-edit="true"] > section#header {
+	img.poster:hover, img.headshot:hover { cursor: pointer; }
 	input { padding: 5px 10px; color: #666; }
 	input[name="poster"] { display: none; }
-	input[name="title"] {
+	input[name="title"], input[name="name"] {
 		width: 100%; margin: 5px 0;
 		font: 1.7rem $font-sans-serif; color: $color-accent; 
 		text-align: center; text-transform: uppercase;
@@ -232,12 +233,12 @@ body[data-view="production"][data-edit="true"] > section#header {
 		display: inline-block; margin: 5px 0 20px 0;
 		font: 1.2rem $font-sans-serif; text-align: center;
 	}
-	textarea[name="summary"] {
+	textarea[name="summary"], textarea[name="bio"] {
 		width: 100%; height: 330px; margin: 0 0 5px 0; resize: vertical;
 		font: 1.2rem $font-serif; color: #666; 
 		text-align: justify; line-height: 1.7rem;
 	}
-	input[name="summary_credit"], input[name="runtime"], input[name$="_id"] {
+	input[name$="_credit"], input[name="runtime"], input[name$="_id"] {
 		margin: 10px 0;
 		font: 0.8rem $font-serif;
 	}
@@ -277,7 +278,7 @@ body[data-view="production"][data-edit="true"] > section#header {
 		&.companies { margin-top: 25px; }
 		&.people > .tagify:first-of-type { grid-column: 1 / -1; }
 	}
-	div.production_ids {
+	div.external_ids {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		grid-column-gap: 10px; color: #666;
@@ -288,14 +289,13 @@ body[data-view="production"][data-edit="true"] > section#header {
 		a { color: #999; text-decoration: none; text-transform: uppercase; }
 		a:hover { color: #666; }
 	}
-	div.meta { display: none; }
 }
 
 // View: Person
 body[data-view="person"] > section#header {
 	padding-bottom: 60px;
 
-	> img.headshot {
+	img.headshot {
 		height: 180px; margin-top: 0;
 		border-radius: 50%; 
 	}

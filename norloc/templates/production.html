@@ -53,107 +53,108 @@
   <p>
    {{production.summary|markdownify}}{% if production.summary_credit %} <span class="source">&mdash; {{production.summary_credit}}</span>{% endif %}
   </p>
- {% else %}
-  <form id="production_form" method="post" enctype="multipart/form-data">
-  {% csrf_token %}
 
-  {% if production.poster %}
-   <label for="id_poster">
-    <img src="{{production.poster.url}}" class="poster" alt="poster">
-   </label>
-  {% endif %}
-
-  {{production_form.poster}}
-
-  {{production_form.title}}
-  {{production_form.release}}
-
-  <div class="people">
-   {# <label for="directors" title="Regi"><i class="zmdi zmdi-comment-video"></i></label> #}
-   {{production_form.directors}}
-   {# <input name="directors" value="" class="tagify"> #}
-   {# <input name="directors" value='[{"pk":2,"image":"/media/people/EQ-CLMddSduZY38Q2i_mqw.jpg","value":"Dag Johan Haugerud"},{"pk":15,"image":null,"value":"Sara Johnsen"}]' class="tagify"> #}
-   {# <label for="writers" title="Manus"><i class="zmdi zmdi-edit"></i></label> #}
-   {{production_form.writers}}
-   {# <label for="photographers" title="Foto"><i class="zmdi zmdi-videocam"></i></label> #}
-   {{production_form.photographers}}
+  <div class="meta">
+   <span class="tag" title="Premiereår"><i class="zmdi zmdi-calendar-alt"></i><span>{{production.release}}</span></span>
+   <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i><span>{{production.runtime}} min.</span></span>
+   <span class="tag" title="Opptakssteder"><i class="zmdi zmdi-pin"></i><span>{{production.locations|length}} opptakssteder</span></span>
   </div>
-
-  {{production_form.summary}}
-  {{production_form.summary_credit}}
-  {{production_form.runtime}}
-
-  <div class="companies">
-   {{production_form.producers}}
-   {{production_form.distributors}}
-  </div>
-
-  <div class="production_ids">
-   <div>
-    {{production_form.imdb_id}}
-    {% if production.imdb_id %}
-     <a href="https://www.imdb.com/title/{{production.imdb_id}}" target="_blank">Detaljer</a> 
-     | <a href="">Oppdater</a>
-    {% else %}
-     <a href="https://www.imdb.com/" target="_blank">Søk</a>
-    {% endif %}
-   </div>
-   <div>
-    {{production_form.tmdb_id}}
-    {% if production.tmdb_id %}
-     <a href="https://www.themoviedb.org/movie/{{production.tmdb_id}}" target="_blank">Detaljer</a> 
-     | <a href="">Oppdater</a>
-    {% else %}
-     <a href="https://www.themoviedb.org/" target="_blank">Søk</a>
-    {% endif %}
-   </div>
-   <div>
-    {{production_form.nbdb_id}}
-    {% if production.nbdb_id %}
-     <a href="https://www.nb.no/filmografi/show?id={{production.nbdb_id}}" target="_blank">Detaljer</a> 
-     | <a href="">Oppdater</a>
-    {% else %}
-     <a href="https://www.nb.no/filmografi/" target="_blank">Søk</a>
-    {% endif %}
-   </div>
-   {% if production.type == "show" %}
-    <div>
-     {{production_form.tvdb_id}}
-     {% if production.tvdb_id %}<a href="">Detaljer</a>{% endif %}
-    </div>
+  <div class="meta">
+   {% if production.producers.count > 0 %}
+    <span class="tag"><i class="zmdi zmdi-case"></i>
+     {% for company in production.producers.all %}
+      {% if company.website %}
+       <a href="{{company.website}}" target="_blank">{{company.name}}</a>
+      {% else %}
+       {{company.name}}
+      {% endif %}
+     {% endfor %}
+    </span>
+   {% endif %}
+   {% if production.distributors.count > 0 %}
+    <span class="tag"><i class="zmdi zmdi-city-alt"></i>
+     {% for company in production.distributors.all %}
+      {% if company.website %}
+       <a href="{{company.website}}" target="_blank">{{company.name}}</a>
+      {% else %}
+       {{company.name}}
+      {% endif %}
+     {% endfor %}
+    </span>
    {% endif %}
   </div>
+ {% else %}
+  <form id="production_form" method="post" enctype="multipart/form-data">
+   {% csrf_token %}
+
+   {% if production.poster %}
+    <label for="id_poster">
+     <img src="{{production.poster.url}}" class="poster" alt="poster">
+    </label>
+   {% endif %}
+
+   {{production_form.poster}}
+
+   {{production_form.title}}
+   {{production_form.release}}
+
+   <div class="people">
+    {# <label for="directors" title="Regi"><i class="zmdi zmdi-comment-video"></i></label> #}
+    {{production_form.directors}}
+    {# <input name="directors" value="" class="tagify"> #}
+    {# <input name="directors" value='[{"pk":2,"image":"/media/people/EQ-CLMddSduZY38Q2i_mqw.jpg","value":"Dag Johan Haugerud"},{"pk":15,"image":null,"value":"Sara Johnsen"}]' class="tagify"> #}
+    {# <label for="writers" title="Manus"><i class="zmdi zmdi-edit"></i></label> #}
+    {{production_form.writers}}
+    {# <label for="photographers" title="Foto"><i class="zmdi zmdi-videocam"></i></label> #}
+    {{production_form.photographers}}
+   </div>
+
+   {{production_form.summary}}
+   {{production_form.summary_credit}}
+   {{production_form.runtime}}
+
+   <div class="companies">
+    {{production_form.producers}}
+    {{production_form.distributors}}
+   </div>
+
+   <div class="external_ids">
+    <div>
+     {{production_form.imdb_id}}
+     {% if production.imdb_id %}
+      <a href="https://www.imdb.com/title/{{production.imdb_id}}" target="_blank">Detaljer</a> 
+      | <a href="">Oppdater</a>
+     {% else %}
+      <a href="https://www.imdb.com/" target="_blank">Søk</a>
+     {% endif %}
+    </div>
+    <div>
+     {{production_form.tmdb_id}}
+     {% if production.tmdb_id %}
+      <a href="https://www.themoviedb.org/movie/{{production.tmdb_id}}" target="_blank">Detaljer</a> 
+      | <a href="">Oppdater</a>
+     {% else %}
+      <a href="https://www.themoviedb.org/" target="_blank">Søk</a>
+     {% endif %}
+    </div>
+    <div>
+     {{production_form.nbdb_id}}
+     {% if production.nbdb_id %}
+      <a href="https://www.nb.no/filmografi/show?id={{production.nbdb_id}}" target="_blank">Detaljer</a> 
+      | <a href="">Oppdater</a>
+     {% else %}
+      <a href="https://www.nb.no/filmografi/" target="_blank">Søk</a>
+     {% endif %}
+    </div>
+    {% if production.type == "show" %}
+     <div>
+      {{production_form.tvdb_id}}
+      {% if production.tvdb_id %}<a href="">Detaljer</a>{% endif %}
+     </div>
+    {% endif %}
+   </div>
   </form>
  {% endif %}
- <div class="meta">
-  <span class="tag" title="Premiereår"><i class="zmdi zmdi-calendar-alt"></i><span>{{production.release}}</span></span>
-  <span class="tag" title="Lengde"><i class="zmdi zmdi-time"></i><span>{{production.runtime}} min.</span></span>
-  <span class="tag" title="Opptakssteder"><i class="zmdi zmdi-pin"></i><span>{{production.locations|length}} opptakssteder</span></span>
- </div>
- <div class="meta">
-  {% if production.producers.count > 0 %}
-   <span class="tag"><i class="zmdi zmdi-case"></i>
-    {% for company in production.producers.all %}
-     {% if company.website %}
-      <a href="{{company.website}}" target="_blank">{{company.name}}</a>
-     {% else %}
-      {{company.name}}
-     {% endif %}
-    {% endfor %}
-   </span>
-  {% endif %}
-  {% if production.distributors.count > 0 %}
-   <span class="tag"><i class="zmdi zmdi-city-alt"></i>
-    {% for company in production.distributors.all %}
-     {% if company.website %}
-      <a href="{{company.website}}" target="_blank">{{company.name}}</a>
-     {% else %}
-      {{company.name}}
-     {% endif %}
-    {% endfor %}
-   </span>
-  {% endif %}
- </div>
 {% endblock %}
 
 

@@ -106,18 +106,39 @@ class ProductionForm(forms.ModelForm):
             'tvdb_id': forms.TextInput({'placeholder': 'TVDb ID'}),
         }
 
-    # Save
-    def save(self):
-        print '~'*50
-        print self.cleaned_data
-        print '~'*50
+    # # Save
+    # def save(self):
+    #     print '~'*50
+    #     print self.cleaned_data
+    #     print '~'*50
 
-        # Initial
-        production = super(ProductionForm, self).save(commit=True)
-        '''
+    #     # Initial
+    #     production = super(ProductionForm, self).save(commit=True)
+    #     '''
 
-        # Save
-        production.save()
+    #     # Save
+    #     production.save()
 
-        return production
-        '''
+    #     return production
+    #     '''
+
+
+# ModelForm: Person
+class PersonForm(forms.ModelForm):
+    # Meta
+    class Meta:
+        model = Person
+
+        fields = [
+            'name', 'bio', 'bio_credit',
+            'imdb_id', 'tmdb_id',
+        ]
+
+        widgets = {
+            'headshot': forms.FileInput(),
+            'name': forms.TextInput({'placeholder': 'Navn'}),
+            'bio': forms.Textarea({'placeholder': 'Biografi'}),
+            'bio_credit': forms.TextInput({'placeholder': 'Kreditering (biografi)'}),
+            'imdb_id': forms.TextInput({'placeholder': 'IMDb ID'}),
+            'tmdb_id': forms.TextInput({'placeholder': 'TMDb ID'}),
+        }

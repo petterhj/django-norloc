@@ -4,12 +4,8 @@
 from __future__ import unicode_literals
 
 import logging
-# import tmdbsimple as tmdb
-# from requests import get
-# from django.core.files import File
-# from django.core.files.temp import NamedTemporaryFile
 from django.shortcuts import render, redirect
-from django.http import JsonResponse#, HttpResponseForbidden
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
@@ -18,7 +14,7 @@ from lib.tmdb import TMDb
 from lib.image_from_url import ImageFileFromUrl
 
 from .models import Production, Scene, Shot, Person, Company
-from .forms import ProductionForm
+from .forms import ProductionForm, PersonForm
 
 
 # Logger
@@ -43,11 +39,6 @@ def map(request):
 def production(request, slug):
     # Production
     production = get_object_or_404(Production, slug=slug)
-
-    # print '='*50
-    # print 'METHOD', request.method
-    # print 'PRODCT', production.title
-    # print '='*50
 
     # Update production (POST)
     if request.method == 'POST' and request.user.is_authenticated():
@@ -78,7 +69,6 @@ def production(request, slug):
         # return redirect('production', slug=form.instance.slug)
         return redirect(reverse('production', args=[form.instance.slug]) + '?edit=true')
 
-
     # View production (GET)
     edit_request = bool(request.GET.get('edit', False))
     edit_mode = edit_request and request.user.is_authenticated()
@@ -86,8 +76,6 @@ def production(request, slug):
     logger.info('Rendering production, slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
         production.slug, edit_mode, edit_request, request.user.is_authenticated()
     ))
-
-    print 'M TITLE', production.title
 
     # Render template
     return render(request, 'production.html', {
@@ -102,8 +90,18 @@ def person(request, slug):
     # Person
     person = get_object_or_404(Person, slug=slug)
 
+    # View person (GET)
+    edit_request = bool(request.GET.get('edit', False))
+    edit_mode = edit_request and request.user.is_authenticated()
+
+    logger.info('Rendering person, slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
+        person.slug, edit_mode, edit_request, request.user.is_authenticated()
+    ))
+
     # Render template
     return render(request, 'person.html', {
+        'edit_mode': edit_mode,
+        'form': PersonForm(instance=person) if edit_mode else None,
         'person': person
     })
 

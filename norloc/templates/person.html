@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% load internal_links %}
+{% load markdownify %}
+
 {% block view %}person{% endblock %}
 {% block content_pk %}{{ person.pk }}{% endblock %}
 {% block title %}{{person.name}} | {% endblock %}
@@ -22,22 +25,61 @@
 
 {# Header #}
 {% block header %}
- {% if person.headshot %}
-  <img src="{{person.headshot.url}}" class="headshot">
- {% endif %}
- <h1>{{person.name}}</h1>
- <h3>{{person.job_title}}</h3>
- <p>
-  {{person.bio|safe}}{% if person.bio_credit %} <span class="source">&mdash; {{person.bio_credit}}</span>{% endif %}
- </p>
- <div class="meta">
-  <span class="tag" title="Filmer"><i class="zmdi zmdi-movie-alt"></i><span>{{person.productions|length}} produksjoner</span></span>
- </div>
- <div class="meta right">
-  {% if person.imdb_id %}
-   <a href="https://www.imdb.com/name/{{person.imdb_id}}" target="_blank">IMDb</a>
+ {% if not edit_mode %}
+  {% if person.headshot %}
+   <img src="{{person.headshot.url}}" class="headshot">
   {% endif %}
- </div>
+  <h1>{{person.name}}</h1>
+  <h3>{{person.job_title}}</h3>
+  <p>
+   {{person.bio|internal_links|markdownify}}{% if person.bio_credit %} <span class="source">&mdash; {{person.bio_credit}}</span>{% endif %}
+  </p>
+  <div class="meta">
+   <span class="tag" title="Filmer"><i class="zmdi zmdi-movie-alt"></i><span>{{person.productions|length}} produksjoner</span></span>
+  </div>
+  <div class="meta">
+   {% if person.imdb_id %}
+    <a href="https://www.imdb.com/name/{{person.imdb_id}}" target="_blank">IMDb</a>
+   {% endif %}
+  </div>
+ {% else %}
+  <form id="person_form" method="post" enctype="multipart/form-data">
+   {% csrf_token %}
+
+   {% if person.headshot %}
+    <label for="id_poster">
+     <img src="{{person.headshot.url}}" class="headshot" alt="headshot">
+    </label>
+   {% endif %}
+
+   <!-- {{form.headshot}} -->
+
+   {{form.name}}
+   {{form.bio}}
+   {{form.bio_credit}}
+
+   <div class="external_ids">
+    <div>
+     {{form.imdb_id}}
+     {% if person.imdb_id %}
+      <a href="https://www.imdb.com/name/{{person.imdb_id}}" target="_blank">Detaljer</a> 
+      | <a href="">Oppdater</a>
+     {% else %}
+      <a href="https://www.imdb.com/" target="_blank">Søk</a>
+     {% endif %}
+    </div>
+    <div>
+     {{form.tmdb_id}}
+     {% if person.tmdb_id %}
+      <a href="https://www.themoviedb.org/person/{{person.tmdb_id}}" target="_blank">Detaljer</a> 
+      | <a href="">Oppdater</a>
+     {% else %}
+      <a href="https://www.themoviedb.org/" target="_blank">Søk</a>
+     {% endif %}
+    </div>
+   </div>
+  </form>
+ {% endif %}
 {% endblock %}
 
 
