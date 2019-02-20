@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
 {% load markdownify %}
 
 {% block view %}production{% endblock %}
@@ -92,11 +93,9 @@
   <form id="production_form" method="post" enctype="multipart/form-data">
    {% csrf_token %}
 
-   {% if production.poster %}
-    <label for="id_poster">
-     <img src="{{production.poster.url}}" class="poster" alt="poster">
-    </label>
-   {% endif %}
+   <label for="id_poster">
+    <img src="{%if production.poster%}{{production.poster.url}}{%else%}{% static "img/no-poster.png" %}{%endif%}" class="poster" alt="poster">
+   </label>
 
    {{production_form.poster}}
 

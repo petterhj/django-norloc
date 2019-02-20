@@ -129,7 +129,7 @@ class PersonForm(forms.ModelForm):
         model = Person
 
         fields = [
-            'name', 'bio', 'bio_credit',
+            'headshot', 'name', 'bio', 'bio_credit',
             'imdb_id', 'tmdb_id',
         ]
 

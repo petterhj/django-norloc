@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
 {% load internal_links %}
 {% load markdownify %}
 
@@ -45,13 +46,11 @@
   <form id="person_form" method="post" enctype="multipart/form-data">
    {% csrf_token %}
 
-   {% if person.headshot %}
-    <label for="id_poster">
-     <img src="{{person.headshot.url}}" class="headshot" alt="headshot">
-    </label>
-   {% endif %}
+   <label for="id_headshot">
+    <img src="{%if person.headshot%}{{person.headshot.url}}{%else%}{% static "img/no-headshot.png" %}{%endif%}" class="headshot" alt="headshot">
+   </label>
 
-   <!-- {{form.headshot}} -->
+   {{form.headshot}}
 
    {{form.name}}
    {{form.bio}}
