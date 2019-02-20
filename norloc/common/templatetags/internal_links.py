@@ -43,7 +43,7 @@ def internal_links(value):
             value = value.replace('{{%s:%s}}' % (view, slug), resolved)
 
     except:
-        logger.exception('Could not parse interla link')
+        logger.exception('Could not parse internal link')
         return value
     
     return value
