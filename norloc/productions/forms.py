@@ -63,7 +63,7 @@ class ProductionForm(forms.ModelForm):
         fields = [
             'poster', 'title', 'release', 'summary', 'summary_credit', 'runtime',
             'directors', 'writers', 'photographers', 'producers', 'distributors',
-            'imdb_id', 'tmdb_id', 'nbdb_id', 'tvdb_id'
+            'imdb_id', 'tmdb_id', 'nbdb_id',
         ]
 
         widgets = {
@@ -103,7 +103,6 @@ class ProductionForm(forms.ModelForm):
             'imdb_id': forms.TextInput({'placeholder': 'IMDb ID'}),
             'tmdb_id': forms.TextInput({'placeholder': 'TMDb ID'}),
             'nbdb_id': forms.TextInput({'placeholder': 'NBdb ID'}),
-            'tvdb_id': forms.TextInput({'placeholder': 'TVDb ID'}),
         }
 
     # # Save

@@ -31,7 +31,7 @@ class ProductionAdmin(admin.ModelAdmin):
             'fields': ['poster']
         }),
         ('External information', {
-            'fields': ['imdb_id', 'tmdb_id', 'nbdb_id', 'tvdb_id']
+            'fields': ['imdb_id', 'tmdb_id', 'nbdb_id']
         }),
     ]
 

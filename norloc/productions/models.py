@@ -12,7 +12,7 @@ from locations.models import Location
 
 
 # Upload factories
-MIGRATE = False
+MIGRATE = True
 upload_to_posters = upload_to_factory('posters') if not MIGRATE else 'posters'
 upload_to_backdrops = upload_to_factory('backdrops') if not MIGRATE else 'backdrops'
 upload_to_shots = upload_to_factory('shots') if not MIGRATE else 'shots'
@@ -42,7 +42,6 @@ class Production(models.Model):
     imdb_id = models.CharField(max_length=10, blank=False, unique=True)
     tmdb_id = models.CharField(max_length=10, blank=False, unique=True)
     nbdb_id = models.CharField(max_length=10, blank=True)
-    tvdb_id = models.CharField(max_length=10, blank=True)
 
     slug = AutoSlugField(populate_from='slugified_title', editable=True, unique=True)#, always_update=True)
 
