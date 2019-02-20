@@ -4,6 +4,7 @@
 from json import dumps, loads
 from django import forms
 from django.apps import apps
+from django.core.urlresolvers import reverse_lazy
 
 from .models import Production, Person
 
@@ -39,6 +40,7 @@ class TagsInput(forms.TextInput):
     # Init
     def __init__(self, *args, **kwargs):
         self.model = kwargs.pop('model')
+        self.source = kwargs.pop('source')
         self.fields = kwargs.pop('fields')
         super(TagsInput, self).__init__(*args, **kwargs)
 
@@ -64,7 +66,9 @@ class TagsInput(forms.TextInput):
             })
 
         # Value
-        return super(TagsInput, self).render(name, dumps(tags), attrs=None)
+        return super(TagsInput, self).render(name, dumps(tags), attrs={
+            'data-source': self.source
+        })
 
 
     # Value from data
@@ -96,27 +100,32 @@ class ProductionForm(StyledModelForm):
 
             'directors': TagsInput(**{
                 'model': 'productions.Person',
+                'source': reverse_lazy('people_tags'),
                 'fields': {'value': 'name', 'image': 'headshot'},
                 'attrs': {'class': 'tagify', 'placeholder': 'Regi'}
             }),
             'writers': TagsInput(**{
                 'model': 'productions.Person',
+                'source': reverse_lazy('people_tags'),
                 'fields': {'value': 'name', 'image': 'headshot'},
                 'attrs': {'class': 'tagify', 'placeholder': 'Manus'}
             }),
             'photographers': TagsInput(**{
                 'model': 'productions.Person',
+                'source': reverse_lazy('people_tags'),
                 'fields': {'value': 'name', 'image': 'headshot'},
                 'attrs': {'class': 'tagify', 'placeholder': 'Foto'}
             }),
 
             'producers': TagsInput(**{
                 'model': 'productions.Company',
+                'source': reverse_lazy('companies_tags'),
                 'fields': {'value': 'name', 'image': 'logo'},
                 'attrs': {'class': 'tagify', 'placeholder': 'Produksjon'}
             }),
             'distributors': TagsInput(**{
                 'model': 'productions.Company',
+                'source': reverse_lazy('companies_tags'),
                 'fields': {'value': 'name', 'image': 'logo'},
                 'attrs': {'class': 'tagify', 'placeholder': 'Distribusjon'}
             }),

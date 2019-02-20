@@ -76,7 +76,7 @@ def production(request, slug):
     return render(request, 'production.html', {
         'edit_mode': edit_mode,
         'form': form if edit_mode else None,
-        'form_errors': dict(form.errors.items()) if form and edit_mode else None,
+        # 'form_errors': dict(form.errors.items()) if form and edit_mode else None,
         'production': production
     })
 
@@ -85,24 +85,25 @@ def production(request, slug):
 def person(request, slug):
     # Person
     person = get_object_or_404(Person, slug=slug)
+    form = PersonForm(instance=person)
 
     # Update person (POST)
     if request.method == 'POST' and request.user.is_authenticated():
         # Form
-        form = ProductionForm(instance=person, data=request.POST, files=request.FILES)
+        form = PersonForm(instance=person, data=request.POST, files=request.FILES)
 
+        logger.info('Checking if form is valid')
+        
         if form.is_valid():
-            # Save
+            logger.info('Form valid, saving posted data')
             form.save()
-            
-        else:
-            print form.errors
-            print 'NOT VALID!!!!!!!!!!!!'
 
+        else:
+            logger.error('Form invalid')
 
         # Disable edit mode
         # return redirect('production', slug=form.instance.slug)
-        return redirect(reverse('production', args=[form.instance.slug]) + '?edit=true')
+        # return redirect(reverse('production', args=[form.instance.slug]) + '?edit=true')
 
     # View person (GET)
     edit_request = bool(request.GET.get('edit', False))
@@ -115,7 +116,7 @@ def person(request, slug):
     # Render template
     return render(request, 'person.html', {
         'edit_mode': edit_mode,
-        'form': PersonForm(instance=person) if edit_mode else None,
+        'form': form if edit_mode else None,
         'person': person
     })
 

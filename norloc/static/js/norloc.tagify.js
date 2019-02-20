@@ -1,7 +1,8 @@
-function TagInput(input, template, source_url) {
+function TagInput(input, template) {
     var controller,
         template = Handlebars.compile(template.html()),
-        whitelist = (input.val() ? JSON.parse(input.val()) : []);
+        whitelist = (input.val() ? JSON.parse(input.val()) : []),
+        source_url = input.data('source');
 
     var taginput = new Tagify(input[0], {
         tagTemplate : function(value, data){

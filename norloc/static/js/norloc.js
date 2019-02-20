@@ -30,6 +30,42 @@ var NORLOC = NORLOC || {
         // Edit mode
         if (getURLParameter('edit') === 'true') {
             $('body').attr('data-edit', true);
+            
+            UTIL.log('Edit mode enabled for view "{0}"'.format($('body').data('view')));
+
+            // Poster/Headshot
+            $('input[name="poster"],input[name="headshot"]').on('change', function(e) {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('section#header img.poster, section#header img.headshot').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
+            // Tag fields
+            if ($('#tag-template').length > 0) {
+                $('input.tagify').each(function() {
+                    TagInput($(this), $('#tag-template'))
+                });
+            }
+
+            // Process form
+            $(document).bind('keydown', 'ctrl+s', function(e) {
+                e.preventDefault();
+                $('section#header form').submit();
+            }).bind('keydown', 'esc', function(e) {
+                e.preventDefault();
+                window.location = $('section#caption i.zmdi-close').parent().attr('href');
+            });
+
+            $('section#caption i.zmdi-save').on('click', function(e) {
+                e.preventDefault();
+                $('section#header form').submit();
+            });
         }
     },
 
@@ -102,43 +138,6 @@ var NORLOC = NORLOC || {
             // Move add button
             $('section#content').append($('div.location.add').show());
         });
-
-        // Edit mode
-        if ($('body').data('edit')) {
-            // Poster
-            $('input[name="poster"]').on('change', function(e) {
-                if (this.files && this.files[0]) {
-                    var reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        $('section#header img.poster').attr('src', e.target.result);
-                    }
-
-                    reader.readAsDataURL(this.files[0]);
-                }
-            });
-
-            // Tags
-            TagInput($('input[name="directors"]'), $('#tag-template'), '/json/tags/people');
-            TagInput($('input[name="writers"]'), $('#tag-template'), '/json/tags/people');
-            TagInput($('input[name="photographers"]'), $('#tag-template'), '/json/tags/people');
-            TagInput($('input[name="producers"]'), $('#tag-template'), '/json/tags/companies');
-            TagInput($('input[name="distributors"]'), $('#tag-template'), '/json/tags/companies');
-
-            // Process form
-            $(document).bind('keydown', 'ctrl+s', function(e) {
-                e.preventDefault();
-                $('form#production_form').submit();
-            }).bind('keydown', 'esc', function(e) {
-                e.preventDefault();
-                window.location = $('section#caption i.zmdi-close').parent().attr('href');
-            });
-
-            $('section#caption i.zmdi-save').on('click', function(e) {
-                e.preventDefault();
-                $('form#production_form').submit();
-            });
-        }   
     },
 
     // View: Map
