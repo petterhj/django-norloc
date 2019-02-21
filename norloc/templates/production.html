@@ -91,15 +91,13 @@
   </div>
  {% else %}
   <form id="production_form" method="post" enctype="multipart/form-data">
+   {{ form.media }}
    {% csrf_token %}
 
-   <label for="id_poster">
-    <img src="{%if production.poster%}{{production.poster.url}}{%else%}{% static "img/no-poster.png" %}{%endif%}" class="poster" alt="poster">
-   </label>
-
+   {{form.poster}}
+   
    {{form.errors}}
 
-   {{form.poster}}
    {{form.title}}
    {{form.release}}
 

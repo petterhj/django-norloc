@@ -34,17 +34,17 @@ var NORLOC = NORLOC || {
             UTIL.log('Edit mode enabled for view "{0}"'.format($('body').data('view')));
 
             // Poster/Headshot
-            $('input[name="poster"],input[name="headshot"]').on('change', function(e) {
-                if (this.files && this.files[0]) {
-                    var reader = new FileReader();
+            // $('input[name="poster"],input[name="headshot"]').on('change', function(e) {
+            //     if (this.files && this.files[0]) {
+            //         var reader = new FileReader();
 
-                    reader.onload = function(e) {
-                        $('section#header img.poster, section#header img.headshot').attr('src', e.target.result);
-                    }
+            //         reader.onload = function(e) {
+            //             $('section#header img.poster, section#header img.headshot').attr('src', e.target.result);
+            //         }
 
-                    reader.readAsDataURL(this.files[0]);
-                }
-            });
+            //         reader.readAsDataURL(this.files[0]);
+            //     }
+            // });
 
             // Tag fields
             if ($('#tag-template').length > 0) {

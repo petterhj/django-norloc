@@ -162,7 +162,7 @@ section#header {
 	    text-transform: uppercase; text-align: center;
 	}
 	h3, h4 { color: #666; }
-	h3 { margin: 20px 0 10px 0; }
+	h3 { margin: 20px 0; }
 	h4 { 
 		font-family: $font-sans-serif; 
 		// margin-bottom: 25px;
@@ -236,14 +236,28 @@ body[data-view="production"] > section#header {
 }
 body[data-view="production"][data-edit="true"] > section#header,
 body[data-view="person"][data-edit="true"] > section#header {
-	img.poster:hover, img.headshot:hover { cursor: pointer; }
+	div.imageselect > .imageselect-buttons { bottom: 30px; padding: 0 5px; }
+	div.imageselect > .imageselect-buttons .imageselect-btn::before {
+		background: rgba(255, 255, 255, 0.5);
+		font: 0.7rem $font-sans-serif-simple;
+		font-weight: bold; text-transform: uppercase;
+		border-radius: 4px; color: rgba(0, 0, 0, 0.75);
+	}
+	div.imageselect > .imageselect-buttons .imageselect-btn:hover::before,
+	div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before {
+		background: rgba(255, 255, 255, 0.8);
+		border-color: rgba(0, 0, 0, 0.75);
+	}
+	div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before {
+	}
+
 	input { padding: 5px 10px; color: #666; }
-	input[name="poster"] { display: none; }
 	input[name="title"], input[name="name"] {
 		width: 100%; margin: 5px 0;
 		font: 1.7rem $font-sans-serif; color: $color-accent; 
 		text-align: center; text-transform: uppercase;
 	}
+	input[name="name"] { margin-bottom: 15px; }
 	input[name="release"] {
 		display: inline-block; margin: 5px 0 20px 0;
 		font: 1.2rem $font-sans-serif; text-align: center;
@@ -254,7 +268,7 @@ body[data-view="person"][data-edit="true"] > section#header {
 		text-align: justify; line-height: 1.7rem;
 	}
 	input[name$="_credit"], input[name="runtime"], input[name$="_id"] {
-		margin: 10px 0;
+		margin: 10px 0 15px 0;
 		font: 0.8rem $font-serif;
 	}
 	input[name="runtime"] { margin-top: 15px; }
@@ -313,6 +327,7 @@ body[data-view="person"] > section#header {
 	img.headshot {
 		height: 180px; margin-top: 0;
 		border-radius: 50%; 
+		filter: grayscale(100%);
 	}
 }
 
@@ -346,10 +361,8 @@ body[data-view="index"] > section#content,
 body[data-view="person"] > section#content {
 	grid-template-columns: repeat(3, 1fr);
 
-	@include respond-to(medium-screens) { 
-		grid-template-columns: repeat(5, 1fr); 
-	}
-	// @include respond-to(wide-screens) { margin: 0 calc(30% - 60px); padding: 60px 0; }
+	@include respond-to(medium-screens) { grid-template-columns: repeat(5, 1fr); }
+	@include respond-to(wide-screens) { grid-template-columns: repeat(7, 1fr); }
 
 	div.production {
 		position: relative;

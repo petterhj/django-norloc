@@ -1,0 +1,34 @@
+div.imageselect { 
+	display: inline-block;
+	position: relative;
+}
+
+div.imageselect > img { display: block; }
+div.imageselect.cleared > img { }
+
+div.imageselect > .imageselect-buttons { 
+	position: absolute; bottom: 10px; left: 0;
+	overflow: auto; width: 100%;
+}
+div.imageselect > .imageselect-buttons .imageselect-btn { 
+	display: inline-block; height: 20px;
+	float: left; width: calc(50% - 10px); margin: 5px;
+	text-align: center;
+	position: relative;
+	cursor: pointer;
+
+}
+div.imageselect > .imageselect-buttons .imageselect-btn::before { 
+	position: absolute; top: 0; left: 0;
+	width: 100%;
+	background: pink;
+	border: 1px solid transparent;
+	content: attr(title);
+}
+div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before { 
+	border: 1px solid #333;
+}
+
+div.imageselect > input { 
+	display: none;
+}

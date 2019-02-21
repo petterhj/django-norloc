@@ -44,14 +44,12 @@
   </div>
  {% else %}
   <form id="person_form" method="post" enctype="multipart/form-data">
+   {{ form.media }}
    {% csrf_token %}
 
-   <label for="id_headshot">
-    <img src="{%if person.headshot%}{{person.headshot.url}}{%else%}{% static "img/no-headshot.png" %}{%endif%}" class="headshot" alt="headshot">
-   </label>
+   {{form.errors}}
 
    {{form.headshot}}
-
    {{form.name}}
    {{form.bio}}
    {{form.bio_credit}}

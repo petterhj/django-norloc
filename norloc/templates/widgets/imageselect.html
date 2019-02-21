@@ -1,0 +1,29 @@
+<div class="imageselect">
+ <img src="{% if widget.is_initial %}{{ widget.value.url }}{% else %}{% if widget.attrs.srccleared %}{{ widget.attrs.srccleared }}{% endif %}{% endif %}" class="{{ widget.name }}" alt="{{ widget.name }}" title="{% if widget.is_initial %}{{ widget.initial_text }}: {{ widget.value }}{% endif %}">
+
+ <div class="imageselect-buttons">
+  <label for="{{ widget.attrs.id }}">
+   <div class="imageselect-btn select" title="{{ widget.input_text }}"></div>
+  </label>
+  {% if not widget.required %}
+   <div class="imageselect-btn clear" title="{{ widget.clear_checkbox_label }}"></div>
+  {% endif %}
+ </div>
+
+ <input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} />
+
+ {% if not widget.required %}
+  <input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
+ {% endif %}
+</div>
+
+
+<!-- <hr>
+<b>!{{ widget.attrs.srccleared }}!</b><br>
+<b>{{ widget.name }}</b><br>
+<b>{{ widget.value }}</b><br>
+<b>{{ widget.value.url }}</b><br>
+<b>{{ widget.initial_text }}</b><br> 
+<b>{{ widget.is_initial }}</b><br>
+<b>{{ widget.required }}</b><br>
+<hr> -->

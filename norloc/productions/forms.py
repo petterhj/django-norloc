@@ -5,8 +5,10 @@ from json import dumps, loads
 from django import forms
 from django.apps import apps
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from .models import Production, Person
+
 
 
 # ModelForm: StyledModelForm
@@ -29,6 +31,17 @@ class StyledModelForm(forms.ModelForm):
             print self.fields[field].widget.attrs, '!!'*20
 
         return valid
+
+
+
+# Widget: ImageSelect
+class ImageSelect(forms.ClearableFileInput):
+    template_name = 'widgets/imageselect.html'
+
+    class Media:
+        css = {'all': ('css/widget.imageselect.css',)}
+        js = ('js/widget.imageselect.js',)
+
 
 
 # Widget: TagsInput
@@ -92,11 +105,12 @@ class ProductionForm(StyledModelForm):
         ]
 
         widgets = {
-            'poster': forms.FileInput(),
+            'poster': ImageSelect({'srccleared': static('img/no-poster.png')}),
             'title': forms.TextInput({'placeholder': 'Tittel'}),
             'release': forms.TextInput({'placeholder': 'Permiere'}),
             'summary': forms.Textarea({'placeholder': 'Sammendrag'}),
             'summary_credit': forms.TextInput({'placeholder': 'Kreditering (sammendrag)'}),
+            'runtime': forms.NumberInput({'placeholder': 'Lengde'}),
 
             'directors': TagsInput(**{
                 'model': 'productions.Person',
@@ -135,12 +149,6 @@ class ProductionForm(StyledModelForm):
             'nbdb_id': forms.TextInput({'placeholder': 'NBdb ID'}),
         }
 
-    # Clean
-    def clean_runtime(self):
-        runtime = self.cleaned_data['runtime']
-        if not runtime or runtime < 0:
-            runtime = 0
-        return runtime
 
     # # Save
     # def save(self):
@@ -171,7 +179,7 @@ class PersonForm(forms.ModelForm):
         ]
 
         widgets = {
-            'headshot': forms.FileInput(),
+            'headshot': ImageSelect({'srccleared': static('img/no-headshot.png')}),
             'name': forms.TextInput({'placeholder': 'Navn'}),
             'bio': forms.Textarea({'placeholder': 'Biografi'}),
             'bio_credit': forms.TextInput({'placeholder': 'Kreditering (biografi)'}),

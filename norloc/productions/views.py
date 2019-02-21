@@ -39,44 +39,45 @@ def map(request):
 def production(request, slug):
     # Production
     production = get_object_or_404(Production, slug=slug)
-    form = ProductionForm(instance=production)
+    edit_request = bool(request.GET.get('edit', False))
+    edit_mode = edit_request and request.user.is_authenticated()
+    form = None
+
+    # Edit production (GET)
+    if request.method == 'GET' and edit_mode:
+        # Form
+        form = ProductionForm(instance=production)
 
     # Update production (POST)
-    if request.method == 'POST' and request.user.is_authenticated():
-        print '='*50
-        print request.POST#.get("title", "")
-        print request.FILES
-
+    if request.method == 'POST' and edit_mode:
+        # print '='*50
+        # print request.POST#.get("title", "")
+        # print request.FILES
+        # Form
         form = ProductionForm(instance=production, data=request.POST, files=request.FILES)
         
         logger.info('Checking if form is valid')
         
         if form.is_valid():
+            # Save
             logger.info('Form valid, saving posted data')
             form.save()
 
+            # Redirect
+            return redirect(reverse('production', args=[form.instance.slug]) + '?edit=true')
+
         else:
             logger.error('Form invalid')
-            # print form.errors
-            # print dict(form.errors.items())
-
-        # Disable edit mode
-        # return redirect('production', slug=form.instance.slug, errors=None)
-        # return redirect(reverse('production', args=[form.instance.slug, dict(form.errors.items())]) + '?edit=true')
-
-    # View production (GET)
-    edit_request = bool(request.GET.get('edit', False))
-    edit_mode = edit_request and request.user.is_authenticated()
-
-    logger.info('Rendering production, slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
-        production.slug, edit_mode, edit_request, request.user.is_authenticated()
-    ))
+            logger.debug(dict(form.errors.items()))
 
     # Render template
+    logger.info('Rendering production (%s), slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
+        request.method, production.slug, edit_mode, edit_request, request.user.is_authenticated()
+    ))
+
     return render(request, 'production.html', {
         'edit_mode': edit_mode,
         'form': form if edit_mode else None,
-        # 'form_errors': dict(form.errors.items()) if form and edit_mode else None,
         'production': production
     })
 
@@ -85,32 +86,37 @@ def production(request, slug):
 def person(request, slug):
     # Person
     person = get_object_or_404(Person, slug=slug)
-    form = PersonForm(instance=person)
+    edit_request = bool(request.GET.get('edit', False))
+    edit_mode = edit_request and request.user.is_authenticated()
+    form = None
+
+    # Edit person (GET)
+    if request.method == 'GET' and edit_mode:
+        # Form
+        form = PersonForm(instance=person)
 
     # Update person (POST)
     if request.method == 'POST' and request.user.is_authenticated():
         # Form
         form = PersonForm(instance=person, data=request.POST, files=request.FILES)
-
+        
         logger.info('Checking if form is valid')
         
         if form.is_valid():
+            # Save
             logger.info('Form valid, saving posted data')
             form.save()
 
+            # Redirect
+            return redirect(reverse('person', args=[form.instance.slug]) + '?edit=true')
+
         else:
             logger.error('Form invalid')
+            logger.debug(dict(form.errors.items()))
 
-        # Disable edit mode
-        # return redirect('production', slug=form.instance.slug)
-        # return redirect(reverse('production', args=[form.instance.slug]) + '?edit=true')
-
-    # View person (GET)
-    edit_request = bool(request.GET.get('edit', False))
-    edit_mode = edit_request and request.user.is_authenticated()
-
-    logger.info('Rendering person, slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
-        person.slug, edit_mode, edit_request, request.user.is_authenticated()
+    # Render template
+    logger.info('Rendering person (%s), slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
+        request.method, person.slug, edit_mode, edit_request, request.user.is_authenticated()
     ))
 
     # Render template

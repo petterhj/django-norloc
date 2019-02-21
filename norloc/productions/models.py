@@ -45,9 +45,21 @@ class Production(models.Model):
 
     slug = AutoSlugField(populate_from='slugified_title', editable=True, unique=True)#, always_update=True)
 
+
     # Metadata
     class Meta:
         ordering = ['title']
+
+
+    # Clean
+    def clean(self):
+        # Super
+        super(Production, self).clean()
+        
+        # Runtime
+        if not self.runtime or self.runtime < 0:
+            self.runtime = 0
+
 
     # Properties
     @property
