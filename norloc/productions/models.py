@@ -7,6 +7,8 @@ from django.db import models
 from autoslug import AutoSlugField
 from uuid_upload_path import upload_to_factory
 from autoslug.settings import slugify
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill, Adjust
 
 from locations.models import Location
 
@@ -89,6 +91,7 @@ class Production(models.Model):
 
         return slugify(populate_from)
 
+    
     # Representation
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.release.year)
@@ -103,12 +106,14 @@ class Scene(models.Model):
     location = models.ForeignKey('locations.Location', blank=True, null=True, on_delete=models.SET_NULL)
     uncertain = models.BooleanField(default=False)
 
+    
     # Representation
     def __unicode__(self):
         return '%s: %s' % (
             self.production.title,
             self.location.address if self.location else '(None)'
         )
+
 
 
 # Model: Shot
@@ -130,11 +135,17 @@ class Shot(models.Model):
         )
 
 
+
 # Model: Person
 class Person(models.Model):
     # Fields
     name = models.CharField(max_length=50)
-    headshot = models.ImageField(upload_to=upload_to_people, blank=True)
+    headshot = ProcessedImageField(**{
+        'upload_to': upload_to_people, 
+        'blank': True,
+        'processors': [ResizeToFill(400, 400), Adjust(color=0)],
+        'format': 'JPEG'
+    })
     bio = models.TextField(max_length=1000, blank=True)
     bio_credit = models.CharField(max_length=50, blank=True)
 
@@ -143,10 +154,13 @@ class Person(models.Model):
 
     slug = AutoSlugField(populate_from='name', editable=True, unique=True, always_update=True)
 
+
     # Metadata
     class Meta:
         ordering = ['name']
 
+
+    # Properties
     @property
     def job_title(self):
         titles = []
@@ -163,9 +177,11 @@ class Person(models.Model):
         productions = self.writers.all() | self.directors.all() | self.photographers.all()
         return productions.distinct().order_by('-release')
 
+    
     # Representation
     def __unicode__(self):
         return self.name
+
 
 
 # Model: Company
@@ -176,12 +192,14 @@ class Company(models.Model):
     website = models.CharField(max_length=100, blank=True)
     twitter = models.CharField(max_length=20, blank=True)
 
-    # Metadata
+    
+    # Meta
     class Meta:
         verbose_name = 'Company'
         verbose_name_plural = 'Companies'
         ordering = ['name']
 
+    
     # Representation
     def __unicode__(self):
         return self.name

@@ -150,23 +150,6 @@ class ProductionForm(StyledModelForm):
         }
 
 
-    # # Save
-    # def save(self):
-    #     print '~'*50
-    #     print self.cleaned_data
-    #     print '~'*50
-
-    #     # Initial
-    #     production = super(ProductionForm, self).save(commit=True)
-    #     '''
-
-    #     # Save
-    #     production.save()
-
-    #     return production
-    #     '''
-
-
 # ModelForm: Person
 class PersonForm(forms.ModelForm):
     # Meta
