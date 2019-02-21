@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block view %}import_person{% endblock %}
+{% block title %}Legg til person | {% endblock %}
+
+
+{# Navigation #}
+{% block navigation %}
+ <a href="{% url 'people' %}">Folk</a> <span class="accent">&raquo;</span> Legg til
+
+ <a href="{% url 'people' %}" class="right icon abort" title="Avbryt"><i class="zmdi zmdi-close"></i></a>
+{% endblock %}
+
+
+{# Header #}
+{% block header %}
+ {% include "header_search.html" with title="Legg til person" placeholder="Navn" %}
+{% endblock %}
+
+
+{# Content #}
+{% block content %}
+ <div id="focused"></div>
+
+ {% verbatim %}
+	 <script id="person-result-template" type="text/x-handlebars-template">
+   <div class="person minified" data-tmdb-id="{{tmdb_id}}">
+    <div class="headshot">
+     {{#if headshot}}<img src="{{headshot}}">{{/if}}
+    </div>
+    <div class="details">
+     <h2>
+      {{name}}
+      <span class="add" title="Velg"><i class="zmdi zmdi-plus-circle-o"></i></span>
+     </h2>
+     <h4></h4>
+     <p>{{#each productions}}- {{title}}<br>{{/each}}</p>
+    </div>
+   </div>
+	 </script>
+ {% endverbatim %}
+{% endblock %}

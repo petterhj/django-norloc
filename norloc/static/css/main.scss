@@ -143,11 +143,12 @@ section#caption {
    ======================================================================== */
 
 section#header { 
-	padding: 5vw;
+	// padding: 5vw;
+	padding: 30px 20vw;
 	background: #FFF;
 	text-align: center; 
 
-	@include respond-to(medium-screens) { padding: 5vw 15vw; }
+	// @include respond-to(medium-screens) { padding: 5vw 15vw; }
 	// @include respond-to(wide-screens) { padding: 30px 30%; }
 
 	img.poster, img.headshot {
@@ -198,6 +199,25 @@ section#header {
 	input, textarea, select {
 		background: #EFEFEF;
 	}
+
+	form {
+		div.input-icon { 
+			position: relative; display: inline-block;
+
+			> input {
+				padding-right: 50px;
+			}
+			> button { 
+				position: absolute; top: 13px; right: 15px;
+				padding: 0; font-size: 2.0rem;
+				border: 0; background: transparent;
+				color: rgba(0, 0, 0, 0.5);
+				&:hover, &:focus {
+					color: rgba(0, 0, 0, 0.75);
+				}
+			}
+		}
+	}
 }
 
 // View: Index
@@ -210,7 +230,7 @@ body[data-view="index"] > section#header {
 
 	.title { 
 		width: 100%; height: 100%;
-		padding: 30px 20%;
+		padding: 30px 20vw;
 		background: rgba(240, 128, 128, 0.5);
 
 		h1 {
@@ -220,13 +240,8 @@ body[data-view="index"] > section#header {
 			border-bottom: 2px solid #FFF;
 		}
 
-		input { width: 100%; }
-	}
-
-	form {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		grid-column-gap: 10px; grid-row-gap: 0;
+		.input-icon, input { width: 100%; }
+		input { background: #FFF; }
 	}
 }
 
@@ -331,11 +346,6 @@ body[data-view="person"] > section#header {
 	}
 }
 
-// View: Import production
-body[data-view="import_production"] > section#header {
-	input, button { display: inline-block; }
-}
-
 
 
 /* ========================================================================
@@ -358,12 +368,17 @@ section#content {
 
 // View: Index / Direcor
 body[data-view="index"] > section#content,
+body[data-view="people"] > section#content,
 body[data-view="person"] > section#content {
 	grid-template-columns: repeat(3, 1fr);
 
 	@include respond-to(medium-screens) { grid-template-columns: repeat(5, 1fr); }
 	@include respond-to(wide-screens) { grid-template-columns: repeat(7, 1fr); }
 
+	div.person {
+		background: #FFF;
+		padding: 30px;
+	}
 	div.production {
 		position: relative;
 		width: 100%; height: 100%;
@@ -511,17 +526,22 @@ body[data-view="map"] > section#content {
 }
 
 // View: Import production
-body[data-view="import_production"] > section#content {
-	
+body[data-view="import_production"] > section#content,
+body[data-view="import_person"] > section#content {
+	// Focused results
+	div#focused {
+		div.production, div.person {
+			margin-bottom: 3vw;
+		}	
+	}
 
 	// Production
-	div.production {
+	div.production, div.person {
 		display: grid; width: 100%;
 		grid-template-columns: auto 1fr;
 		grid-column-gap: 15px; grid-row-gap: 0;
-		margin-bottom: 45px;
 
-		> .poster {
+		> .poster, > .headshot {
 			width: 100px; height: 150px;
 			border-radius: 4px; background: rgba(255, 255, 255, 0.025);
 
@@ -550,8 +570,8 @@ body[data-view="import_production"] > section#content {
 
 		// Minified
 		&.minified {
-			> .poster { width: 60px; height: 90px; }
-			> .details > p { display: none; }
+			> .poster, > .headshot { width: 60px; height: 90px; }
+			// > .details > p { display: none; }
 		}
 	}
 }

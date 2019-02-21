@@ -15,18 +15,22 @@ urlpatterns = [
     url(r'^map/$', prd.map, name='map'),
 
     url(r'^production/(?P<slug>[\w-]+)/$', prd.production, name='production'),
-    url(r'^people/(?P<slug>[\w-]+)/$', prd.person, name='person'),
+    url(r'^people/$', prd.people, name='people'),
+    url(r'^person/(?P<slug>[\w-]+)/$', prd.person, name='person'),
 
     url(r'^productions/import/$', prd.import_production, name='import_production'),
     url(r'^productions/import/(?P<tmdb_id>\d+)$', prd.import_production, name='import_production'),
+    url(r'^people/import/$', prd.import_person, name='import_person'),
 
     url(r'^json/production/(?P<ppk>\d+)/locations/$', prd.locations, name='production_locations'),
     url(r'^json/shots/$', prd.shots, name='shots'),
     url(r'^json/scenes/$', prd.scenes, name='scenes'),
     url(r'^json/tags/people/$', prd.people_tags, name='people_tags'),
     url(r'^json/tags/companies/$', prd.companies_tags, name='companies_tags'),
-    url(r'^json/tmdb/search/$', prd.tmdb_search, name='tmdb_search'),
-    url(r'^json/tmdb/details/(?P<tmdb_id>\d+)$', prd.tmdb_details, name='tmdb_details'),
+    url(r'^json/tmdb/production/search/$', prd.tmdb_production_search, name='tmdb_production_search'),
+    url(r'^json/tmdb/production/details/(?P<tmdb_id>\d+)$', prd.tmdb_production_details, name='tmdb_production_details'),
+    url(r'^json/tmdb/people/search/$', prd.tmdb_people_search, name='tmdb_people_search'),
+    url(r'^json/tmdb/people/details/(?P<tmdb_id>\d+)$', prd.tmdb_person_details, name='tmdb_person_details'),
 
     url(r'^json/location/(?P<lpk>\d+)/details$', loc.location_details, name='location_details'),
     url(r'^json/location/(?P<lpk>\d+)/bounds/update$', loc.update_location_bounds, name='update_bounds'),

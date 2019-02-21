@@ -82,6 +82,14 @@ def production(request, slug):
     })
 
 
+# View: People
+def people(request):
+    # Render template  
+    return render(request, 'people.html', {
+        'people': Person.objects.all()#order_by('-release')
+    })
+
+
 # View: Person
 def person(request, slug):
     # Person
@@ -125,6 +133,16 @@ def person(request, slug):
         'form': form if edit_mode else None,
         'person': person
     })
+
+
+# View: Import person
+@login_required
+def import_person(request, tmdb_id=None):
+    # Search
+    if not tmdb_id:
+        # Render import search template
+        logger.info('Rendering search template (no TMDb ID provided)')
+        return render(request, 'import_person.html', {})
 
 
 # View: Import production
@@ -329,9 +347,9 @@ def companies_tags(request):
     })
 
 
-# JSON: TMDb search
+# JSON: TMDb production search
 @login_required
-def tmdb_search(request):
+def tmdb_production_search(request):
     # Search
     title = request.GET.get('title', '').encode('utf-8')
     results = {'films': []}
@@ -349,12 +367,46 @@ def tmdb_search(request):
     return JsonResponse(results)
 
 
-# JSON: TMDb details
+# JSON: TMDb production details
 @login_required
-def tmdb_details(request, tmdb_id):
+def tmdb_production_details(request, tmdb_id):
     # Fetch movie details from TMDb
     try:
         details = TMDb().details(tmdb_id)
+    except:
+        logger.exception('Could not get TMDb details')
+        return JsonResponse({})
+
+    # Response
+    return JsonResponse(details)
+
+
+# JSON: TMDb people search
+@login_required
+def tmdb_people_search(request):
+    # Search
+    name = request.GET.get('name', '').encode('utf-8')
+    results = {'persons': []}
+
+    if not name:
+        return JsonResponse(results)
+
+    try:
+        results['persons'] = TMDb().people_search(name, limit=5)
+    except:
+        logger.exception('Could not search TMDb')
+        return JsonResponse(results)
+
+    # Response
+    return JsonResponse(results)
+
+
+# JSON: TMDb person details
+@login_required
+def tmdb_person_details(request, tmdb_id):
+    # Fetch movie details from TMDb
+    try:
+        details = TMDb().person_details(tmdb_id)
     except:
         logger.exception('Could not get TMDb details')
         return JsonResponse({})

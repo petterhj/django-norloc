@@ -171,14 +171,9 @@ section#caption nav i.zmdi:hover {
    	Header
    ======================================================================== */
 section#header {
-  padding: 5vw;
+  padding: 30px 20vw;
   background: #FFF;
   text-align: center;
-}
-@media only screen and (min-width: 501px) and (max-width: 1199px) {
-  section#header {
-    padding: 5vw 15vw;
-  }
 }
 section#header img.poster, section#header img.headshot {
   width: 180px;
@@ -251,6 +246,26 @@ section#header p a:hover {
 section#header input, section#header textarea, section#header select {
   background: #EFEFEF;
 }
+section#header form div.input-icon {
+  position: relative;
+  display: inline-block;
+}
+section#header form div.input-icon > input {
+  padding-right: 50px;
+}
+section#header form div.input-icon > button {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  padding: 0;
+  font-size: 2rem;
+  border: 0;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.5);
+}
+section#header form div.input-icon > button:hover, section#header form div.input-icon > button:focus {
+  color: rgba(0, 0, 0, 0.75);
+}
 
 body[data-view=index] > section#header {
   padding: 0;
@@ -262,7 +277,7 @@ body[data-view=index] > section#header {
 body[data-view=index] > section#header .title {
   width: 100%;
   height: 100%;
-  padding: 30px 20%;
+  padding: 30px 20vw;
   background: rgba(240, 128, 128, 0.5);
 }
 body[data-view=index] > section#header .title h1 {
@@ -273,14 +288,11 @@ body[data-view=index] > section#header .title h1 {
   color: #FFF;
   border-bottom: 2px solid #FFF;
 }
-body[data-view=index] > section#header .title input {
+body[data-view=index] > section#header .title .input-icon, body[data-view=index] > section#header .title input {
   width: 100%;
 }
-body[data-view=index] > section#header form {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-column-gap: 10px;
-  grid-row-gap: 0;
+body[data-view=index] > section#header .title input {
+  background: #FFF;
 }
 
 body[data-view=production] > section#header {
@@ -457,10 +469,6 @@ body[data-view=person] > section#header img.headshot {
   filter: grayscale(100%);
 }
 
-body[data-view=import_production] > section#header input, body[data-view=import_production] > section#header button {
-  display: inline-block;
-}
-
 /* ========================================================================
     Content
    ======================================================================== */
@@ -489,22 +497,32 @@ section#content .meta > .tag > i.zmdi {
 }
 
 body[data-view=index] > section#content,
+body[data-view=people] > section#content,
 body[data-view=person] > section#content {
   grid-template-columns: repeat(3, 1fr);
 }
 @media only screen and (min-width: 501px) and (max-width: 1199px) {
   body[data-view=index] > section#content,
+body[data-view=people] > section#content,
 body[data-view=person] > section#content {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 @media only screen and (min-width: 1200px) {
   body[data-view=index] > section#content,
+body[data-view=people] > section#content,
 body[data-view=person] > section#content {
     grid-template-columns: repeat(7, 1fr);
   }
 }
+body[data-view=index] > section#content div.person,
+body[data-view=people] > section#content div.person,
+body[data-view=person] > section#content div.person {
+  background: #FFF;
+  padding: 30px;
+}
 body[data-view=index] > section#content div.production,
+body[data-view=people] > section#content div.production,
 body[data-view=person] > section#content div.production {
   position: relative;
   width: 100%;
@@ -514,14 +532,17 @@ body[data-view=person] > section#content div.production {
   background: #333;
 }
 body[data-view=index] > section#content div.production.faded,
+body[data-view=people] > section#content div.production.faded,
 body[data-view=person] > section#content div.production.faded {
   opacity: 0.2;
 }
 body[data-view=index] > section#content div.production:hover,
+body[data-view=people] > section#content div.production:hover,
 body[data-view=person] > section#content div.production:hover {
   border: 2px solid #9E9E9E;
 }
 body[data-view=index] > section#content div.production > img,
+body[data-view=people] > section#content div.production > img,
 body[data-view=person] > section#content div.production > img {
   display: inline;
   width: inherit;
@@ -679,53 +700,78 @@ body[data-view=map] > section#content {
   margin: 0;
 }
 
-body[data-view=import_production] > section#content div.production {
+body[data-view=import_production] > section#content div#focused div.production, body[data-view=import_production] > section#content div#focused div.person,
+body[data-view=import_person] > section#content div#focused div.production,
+body[data-view=import_person] > section#content div#focused div.person {
+  margin-bottom: 3vw;
+}
+body[data-view=import_production] > section#content div.production, body[data-view=import_production] > section#content div.person,
+body[data-view=import_person] > section#content div.production,
+body[data-view=import_person] > section#content div.person {
   display: grid;
   width: 100%;
   grid-template-columns: auto 1fr;
   grid-column-gap: 15px;
   grid-row-gap: 0;
-  margin-bottom: 45px;
 }
-body[data-view=import_production] > section#content div.production > .poster {
+body[data-view=import_production] > section#content div.production > .poster, body[data-view=import_production] > section#content div.production > .headshot, body[data-view=import_production] > section#content div.person > .poster, body[data-view=import_production] > section#content div.person > .headshot,
+body[data-view=import_person] > section#content div.production > .poster,
+body[data-view=import_person] > section#content div.production > .headshot,
+body[data-view=import_person] > section#content div.person > .poster,
+body[data-view=import_person] > section#content div.person > .headshot {
   width: 100px;
   height: 150px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.025);
 }
-body[data-view=import_production] > section#content div.production > .poster > img {
+body[data-view=import_production] > section#content div.production > .poster > img, body[data-view=import_production] > section#content div.production > .headshot > img, body[data-view=import_production] > section#content div.person > .poster > img, body[data-view=import_production] > section#content div.person > .headshot > img,
+body[data-view=import_person] > section#content div.production > .poster > img,
+body[data-view=import_person] > section#content div.production > .headshot > img,
+body[data-view=import_person] > section#content div.person > .poster > img,
+body[data-view=import_person] > section#content div.person > .headshot > img {
   width: inherit;
   height: inherit;
   border-radius: inherit;
 }
-body[data-view=import_production] > section#content div.production > .details h2 span.year {
+body[data-view=import_production] > section#content div.production > .details h2 span.year, body[data-view=import_production] > section#content div.person > .details h2 span.year,
+body[data-view=import_person] > section#content div.production > .details h2 span.year,
+body[data-view=import_person] > section#content div.person > .details h2 span.year {
   opacity: 0.7;
 }
-body[data-view=import_production] > section#content div.production > .details h2 span.add {
+body[data-view=import_production] > section#content div.production > .details h2 span.add, body[data-view=import_production] > section#content div.person > .details h2 span.add,
+body[data-view=import_person] > section#content div.production > .details h2 span.add,
+body[data-view=import_person] > section#content div.person > .details h2 span.add {
   float: right;
   opacity: 0.7;
   color: #4CAF50;
 }
-body[data-view=import_production] > section#content div.production > .details h2 span.add:hover {
+body[data-view=import_production] > section#content div.production > .details h2 span.add:hover, body[data-view=import_production] > section#content div.person > .details h2 span.add:hover,
+body[data-view=import_person] > section#content div.production > .details h2 span.add:hover,
+body[data-view=import_person] > section#content div.person > .details h2 span.add:hover {
   opacity: 1;
   cursor: pointer;
 }
-body[data-view=import_production] > section#content div.production > .details h4 {
+body[data-view=import_production] > section#content div.production > .details h4, body[data-view=import_production] > section#content div.person > .details h4,
+body[data-view=import_person] > section#content div.production > .details h4,
+body[data-view=import_person] > section#content div.person > .details h4 {
   color: rgba(255, 255, 255, 0.5);
 }
-body[data-view=import_production] > section#content div.production > .details p {
+body[data-view=import_production] > section#content div.production > .details p, body[data-view=import_production] > section#content div.person > .details p,
+body[data-view=import_person] > section#content div.production > .details p,
+body[data-view=import_person] > section#content div.person > .details p {
   margin: 2px 10vw 0 0;
   font-family: "Noto Serif", serif;
   font-size: 0.8rem;
   text-align: justify;
   line-height: 1.3rem;
 }
-body[data-view=import_production] > section#content div.production.minified > .poster {
+body[data-view=import_production] > section#content div.production.minified > .poster, body[data-view=import_production] > section#content div.production.minified > .headshot, body[data-view=import_production] > section#content div.person.minified > .poster, body[data-view=import_production] > section#content div.person.minified > .headshot,
+body[data-view=import_person] > section#content div.production.minified > .poster,
+body[data-view=import_person] > section#content div.production.minified > .headshot,
+body[data-view=import_person] > section#content div.person.minified > .poster,
+body[data-view=import_person] > section#content div.person.minified > .headshot {
   width: 60px;
   height: 90px;
-}
-body[data-view=import_production] > section#content div.production.minified > .details > p {
-  display: none;
 }
 
 .my-label {

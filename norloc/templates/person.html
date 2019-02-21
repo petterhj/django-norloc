@@ -11,7 +11,7 @@
 
 {# Navigation #}
 {% block navigation %}
- <a href="{% url 'index' %}">Folk</a> <span class="accent">&raquo;</span> {{person.name}}
+ <a href="{% url 'people' %}">Folk</a> <span class="accent">&raquo;</span> {{person.name}}
  
  {% if edit_mode %}
   <a href="{%url 'person' person.slug %}" class="right icon" title="Avbryt endringer"><i class="zmdi zmdi-close"></i></a>

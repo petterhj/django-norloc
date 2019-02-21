@@ -7,22 +7,13 @@
 {% block navigation %}
  <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> Legg til
 
- {% if user.is_authenticated %}
-  <a href="#" class="right icon abort" title="Avbryt"><i class="zmdi zmdi-close"></i></a>
- {% endif %}
+ <a href="#" class="right icon abort" title="Avbryt"><i class="zmdi zmdi-close"></i></a>
 {% endblock %}
 
 
 {# Header #}
 {% block header %}
- {% if user.is_authenticated %}
-  <h1>Legg til produksjon</h1>
-  <!-- <p class="center">Kun norske produksjoner.</p> -->
-  <form name="search_production">
-   <input type="text" name="title" placeholder="Tittel" value="Sønner av norge">
-   <button type="submit" name="search">Søk</button>
-  </form>
- {% endif %}
+ {% include "header_search.html" with title="Legg til produksjon" placeholder="Tittel" %}
 {% endblock %} 
 
 

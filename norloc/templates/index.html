@@ -8,8 +8,8 @@
  <a href="">Filmer</a> | 
  <a href="">Serier</a> |
  <a href="">Opptakssteder</a> |
- <a href="">Regissører</a> |
- <a href="">Produksjonsselskaper</a> |
+ <a href="{%url 'people' %}">Folk</a> |
+ <a href="">Selskaper</a> |
  <a href="{%url 'map' %}">Kart</a>
 
  {% if user.is_authenticated %}
@@ -21,8 +21,7 @@
 {# Header #}
 {% block header %}
  <div class="title">
-  <h1>Norske opptakssteder</h1>
-  <input id="search" type="text" placeholder="Tittel, regissør, opptakssted...">
+  {% include "header_search.html" with title="Legg til person" placeholder="Tittel, regissør, opptakssted..." %}
  </div>
 {% endblock %}
 
@@ -30,11 +29,10 @@
 {# Content #}
 {% block content %}
  {% for production in productions %}
-  <div class="production {%if production.locations|length == 0 %}faded{%endif%}" data-href="{%url 'production' production.slug%}" title="{{production.title}} ({{production.release.year}})">
+  <div class="production {%if production.locations|length == 0 %}faded{%endif%}" data-href="{% url 'production' production.slug %}" title="{{ production.title }} ({{ production.release.year }})">
    {%if production.poster %}
-    <img src="{{production.poster.url}}" alt="{{production.title}} ({{production.release.year}})">
+    <img src="{{ production.poster.url }}" alt="{{ production.title }} ({{ production.release.year }})">
    {%endif%}
   </div>
  {% endfor %}
- </section>
 {% endblock %}

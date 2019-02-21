@@ -52,7 +52,7 @@ class TMDb(object):
         poster_base = 'https://image.tmdb.org/t/p/w500'
         crew = details.get('credits', {}).get('crew', [])
 
-        details = {
+        parsed = {
             'tmdb_id': details.get('id'),
             'imdb_id': details.get('imdb_id'),
             'title': title,
@@ -83,4 +83,54 @@ class TMDb(object):
             } for p in crew if p.get('job') == 'Director of Photography'],
         }
 
-        return details
+        return parsed
+
+
+    # Search people
+    def people_search(self, name, limit=10):
+        # Search people by name
+        tmdb_search = tmdb.Search()
+        results = []
+        
+        from json import dumps
+        for person in tmdb_search.person(query=name, language=self.language).get('results')[0:limit]:
+            print dumps(person, indent=4)
+
+            headshot_path = person.get('profile_path')
+            headshot = 'https://image.tmdb.org/t/p/w200' + headshot_path if headshot_path else None
+
+            results.append({
+                'tmdb_id': person.get('id'),
+                'name': person.get('name'),
+                'popularity': person.get('popularity', 0),
+                'productions': [{
+                    'title': p.get('title') or p.get('name'),
+                    'release': p.get('release_date') or p.get('first_air_date')
+                } for p in person.get('known_for', [])],
+                'headshot': headshot
+            })
+
+        return results
+
+
+    # Person details
+    def person_details(self, tmdb_id):
+        # Fetch person details
+        person = tmdb.People(tmdb_id)
+        details = person.info(language=self.language)
+
+        # Parse data
+        poster_base = 'https://image.tmdb.org/t/p/w500'
+
+        parsed = {
+            'tmdb_id': details.get('id'),
+            'imdb_id': details.get('imdb_id'),
+            'name': details.get('name'),
+            'biography': details.get('biography'),
+            'headshot': poster_base + details.get('profile_path') if details.get('profile_path') else None,
+            'known_for_department': details.get('known_for_department'),
+            'birthplace': details.get('place_of_birth'),
+            'birthdate': details.get('birthday'),
+        }
+
+        return parsed#{'d': details, 'p': parsed}

@@ -174,15 +174,15 @@ var NORLOC = NORLOC || {
     // View: Import production
     import_production: function() {
         // Template
+        var form = $('form[name="search"]');
         var target = $('section#content');
         var template = Handlebars.compile($('#production-result-template').html());
 
         // Search production
-        $('form[name="search_production"]').on('submit', function(e) {
+        form.on('submit', function(e) {
             e.preventDefault();
 
-            var search_form = $('form[name="search_production"]');
-            var title = search_form.find('input[name="title"]').val();
+            var title = form.find('input[name="query"]').val();
 
             if (!title) {
                 return;
@@ -194,10 +194,10 @@ var NORLOC = NORLOC || {
             target.find('div.production').fadeOut(function() { $(this).remove(); })
 
             // Temporarily disable inputs
-            search_form.find(':input').prop('disabled', true);
+            form.find(':input').prop('disabled', true);
 
             // Search productions
-            $.getJSON('/json/tmdb/search/?title={0}'.format(title), function(results) {
+            $.getJSON('/json/tmdb/production/search/?title={0}'.format(title), function(results) {
                 // Append results
                 $.each(results.films, function(i, production) {
                     // Production
@@ -206,7 +206,7 @@ var NORLOC = NORLOC || {
                     target.append(rendered);
 
                     // Get details and check if "appliable"
-                    $.getJSON('/json/tmdb/details/{0}'.format(production.tmdb_id), function(details) {
+                    $.getJSON('/json/tmdb/production/details/{0}'.format(production.tmdb_id), function(details) {
                         if (details) {
                             // Add extra metadata
                             if (details.directors.length > 0) {
@@ -228,10 +228,12 @@ var NORLOC = NORLOC || {
                                 if (countries.includes('NO')) {
                                     rendered.appendTo($('div#focused'));
                                     rendered.removeClass('minified faded');
-                                    rendered.find('.add').show().on('click', function() {
-                                        // Select film
-                                        window.location = '/productions/import/{0}'.format(production.tmdb_id);
-                                    });
+                                    rendered.find('.add')
+                                        .removeClass('hidden')
+                                        .on('click', function() {
+                                            // Select film
+                                            window.location = '/productions/import/{0}'.format(production.tmdb_id);
+                                        });
                                     return;
                                 }
                             }
@@ -240,7 +242,64 @@ var NORLOC = NORLOC || {
                 });
                 
                 // Re-enable inputs
-                search_form.find(':input').prop('disabled', false);
+                form.find(':input').prop('disabled', false);
+            });
+        });
+    },
+
+    // View: Import person
+    import_person: function() {
+        // Template
+        var form = $('form[name="search"]');
+        var target = $('section#content');
+        var template = Handlebars.compile($('#person-result-template').html());
+
+        // Search production
+        form.on('submit', function(e) {
+            e.preventDefault();
+
+            var name = form.find('input[name="query"]').val();
+
+            if (!name) {
+                return;
+            }
+
+            UTIL.log('Searching for person: {0}'.format(name))
+
+            // Remove any previous results
+            target.find('div.person').fadeOut(function() { $(this).remove(); })
+
+            // Temporarily disable inputs
+            form.find(':input').prop('disabled', true);
+
+            // Search productions
+            $.getJSON('/json/tmdb/people/search/?name={0}'.format(name), function(results) {
+                // Append results
+                $.each(results.persons, function(i, person) {
+                    // Person
+                    var rendered = $(template(person));
+
+                    rendered.find('.add').on('click', function() {
+                        // Select person
+                        // window.location = '/productions/import/{0}'.format(production.tmdb_id);
+                    });
+
+                    if (person.popularity >= 1) {
+                        rendered.appendTo($('div#focused'));
+                        rendered.removeClass('minified');
+
+                        // Get details
+                        $.getJSON('/json/tmdb/people/details/{0}'.format(person.tmdb_id), function(details) {
+                            rendered.find('h4').text(details.known_for_department);
+                        });
+                        return;
+                    }
+
+                    rendered.appendTo(target);
+                });
+                
+                // Re-enable inputs
+                form.find(':input').prop('disabled', false);
             });
         });
     }

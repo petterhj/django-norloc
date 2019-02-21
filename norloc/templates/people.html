@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block view %}people{% endblock %}
+{% block title %}Folk | {% endblock %}
+
+
+{# Navigation #}
+{% block navigation %}
+ Folk
+
+ {% if user.is_authenticated %}
+  <a href="{%url 'import_person' %}" class="right icon" title="Legg til person"><i class="zmdi zmdi-plus"></i></a>
+ {% endif %}
+{% endblock %}
+
+
+{# Header #}
+{% block header %}
+ 
+{% endblock %}
+
+
+{# Content #}
+{% block content %}
+ {% for person in people %}
+  <div class="person">
+   <a href="{% url 'person' person.slug %}">{{ person.name }}</a>
+  </div>
+ {% endfor %}
+{% endblock %}
