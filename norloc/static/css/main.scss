@@ -393,6 +393,7 @@ section#content {
 
 // View: Index / Direcor
 body[data-view="index"] > section#content,
+body[data-view="productions"] > section#content,
 body[data-view="people"] > section#content,
 body[data-view="person"] > section#content {
 	grid-template-columns: repeat(3, 1fr);
@@ -610,6 +611,18 @@ body[data-view="import_person"] > section#content {
 
 
 
+/* ========================================================================
+   	Footer
+   ======================================================================== */
+
+footer {
+	width: 100%; padding: 15px;
+	font: 0.7rem $font-sans-serif;
+	text-align: center; text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.025);
+	a { color: rgba(255, 255, 255, 0.05); text-decoration: none; }
+	a:hover { color: rgba(255, 255, 255, 0.1); }
+}
 
 
 

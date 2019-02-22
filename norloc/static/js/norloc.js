@@ -232,7 +232,7 @@ var NORLOC = NORLOC || {
                                         .removeClass('hidden')
                                         .on('click', function() {
                                             // Select film
-                                            window.location = '/productions/import/{0}'.format(production.tmdb_id);
+                                            window.location = '/produksjoner/import/{0}'.format(production.tmdb_id);
                                         });
                                     return;
                                 }

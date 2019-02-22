@@ -1,0 +1,41 @@
+{% extends "base_grid.html" %}
+
+{% load staticfiles %}
+
+{% block view %}productions{% endblock %}
+{% block title %}Produksjoner | {% endblock %}
+
+
+{# Navigation #}
+{% block navigation %}
+ {% if not filter %}
+  Produksjoner
+ {% else %}
+  <a href="{% url 'productions' %}">Produksjoner</a> <span class="accent">&raquo;</span> {{filter}}
+ {% endif  %}
+
+ {% if user.is_authenticated %}
+  <a href="{%url 'import_production' %}" class="right icon" title="Legg til production"><i class="zmdi zmdi-plus"></i></a>
+ {% endif %}
+{% endblock %}
+
+
+{# Header #}
+{% block header %}{# No header #}{% endblock %}
+
+
+{# Menu #}
+{% block menu-content %}
+ <span class="group">Type: 
+  <a href="{% url 'productions' %}">Alle</a> &#9642; 
+  <a href="{% url 'filtered_productions' 'film' %}">Film</a> &#9642; 
+  <a href="{% url 'filtered_productions' 'tv' %}">Serie</a>
+{% endblock %}
+
+
+{# Content #}
+{% block content %}
+ {% for production in productions %}
+  {% include "grid_item_production.html" with production=production %}
+ {% endfor %}
+{% endblock %}

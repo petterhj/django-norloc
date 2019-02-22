@@ -522,12 +522,14 @@ section#content .meta > .tag > i.zmdi {
 }
 
 body[data-view=index] > section#content,
+body[data-view=productions] > section#content,
 body[data-view=people] > section#content,
 body[data-view=person] > section#content {
   grid-template-columns: repeat(3, 1fr);
 }
 @media only screen and (min-width: 501px) and (max-width: 1199px) {
   body[data-view=index] > section#content,
+body[data-view=productions] > section#content,
 body[data-view=people] > section#content,
 body[data-view=person] > section#content {
     grid-template-columns: repeat(5, 1fr);
@@ -535,18 +537,21 @@ body[data-view=person] > section#content {
 }
 @media only screen and (min-width: 1200px) {
   body[data-view=index] > section#content,
+body[data-view=productions] > section#content,
 body[data-view=people] > section#content,
 body[data-view=person] > section#content {
     grid-template-columns: repeat(7, 1fr);
   }
 }
 body[data-view=index] > section#content div.person,
+body[data-view=productions] > section#content div.person,
 body[data-view=people] > section#content div.person,
 body[data-view=person] > section#content div.person {
   background: #FFF;
   padding: 30px;
 }
 body[data-view=index] > section#content div.production,
+body[data-view=productions] > section#content div.production,
 body[data-view=people] > section#content div.production,
 body[data-view=person] > section#content div.production {
   position: relative;
@@ -557,16 +562,19 @@ body[data-view=person] > section#content div.production {
   background: #333;
 }
 body[data-view=index] > section#content div.production.faded,
+body[data-view=productions] > section#content div.production.faded,
 body[data-view=people] > section#content div.production.faded,
 body[data-view=person] > section#content div.production.faded {
   opacity: 0.2;
 }
 body[data-view=index] > section#content div.production:hover,
+body[data-view=productions] > section#content div.production:hover,
 body[data-view=people] > section#content div.production:hover,
 body[data-view=person] > section#content div.production:hover {
   border: 2px solid #9E9E9E;
 }
 body[data-view=index] > section#content div.production > img,
+body[data-view=productions] > section#content div.production > img,
 body[data-view=people] > section#content div.production > img,
 body[data-view=person] > section#content div.production > img {
   display: inline;
@@ -797,6 +805,25 @@ body[data-view=import_person] > section#content div.person.minified > .poster,
 body[data-view=import_person] > section#content div.person.minified > .headshot {
   width: 60px;
   height: 90px;
+}
+
+/* ========================================================================
+   	Footer
+   ======================================================================== */
+footer {
+  width: 100%;
+  padding: 15px;
+  font: 0.7rem "Unica One", Helvetica, Arial, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.025);
+}
+footer a {
+  color: rgba(255, 255, 255, 0.05);
+  text-decoration: none;
+}
+footer a:hover {
+  color: rgba(255, 255, 255, 0.1);
 }
 
 .my-label {

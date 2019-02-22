@@ -29,10 +29,28 @@ def index(request):
     })
 
 
-# View: Map
-def map(request):
+# View: Productions
+def productions(request, filter=None):
+    # Filter
+    if not filter:
+        productions = Production.objects.order_by('-release')
+
+    elif filter in ['film', 'tv']:
+        # Filter by type
+        productions = Production.objects.filter(type={
+            'film': 'film',
+            'tv': 'show',
+        }.get(filter)).order_by('-release')
+
+    else:
+        # Invalid filter
+        return error(request)
+
     # Render template
-    return render(request, 'map.html', {})
+    return render(request, 'productions.html', {
+        'filter': filter,
+        'productions': productions
+    })
 
 
 # View: Production
@@ -156,6 +174,12 @@ def person(request, slug):
         'form': form if edit_mode else None,
         'person': person
     })
+
+
+# View: Map
+def map(request):
+    # Render template
+    return render(request, 'map.html', {})
 
 
 # View: Import person

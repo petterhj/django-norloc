@@ -12,17 +12,18 @@ from locations import views as loc
 urlpatterns = [
     url(r'^$', prd.index, name='index'),
 
-    url(r'^map/$', prd.map, name='map'),
-
-    url(r'^production/(?P<slug>[\w-]+)/$', prd.production, name='production'),
+    url(r'^produksjoner/$', prd.productions, name='productions'),
+    url(r'^produksjoner/(?P<filter>[\w-]+)/$', prd.productions, name='filtered_productions'),
+    url(r'^produksjoner/import/$', prd.import_production, name='import_production'),
+    url(r'^produksjoner/import/(?P<tmdb_id>\d+)$', prd.import_production, name='import_production'),
+    url(r'^produksjon/(?P<slug>[\w-]+)/$', prd.production, name='production'),
     
-    url(r'^people/$', prd.people, name='people'),
-    url(r'^people/(?P<filter>[\w-]+)/$', prd.people, name='filtered_people'),
+    url(r'^folk/$', prd.people, name='people'),
+    url(r'^folk/(?P<filter>[\w-]+)/$', prd.people, name='filtered_people'),
+    url(r'^folk/import/$', prd.import_person, name='import_person'),
     url(r'^person/(?P<slug>[\w-]+)/$', prd.person, name='person'),
-
-    url(r'^productions/import/$', prd.import_production, name='import_production'),
-    url(r'^productions/import/(?P<tmdb_id>\d+)$', prd.import_production, name='import_production'),
-    url(r'^people/import/$', prd.import_person, name='import_person'),
+    
+    url(r'^kart/$', prd.map, name='map'),
 
     url(r'^json/production/(?P<ppk>\d+)/locations/$', prd.locations, name='production_locations'),
     url(r'^json/shots/$', prd.shots, name='shots'),
