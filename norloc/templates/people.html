@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_grid.html" %}
 
 {% load staticfiles %}
 
@@ -8,7 +8,11 @@
 
 {# Navigation #}
 {% block navigation %}
- Folk
+ {% if not filter %}
+  Folk
+ {% else %}
+  <a href="{% url 'people' %}">Folk</a> <span class="accent">&raquo;</span> {{filter}}
+ {% endif  %}
 
  {% if user.is_authenticated %}
   <a href="{%url 'import_person' %}" class="right icon" title="Legg til person"><i class="zmdi zmdi-plus"></i></a>
@@ -17,16 +21,25 @@
 
 
 {# Header #}
-{% block header %}
- 
+{% block header %}{# No header #}{% endblock %}
+
+
+{# Menu #}
+{% block menu-content %}
+ <span class="group">Avdeling: 
+  <a href="{% url 'people' %}">Alle</a> &#9642; 
+  <a href="{% url 'filtered_people' 'regi' %}">Regi</a> &#9642; 
+  <a href="{% url 'filtered_people' 'manus' %}">Manus</a> &#9642; 
+  <a href="{% url 'filtered_people' 'foto' %}">Foto</a></span>
 {% endblock %}
 
 
 {# Content #}
 {% block content %}
  {% for person in people %}
-  <div class="person">
-   <a href="{% url 'person' person.slug %}">{{ person.name }}</a>
+  <div class="person" style="background: transparent; padding:1vw;" data-href="{% url 'person' person.slug %}">
+   <img src="{%if person.headshot %}{{person.headshot.url}}{% else %}{% static "img/no-headshot.png" %}{% endif %}" style="width:100%; border-radius: 50%;">
+   <div class="nametag" style="font-size: 0.8rem; font-family: 'Unica One', Helvetica, Arial, sans-serif; width: 100%; text-align: center; background: #FFF; color: #333; border-radius: 4px; padding: 10px 4px; margin-top: -10px; text-transform: uppercase;">{{ person.name }} ({{ person.production_count }})</div>
   </div>
  {% endfor %}
 {% endblock %}

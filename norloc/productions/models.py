@@ -9,6 +9,7 @@ from uuid_upload_path import upload_to_factory
 from autoslug.settings import slugify
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill, Adjust
+from django.dispatch import receiver
 
 from locations.models import Location
 
@@ -61,6 +62,15 @@ class Production(models.Model):
         # Runtime
         if not self.runtime or self.runtime < 0:
             self.runtime = 0
+
+
+    # Save
+    def save(self, *args, **kwargs):
+        super(Production, self).save(*args, **kwargs)
+
+        # Update people
+        print '!'*1000
+        print self.directors.all()
 
 
     # Properties
@@ -148,6 +158,9 @@ class Person(models.Model):
     })
     bio = models.TextField(max_length=1000, blank=True)
     bio_credit = models.CharField(max_length=50, blank=True)
+    known_for_department = models.CharField(max_length=10, blank=True, choices=(
+        ('directing', 'Regi'), ('writing', 'Manus'), ('photo', 'Foto')
+    ))
 
     tmdb_id = models.CharField(max_length=10, blank=False, unique=True)
     imdb_id = models.CharField(max_length=10, blank=True)

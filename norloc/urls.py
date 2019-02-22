@@ -15,7 +15,9 @@ urlpatterns = [
     url(r'^map/$', prd.map, name='map'),
 
     url(r'^production/(?P<slug>[\w-]+)/$', prd.production, name='production'),
+    
     url(r'^people/$', prd.people, name='people'),
+    url(r'^people/(?P<filter>[\w-]+)/$', prd.people, name='filtered_people'),
     url(r'^person/(?P<slug>[\w-]+)/$', prd.person, name='person'),
 
     url(r'^productions/import/$', prd.import_production, name='import_production'),

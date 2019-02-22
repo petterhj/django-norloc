@@ -472,14 +472,39 @@ body[data-view=person] > section#header img.headshot {
 /* ========================================================================
     Content
    ======================================================================== */
+nav#menu {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  font: 0.7rem "Unica One", Helvetica, Arial, sans-serif;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.3);
+}
+nav#menu span.group {
+  margin-right: 25px;
+}
+nav#menu a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.5);
+}
+nav#menu a:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ========================================================================
+    Content
+   ======================================================================== */
 section#content {
-  display: grid;
   width: 100%;
   padding: 5vw;
+  color: rgba(255, 255, 255, 0.8);
+}
+section#content.grid {
+  display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-column-gap: 3vw;
   grid-row-gap: 3vw;
-  color: rgba(255, 255, 255, 0.8);
 }
 section#content h2 {
   font-size: 1.5rem;

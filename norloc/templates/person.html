@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_grid.html" %}
 
 {% load staticfiles %}
 {% load internal_links %}
@@ -25,7 +25,7 @@
 
 
 {# Header #}
-{% block header %}
+{% block header-content %}
  {% if not edit_mode %}
   {% if person.headshot %}
    <img src="{{person.headshot.url}}" class="headshot">
@@ -77,6 +77,10 @@
   </form>
  {% endif %}
 {% endblock %}
+
+
+{# Menu #}
+{% block menu %}{# No menu #}{% endblock %}
 
 
 {# Content #}

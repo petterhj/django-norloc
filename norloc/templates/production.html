@@ -23,7 +23,7 @@
 
 
 {# Header #}
-{% block header %}
+{% block header-content %}
  {% if not edit_mode %}
   <!-- Poster -->
   {% if production.poster %}
@@ -153,6 +153,10 @@
   </form>
  {% endif %}
 {% endblock %}
+
+
+{# Menu #}
+{% block menu %}{# No menu #}{% endblock %}
 
 
 {# Content #}

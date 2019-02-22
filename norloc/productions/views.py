@@ -4,11 +4,11 @@
 from __future__ import unicode_literals
 
 import logging
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.shortcuts import get_object_or_404
+from django.db.models import Count
 
 from lib.tmdb import TMDb
 from lib.image_from_url import ImageFileFromUrl
@@ -83,10 +83,33 @@ def production(request, slug):
 
 
 # View: People
-def people(request):
-    # Render template  
+def people(request, filter=None):
+    # Filter
+    if not filter:
+        people = Person.objects.annotate(
+            production_count=Count('directors', distinct=True) + Count('writers', distinct=True) + Count('photographers', distinct=True)
+        ).order_by('-production_count')
+
+    elif filter in ['regi', 'manus', 'foto']:
+        # Filter by role
+        people = Person.objects.annotate(
+            production_count=Count({
+                'regi': 'directors',
+                'manus': 'writers',
+                'foto': 'photographers',
+            }.get(filter), distinct=True)
+        ).filter(production_count__gt=0).order_by('-production_count')
+
+    else:
+        # Invalid filter
+        return error(request)
+
+    # Render template
     return render(request, 'people.html', {
-        'people': Person.objects.all()#order_by('-release')
+        # 'people': Person.objects.all()#order_by('-release')
+        'filter': filter,
+        'people': people
+
     })
 
 

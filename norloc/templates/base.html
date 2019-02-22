@@ -52,14 +52,28 @@
    </nav>
   </section>
 
+  
   <!-- Header -->
-  <section id="header">
-   {% block header %}{% endblock %}
-  </section>
+  {% block header %}
+   <section id="header">
+    {% block header-content %}{% endblock %}
+   </section>
+  {% endblock %}
+
+
+  <!-- Menu -->
+  {% block menu %}
+   <nav id="menu">
+    {% block menu-content %}{% endblock %}
+   </nav>
+  {% endblock %}
+
 
   <!-- Content -->
-  <section id="content">
-   {% block content %}{% endblock %}
-  </section>
+  {%block body %}
+   <section id="content">
+    {% block content %}{% endblock %}
+   </section>
+  {% endblock %}
  </body>
 </html>
