@@ -346,16 +346,19 @@ body[data-view="person"] > section#header {
 	}
 }
 
+
+
 /* ========================================================================
-    Content
+    Menu
    ======================================================================== */
 
 nav#menu {
-	padding: 10px 20px;  
+	padding: 0 20px;  
 	background: rgba(255, 255, 255, 0.1);
 	font: 0.7rem $font-sans-serif;
 	text-align: left; text-transform: uppercase;
 	letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.3);
+	height: 2.2rem; line-height: 2.2rem;
 
 	span.group { margin-right: 25px; }
 
@@ -367,6 +370,7 @@ nav#menu {
 		}
 	}
 }
+
 
 
 /* ========================================================================
@@ -425,7 +429,7 @@ body[data-view="person"] > section#content {
 
 // View: Production
 body[data-view="production"] > section#content {
-	padding: 5vw calc(15vw - 60px);
+	padding: 5vw calc(20vw - 60px);
 
 	// Location
 	div.location {
@@ -557,15 +561,16 @@ body[data-view="import_person"] > section#content {
 	// Focused results
 	div#focused {
 		div.production, div.person {
-			margin-bottom: 3vw;
+			margin-bottom: 5vw;
 		}	
 	}
 
 	// Production
 	div.production, div.person {
+		margin-bottom: 4vw;
 		display: grid; width: 100%;
 		grid-template-columns: auto 1fr;
-		grid-column-gap: 15px; grid-row-gap: 0;
+		grid-column-gap: 30px; grid-row-gap: 0;
 
 		> .poster, > .headshot {
 			width: 100px; height: 150px;

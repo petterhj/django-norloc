@@ -13,6 +13,7 @@ from django.db.models import Count
 from lib.tmdb import TMDb
 from lib.image_from_url import ImageFileFromUrl
 
+from common.views import error
 from .models import Production, Scene, Shot, Person, Company
 from .forms import ProductionForm, PersonForm
 
@@ -37,10 +38,7 @@ def productions(request, filter=None):
 
     elif filter in ['film', 'tv']:
         # Filter by type
-        productions = Production.objects.filter(type={
-            'film': 'film',
-            'tv': 'show',
-        }.get(filter)).order_by('-release')
+        productions = Production.objects.filter(type=filter).order_by('-release')
 
     else:
         # Invalid filter
@@ -54,9 +52,9 @@ def productions(request, filter=None):
 
 
 # View: Production
-def production(request, slug):
+def production(request, production_type, slug):
     # Production
-    production = get_object_or_404(Production, slug=slug)
+    production = get_object_or_404(Production, type=production_type, slug=slug)
     edit_request = bool(request.GET.get('edit', False))
     edit_mode = edit_request and request.user.is_authenticated()
     form = None
@@ -194,9 +192,9 @@ def import_person(request, tmdb_id=None):
 
 # View: Import production
 @login_required
-def import_production(request, tmdb_id=None):
+def import_production(request, production_type=None, tmdb_id=None):
     # Search
-    if not tmdb_id:
+    if not production_type or not tmdb_id:
         # Render import search template
         logger.info('Rendering search template (no TMDb ID provided)')
         return render(request, 'import_production.html', {})
@@ -211,8 +209,8 @@ def import_production(request, tmdb_id=None):
 
     # Get details
     try:
-        details = TMDb().details(tmdb_id)
-        is_valid = 'NO' in details.get('production_countries', {}).keys()
+        details = TMDb().details(production_type, tmdb_id)
+        is_valid = 'NO' in details.get('production_countries', [])
     
     except:
         logger.exception('Could not get TMDb details')
@@ -229,7 +227,7 @@ def import_production(request, tmdb_id=None):
             logger.info('Creating new production object, title=%s' % (details.get('title')))
 
             p = Production(**{
-                'type': 'film', 
+                'type': 'film' if production_type == 'film' else 'show', 
                 'title': details.get('title'),
                 'release': details.get('release'),
                 'summary': details.get('overview'),
@@ -278,14 +276,6 @@ def import_production(request, tmdb_id=None):
     return error(request)
 
     
-# View: Error
-def error(request, message=None):
-    # Render template  
-    return render(request, 'error.html', {
-        'message': message if message else ':(('
-    })
-
-
 # JSON: Locations
 def locations(request, ppk):
     # Production
@@ -399,13 +389,14 @@ def companies_tags(request):
 def tmdb_production_search(request):
     # Search
     title = request.GET.get('title', '').encode('utf-8')
-    results = {'films': []}
+    logging.info('Searching tmdb production, title=%s' % (title))
+    results = {'productions': []}
 
     if not title:
         return JsonResponse(results)
 
     try:
-        results['films'] = TMDb().search(title, limit=5)
+        results['productions'] = TMDb().search(title, limit=5)
     except:
         logger.exception('Could not search TMDb')
         return JsonResponse(results)
@@ -416,10 +407,10 @@ def tmdb_production_search(request):
 
 # JSON: TMDb production details
 @login_required
-def tmdb_production_details(request, tmdb_id):
+def tmdb_production_details(request, production_type, tmdb_id):
     # Fetch movie details from TMDb
     try:
-        details = TMDb().details(tmdb_id)
+        details = TMDb().details(production_type, tmdb_id)
     except:
         logger.exception('Could not get TMDb details')
         return JsonResponse({})

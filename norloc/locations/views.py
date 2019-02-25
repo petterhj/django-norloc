@@ -12,20 +12,42 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
+from common.views import error
 from .models import Location
 
 
 # JSON: Locations
-def locations(request):
-    # Locations
-    locations = {l.pk: {
-        'full_address': l.full_address,
-        # 'bounds': [[p.latitude, p.longitude] for p in l.bounds.all()],
-        'bounds': l.bounds if l.bounds else [],
-    } for l in Location.objects.all()}
+def locations(request, filter=None, json=False):
+    # Filter
+    if not filter:
+        locations = Location.objects.all()
 
-    # Return JSON
-    return JsonResponse(locations)
+    # elif filter in ['film', 'tv']:
+    #     # Filter by type
+    #     productions = Production.objects.filter(type={
+    #         'film': 'film',
+    #         'tv': 'show',
+    #     }.get(filter)).order_by('-release')
+
+    else:
+        # Invalid filter
+        return error(request)
+
+
+    # Locations in JSON format
+    if json:
+        # Return JSON
+        return JsonResponse({l.pk: {
+            'full_address': l.full_address,
+            # 'bounds': [[p.latitude, p.longitude] for p in l.bounds.all()],
+            'bounds': l.bounds if l.bounds else [],
+        } for l in locations})
+
+    # Render template
+    return render(request, 'locations.html', {
+        # 'filter': filter,
+        'locations': locations
+    })
 
 
 # JSON: Location details

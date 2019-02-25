@@ -2,18 +2,26 @@
 
 {% block view %}map{% endblock %}
 
+
+{# Navigation #}
 {% block navigation %}
  Kart
 {% endblock %}
 
 
+{# Header #}
+{% block header %}{# No header #}{% endblock %}
 
+
+{# Menu #}
+{% block menu %}{# No menu #}{% endblock %}
+
+
+{# Content #}
 {% block content %}
- 
  <div id="map" style="height: 500px; width: 100%;"></div>
- <!--div id="map" style="height: 600px; width: 100%;"></div>
- <div id="map2" style="height: 600px; width: 100%; margin-top: 10px;"></div-->
 
+ 
  <!-- Template: Location details edit -->
  {% if user.is_authenticated %}
   {% verbatim %}

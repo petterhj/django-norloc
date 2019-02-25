@@ -13,14 +13,14 @@ urlpatterns = [
     url(r'^$', prd.index, name='index'),
 
     url(r'^produksjoner/$', prd.productions, name='productions'),
-    url(r'^produksjoner/(?P<filter>[\w-]+)/$', prd.productions, name='filtered_productions'),
     url(r'^produksjoner/import/$', prd.import_production, name='import_production'),
-    url(r'^produksjoner/import/(?P<tmdb_id>\d+)$', prd.import_production, name='import_production'),
-    url(r'^produksjon/(?P<slug>[\w-]+)/$', prd.production, name='production'),
-    
+    url(r'^produksjoner/import/(?P<production_type>film|tv)/(?P<tmdb_id>\d+)$', prd.import_production, name='import_production'),
+    url(r'^produksjoner/(?P<filter>[\w-]+)/$', prd.productions, name='filtered_productions'),
+    url(r'^produksjoner/(?P<production_type>film|tv)/(?P<slug>[\w-]+)/$', prd.production, name='production'),
+
     url(r'^folk/$', prd.people, name='people'),
-    url(r'^folk/(?P<filter>[\w-]+)/$', prd.people, name='filtered_people'),
     url(r'^folk/import/$', prd.import_person, name='import_person'),
+    url(r'^folk/(?P<filter>[\w-]+)/$', prd.people, name='filtered_people'),
     url(r'^person/(?P<slug>[\w-]+)/$', prd.person, name='person'),
     
     url(r'^kart/$', prd.map, name='map'),
@@ -31,13 +31,17 @@ urlpatterns = [
     url(r'^json/tags/people/$', prd.people_tags, name='people_tags'),
     url(r'^json/tags/companies/$', prd.companies_tags, name='companies_tags'),
     url(r'^json/tmdb/production/search/$', prd.tmdb_production_search, name='tmdb_production_search'),
-    url(r'^json/tmdb/production/details/(?P<tmdb_id>\d+)$', prd.tmdb_production_details, name='tmdb_production_details'),
+    url(r'^json/tmdb/production/(?P<production_type>film|tv)/details/(?P<tmdb_id>\d+)$', prd.tmdb_production_details, name='tmdb_production_details'),
     url(r'^json/tmdb/people/search/$', prd.tmdb_people_search, name='tmdb_people_search'),
     url(r'^json/tmdb/people/details/(?P<tmdb_id>\d+)$', prd.tmdb_person_details, name='tmdb_person_details'),
 
+    url(r'^opptakssteder/$', loc.locations, name='locations'),
+    url(r'^opptakssteder/(?P<filter>[\w-]+)/$', loc.locations, name='filtered_locations'),
+    url(r'^json/locations/$', loc.locations, {'json': 'True'}, name='json_locations'),
+
     url(r'^json/location/(?P<lpk>\d+)/details$', loc.location_details, name='location_details'),
     url(r'^json/location/(?P<lpk>\d+)/bounds/update$', loc.update_location_bounds, name='update_bounds'),
-    url(r'^json/locations/$', loc.locations, name='locations'),
+    # url(r'^json/locations/$', loc.locations, name='locations'),
 
     url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,4 +1,4 @@
-<div class="production {%if production.locations|length == 0 %}faded{%endif%}" data-href="{% url 'production' production.slug %}" title="{{ production.title }} ({{ production.release.year }})">
+<div class="production {%if production.locations|length == 0 %}faded{%endif%}" data-href="{% url 'production' production.type production.slug %}" title="{{ production.title }} ({{ production.release.year }})">
  {%if production.poster %}
   <img src="{{ production.poster.url }}" alt="{{ production.title }} ({{ production.release.year }})">
  {%endif%}

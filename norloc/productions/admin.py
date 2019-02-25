@@ -7,7 +7,7 @@ from productions.models import Production, Person, Company, Scene, Shot
 # ModelAdmin: Production
 class ProductionAdmin(admin.ModelAdmin):
     # List
-    list_display = ('poster_thumb', 'title', 'slug', 'type', 'release', 'runtime')
+    list_display = ('poster_thumb', 'title', 'slug', 'type', 'release', 'runtime', 'imdb_id', 'tmdb_id')
     list_display_links = ('poster_thumb', 'title',)
 
     def poster_thumb(self, obj):

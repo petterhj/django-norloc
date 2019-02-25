@@ -5,9 +5,9 @@
 
 {# Navigation #}
 {% block navigation %}
- <a href="{% url 'index' %}">Produksjoner</a> <span class="accent">&raquo;</span> Legg til
+ <a href="{% url 'productions' %}">Produksjoner</a> <span class="accent">&raquo;</span> Legg til
 
- <a href="#" class="right icon abort" title="Avbryt"><i class="zmdi zmdi-close"></i></a>
+ <a href="{% url 'productions' %}" class="right icon abort" title="Avbryt"><i class="zmdi zmdi-close"></i></a>
 {% endblock %}
 
 

@@ -470,16 +470,18 @@ body[data-view=person] > section#header img.headshot {
 }
 
 /* ========================================================================
-    Content
+    Menu
    ======================================================================== */
 nav#menu {
-  padding: 10px 20px;
+  padding: 0 20px;
   background: rgba(255, 255, 255, 0.1);
   font: 0.7rem "Unica One", Helvetica, Arial, sans-serif;
   text-align: left;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.3);
+  height: 2.2rem;
+  line-height: 2.2rem;
 }
 nav#menu span.group {
   margin-right: 25px;
@@ -584,7 +586,7 @@ body[data-view=person] > section#content div.production > img {
 }
 
 body[data-view=production] > section#content {
-  padding: 5vw calc(15vw - 60px);
+  padding: 5vw calc(20vw - 60px);
 }
 body[data-view=production] > section#content div.location {
   position: relative;
@@ -736,15 +738,16 @@ body[data-view=map] > section#content {
 body[data-view=import_production] > section#content div#focused div.production, body[data-view=import_production] > section#content div#focused div.person,
 body[data-view=import_person] > section#content div#focused div.production,
 body[data-view=import_person] > section#content div#focused div.person {
-  margin-bottom: 3vw;
+  margin-bottom: 5vw;
 }
 body[data-view=import_production] > section#content div.production, body[data-view=import_production] > section#content div.person,
 body[data-view=import_person] > section#content div.production,
 body[data-view=import_person] > section#content div.person {
+  margin-bottom: 4vw;
   display: grid;
   width: 100%;
   grid-template-columns: auto 1fr;
-  grid-column-gap: 15px;
+  grid-column-gap: 30px;
   grid-row-gap: 0;
 }
 body[data-view=import_production] > section#content div.production > .poster, body[data-view=import_production] > section#content div.production > .headshot, body[data-view=import_production] > section#content div.person > .poster, body[data-view=import_production] > section#content div.person > .headshot,

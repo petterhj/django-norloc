@@ -2,20 +2,20 @@
 
 {% load staticfiles %}
 
-{% block view %}productions{% endblock %}
-{% block title %}Produksjoner | {% endblock %}
+{% block view %}locations{% endblock %}
+{% block title %}Opptakssteder | {% endblock %}
 
 
 {# Navigation #}
 {% block navigation %}
  {% if not filter %}
-  Produksjoner
+  Opptakssteder
  {% else %}
-  <a href="{% url 'productions' %}">Produksjoner</a> <span class="accent">&raquo;</span> {{filter}}
+  <a href="{% url 'locations' %}">Opptakssteder</a> <span class="accent">&raquo;</span> {{filter}}
  {% endif  %}
 
  {% if user.is_authenticated %}
-  <a href="{%url 'import_production' %}" class="right icon" title="Legg til production"><i class="zmdi zmdi-plus"></i></a>
+  <!--a href="{%url 'import_production' %}" class="right icon" title="Legg til production"><i class="zmdi zmdi-plus"></i></a-->
  {% endif %}
 {% endblock %}
 
@@ -26,10 +26,10 @@
 
 {# Menu #}
 {% block menu-content %}
- <span class="group">Type: 
+ <!--span class="group">Type: 
   <a href="{% url 'productions' %}">Alle</a> &#9642; 
   <a href="{% url 'filtered_productions' 'film' %}">Film</a> &#9642; 
-  <a href="{% url 'filtered_productions' 'tv' %}">TV</a>
+  <a href="{% url 'filtered_productions' 'tv' %}">TV</a-->
 {% endblock %}
 
 

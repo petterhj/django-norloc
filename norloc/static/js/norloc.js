@@ -200,13 +200,15 @@ var NORLOC = NORLOC || {
             $.getJSON('/json/tmdb/production/search/?title={0}'.format(title), function(results) {
                 // Append results
                 $.each(results.films, function(i, production) {
+                    console.log(production);
+                    console.log('-------------------')
                     // Production
                     var rendered = $(template(production));
 
                     target.append(rendered);
 
                     // Get details and check if "appliable"
-                    $.getJSON('/json/tmdb/production/details/{0}'.format(production.tmdb_id), function(details) {
+                    $.getJSON('/json/tmdb/production/{0}/details/{1}'.format(production.type, production.tmdb_id), function(details) {
                         if (details) {
                             // Add extra metadata
                             if (details.directors.length > 0) {
@@ -220,7 +222,7 @@ var NORLOC = NORLOC || {
                             }
                             // Check if valid production country
                             if (details.production_countries) {
-                                var countries = Object.keys(details.production_countries);
+                                var countries = details.production_countries;
 
                                 rendered.find('.tag.countries').show()
                                     .find('span').text(countries.join(', '));
@@ -232,7 +234,7 @@ var NORLOC = NORLOC || {
                                         .removeClass('hidden')
                                         .on('click', function() {
                                             // Select film
-                                            window.location = '/produksjoner/import/{0}'.format(production.tmdb_id);
+                                            window.location = '/produksjoner/import/{0}/{1}'.format(production.type, production.tmdb_id);
                                         });
                                     return;
                                 }

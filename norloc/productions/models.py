@@ -26,7 +26,7 @@ upload_to_logos = upload_to_factory('logos') if not MIGRATE else 'logos'
 # Model: Production
 class Production(models.Model):
     # Fields
-    type = models.CharField(max_length=4, choices=(('film', 'Film'), ('show', 'Serie')))
+    type = models.CharField(max_length=4, choices=(('film', 'Film'), ('tv', 'Serie')))
 
     title = models.CharField(max_length=50)
     release = models.DateField('Released')
@@ -42,8 +42,8 @@ class Production(models.Model):
     
     poster = models.ImageField(upload_to=upload_to_posters, blank=True)
 
-    imdb_id = models.CharField(max_length=10, blank=False, unique=True)
     tmdb_id = models.CharField(max_length=10, blank=False, unique=True)
+    imdb_id = models.CharField(max_length=10, blank=True)
     nbdb_id = models.CharField(max_length=10, blank=True)
 
     slug = AutoSlugField(populate_from='slugified_title', editable=True, unique=True)#, always_update=True)

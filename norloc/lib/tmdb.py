@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 
 # Imports
+import logging
 import tmdbsimple as tmdb
+from json import dumps
 from django.conf import settings
+
+
+# Logger
+logger = logging.getLogger('norloc')
 
 
 # Class: TMDb
@@ -16,56 +22,70 @@ class TMDb(object):
     
     # Search
     def search(self, title, limit=10):
-        # Search films by title
+        # Search films/shows by title
+        logging.info('Searching for "%s" (limit=%d)' % (title, limit))
         tmdb_search = tmdb.Search()
         results = []
 
-        for movie in tmdb_search.movie(query=title, language=self.language).get('results')[0:limit]:
-            title = movie.get('original_title') or movie.get('title')
-            poster_path = movie.get('poster_path')
-            poster = 'https://image.tmdb.org/t/p/w200' + poster_path if poster_path else None
+        for production_type, method in {'film': tmdb_search.movie, 'tv': tmdb_search.tv}.iteritems():
+            logging.info('> Searching type %s' % (production_type))
 
-            results.append({
-                'tmdb_id': movie.get('id'),
-                'title': movie.get('title'),
-                'original_language': movie.get('original_language'),
-                'popularity': movie.get('popularity', 0),
-                'overview': movie.get('overview'),
-                'poster': poster,
-                'release': movie.get('release_date')
-            })
+            for production in method(query=title, language=self.language).get('results')[0:limit]:
+                title = production.get('original_title') or production.get('title') or production.get('name')
+                poster_path = production.get('poster_path')
+                poster = 'https://image.tmdb.org/t/p/w200' + poster_path if poster_path else None
 
-            # Sort results by popularity
-            # results = sorted(results['films'], key=lambda f: f['popularity'], reverse=True) 
+                results.append({
+                    'tmdb_id': production.get('id'),
+                    'type': production_type,
+                    'title': title,
+                    'original_language': production.get('original_language'),
+                    'popularity': production.get('popularity', 0),
+                    'overview': production.get('overview'),
+                    'poster': poster,
+                    'release': production.get('release_date') or production.get('first_air_date')
+                })
+
+        # Sort results by popularity
+        # results = sorted(results['films'], key=lambda f: f['popularity'], reverse=True) 
 
         return results
 
 
     # Details
-    def details(self, tmdb_id):
-        # Fetch movie details
-        movie = tmdb.Movies(tmdb_id)
-        details = movie.info(language=self.language, append_to_response='credits')
+    def details(self, production_type, tmdb_id):
+        search_types = {'film': tmdb.Movies, 'tv': tmdb.TV}
+        
+        if production_type not in search_types:
+            return {}
+
+        # Fetch production details
+        production = search_types.get(production_type)(tmdb_id)
+        details = production.info(language=self.language, append_to_response='credits')
 
         # Parse data
         title = details.get('original_title') or details.get('title')
+        title = title or details.get('original_name') or details.get('name')
         poster_base = 'https://image.tmdb.org/t/p/w500'
         crew = details.get('credits', {}).get('crew', [])
+        production_countries = [c['iso_3166_1'] for c in details.get('production_countries', [])]
+
+        production_countries = production_countries or details.get('origin_country', [])
 
         parsed = {
             'tmdb_id': details.get('id'),
-            'imdb_id': details.get('imdb_id'),
+            'imdb_id': details.get('imdb_id', ''),
             'title': title,
             'overview': details.get('overview'),
             'poster': poster_base + details.get('poster_path') if details.get('poster_path') else None,
-            'release': details.get('release_date'),
+            'release': details.get('release_date') or details.get('first_air_date'),
             'languages': {l['iso_639_1']: l['name'] for l in details.get('spoken_languages', {})},
-            'production_countries': {c['iso_3166_1']: c['name'] for c in details.get('production_countries', {})},
+            'production_countries': production_countries,
             'production_companies': [{
                 'name': company.get('name'),
                 'country': company.get('origin_country')
             } for company in details.get('production_companies')],
-            'runtime': details.get('runtime'),
+            'runtime': details.get('runtime') or details.get('episode_run_time', [])[0:1],
             'directors': [{
                 'tmdb_id': p.get('id'),
                 'name': p.get('name'),
@@ -94,8 +114,6 @@ class TMDb(object):
         
         from json import dumps
         for person in tmdb_search.person(query=name, language=self.language).get('results')[0:limit]:
-            print dumps(person, indent=4)
-
             headshot_path = person.get('profile_path')
             headshot = 'https://image.tmdb.org/t/p/w200' + headshot_path if headshot_path else None
 
