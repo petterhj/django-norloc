@@ -12,6 +12,10 @@ from locations import views as loc
 urlpatterns = [
     url(r'^$', prd.index, name='index'),
 
+    # url(r'^produksjoner/$', include([
+    #     url(r'^$', prd.productions, name='productions')
+    # ])),
+
     url(r'^produksjoner/$', prd.productions, name='productions'),
     url(r'^produksjoner/import/$', prd.import_production, name='import_production'),
     url(r'^produksjoner/import/(?P<production_type>film|tv)/(?P<tmdb_id>\d+)$', prd.import_production, name='import_production'),

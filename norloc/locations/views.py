@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-from common.views import error
+from common.views import error, not_found
 from .models import Location
 
 
@@ -31,7 +31,7 @@ def locations(request, filter=None, json=False):
 
     else:
         # Invalid filter
-        return error(request)
+        return not_found(request)
 
 
     # Locations in JSON format
