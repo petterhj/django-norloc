@@ -26,16 +26,20 @@
 
 {# Menu #}
 {% block menu-content %}
- <!--span class="group">Type: 
-  <a href="{% url 'productions' %}">Alle</a> &#9642; 
-  <a href="{% url 'filtered_productions' 'film' %}">Film</a> &#9642; 
-  <a href="{% url 'filtered_productions' 'tv' %}">TV</a-->
+ <span class="group">Fylke: 
+  <select>
+   <option value="all">Alle</option>
+   {% for county_slug, county in counties %}
+    <option value="{{ county_slug }}">{{ county }}</option>
+   {% endfor %}
+  </select>
+ </span>
 {% endblock %}
 
 
 {# Content #}
 {% block content %}
- {% for production in productions %}
-  {% include "grid_item_production.html" with production=production %}
+ {% for location in locations %}
+  {% include "grid_item_location.html" with location=location %}
  {% endfor %}
 {% endblock %}

@@ -1,0 +1,72 @@
+@font-face {
+	font-family: 'Monda';
+	font-style: normal;
+	font-weight: normal;
+	src:
+		local('Monda Regular'),
+		local('Monda-Regular'),
+		/* from https://fonts.gstatic.com/s/monda/v8/TK3tWkYFABsmjsphPho.woff2 */
+		url('Monda.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/monda/v8/TK3tWkYFABsmjsphPhw.woff */
+		url('Monda.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/monda/v8/TK3tWkYFABsmjsphPh4.eot */
+		url('Monda.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=TK3tWkYFABsmjsphPh0&skey=12b74b97e719c11d&v=v8#Monda */
+		url('Monda.svg#Monda') format('svg'),
+		/* from https://fonts.gstatic.com/s/monda/v8/TK3tWkYFABsmjsphPh8.ttf */
+		url('Monda.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Unica One';
+	font-style: normal;
+	font-weight: normal;
+	src:
+		local('Unica One'),
+		local('UnicaOne-Regular'),
+		/* from https://fonts.gstatic.com/s/unicaone/v6/DPEuYwWHyAYGVTSmalsRcd3e.woff2 */
+		url('Unica_One.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/unicaone/v6/DPEuYwWHyAYGVTSmalsRcd3Y.woff */
+		url('Unica_One.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/unicaone/v6/DPEuYwWHyAYGVTSmalsRcd3a.eot */
+		url('Unica_One.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=DPEuYwWHyAYGVTSmalsRcd3Z&skey=95c90eaca39f67c7&v=v6#UnicaOne */
+		url('Unica_One.svg#UnicaOne') format('svg'),
+		/* from https://fonts.gstatic.com/s/unicaone/v6/DPEuYwWHyAYGVTSmalsRcd3b.ttf */
+		url('Unica_One.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Noto Serif';
+	font-style: normal;
+	font-weight: normal;
+	src:
+		local('Noto Serif'),
+		local('NotoSerif'),
+		/* from https://fonts.gstatic.com/s/notoserif/v6/ga6Iaw1J5X9T9RW6j9bNfFcWaA.woff2 */
+		url('Noto_Serif.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/notoserif/v6/ga6Iaw1J5X9T9RW6j9bNfFcWbg.woff */
+		url('Noto_Serif.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/notoserif/v6/ga6Iaw1J5X9T9RW6j9bNfFcWbA.eot */
+		url('Noto_Serif.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=ga6Iaw1J5X9T9RW6j9bNfFcWbw&skey=ff3f102bd67fc93c&v=v6#NotoSerif */
+		url('Noto_Serif.svg#NotoSerif') format('svg'),
+		/* from https://fonts.gstatic.com/s/notoserif/v6/ga6Iaw1J5X9T9RW6j9bNfFcWbQ.ttf */
+		url('Noto_Serif.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Vollkorn';
+	font-style: normal;
+	font-weight: normal;
+	src:
+		local('Vollkorn Regular'),
+		local('Vollkorn-Regular'),
+		/* from https://fonts.gstatic.com/s/vollkorn/v8/0yb9GDoxxrvAnPhYGxkpaE0.woff2 */
+		url('Vollkorn.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/vollkorn/v8/0yb9GDoxxrvAnPhYGxkpaEs.woff */
+		url('Vollkorn.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/vollkorn/v8/0yb9GDoxxrvAnPhYGxkpaEk.eot */
+		url('Vollkorn.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=0yb9GDoxxrvAnPhYGxkpaEo&skey=70793812edfff824&v=v8#Vollkorn */
+		url('Vollkorn.svg#Vollkorn') format('svg'),
+		/* from https://fonts.gstatic.com/s/vollkorn/v8/0yb9GDoxxrvAnPhYGxkpaEg.ttf */
+		url('Vollkorn.ttf') format('truetype');
+}

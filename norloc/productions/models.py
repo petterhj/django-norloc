@@ -23,6 +23,7 @@ upload_to_people = upload_to_factory('people') if not MIGRATE else 'people'
 upload_to_logos = upload_to_factory('logos') if not MIGRATE else 'logos'
 
 
+
 # Model: Production
 class Production(models.Model):
     # Fields

@@ -11,16 +11,24 @@ from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.db.models import Count
 
 from common.views import error, not_found
-from .models import Location
+from .models import Location, NO_COUNTIES
 
 
 # JSON: Locations
-def locations(request, filter=None, json=False):
+def locations(request, county=None, place=None, json=False):
     # Filter
-    if not filter:
-        locations = Location.objects.all()
+    locations = Location.objects
+    
+    if county:
+        locations = locations.filter(county=county)
+
+    if place:
+        locations = locations.filter(place_slug=place)
+
+    locations = locations.all().annotate(production_count=Count('scene__production', distinct=True))
 
     # elif filter in ['film', 'tv']:
     #     # Filter by type
@@ -29,9 +37,9 @@ def locations(request, filter=None, json=False):
     #         'tv': 'show',
     #     }.get(filter)).order_by('-release')
 
-    else:
-        # Invalid filter
-        return not_found(request)
+    # else:
+    #     # Invalid filter
+    #     return not_found(request)
 
 
     # Locations in JSON format
@@ -46,7 +54,17 @@ def locations(request, filter=None, json=False):
     # Render template
     return render(request, 'locations.html', {
         # 'filter': filter,
+        'counties': NO_COUNTIES,
         'locations': locations
+    })
+
+
+def location(request, county, place, slug):
+    location = get_object_or_404(Location, county=county, place_slug=place, slug=slug)
+
+    # return JsonResponse({'name': location.full_address})
+    return render(request, 'location.html', {
+        'location': location
     })
 
 

@@ -1,7 +1,5 @@
 {% extends "base_grid.html" %}
 
-{% load staticfiles %}
-
 {% block view %}people{% endblock %}
 {% block title %}Folk | {% endblock %}
 
@@ -37,9 +35,6 @@
 {# Content #}
 {% block content %}
  {% for person in people %}
-  <div class="person" style="background: transparent; padding:1vw;" data-href="{% url 'person' person.slug %}">
-   <img src="{%if person.headshot %}{{person.headshot.url}}{% else %}{% static "img/no-headshot.png" %}{% endif %}" style="width:100%; border-radius: 50%;">
-   <div class="nametag" style="font-size: 0.8rem; font-family: 'Unica One', Helvetica, Arial, sans-serif; width: 100%; text-align: center; background: #FFF; color: #333; border-radius: 4px; padding: 10px 4px; margin-top: -10px; text-transform: uppercase;">{{ person.name }} ({{ person.production_count }})</div>
-  </div>
+  {% include "grid_item_person.html" with person=person %}
  {% endfor %}
 {% endblock %}

@@ -5,11 +5,7 @@
 
 {# Navigation #}
 {% block navigation %}
- <a href="{%url 'productions' %}">Produksjoner</a> | 
- <a href="{%url 'locations' %}">Opptakssteder</a> |
- <a href="{%url 'people' %}">Folk</a> |
- <a href="">Selskaper</a> |
- <a href="{%url 'map' %}">Kart</a>
+ {% include "menu_main.html" %}
 
  {% if user.is_authenticated %}
   <a href="{%url 'import_production' %}" class="right icon" title="Legg til produksjon"><i class="zmdi zmdi-plus"></i></a>
@@ -18,10 +14,9 @@
 
 
 {# Header #}
+{% block header-class %}search{% endblock %}
 {% block header-content %}
- <div class="title">
-  {% include "header_search.html" with title="Norsk opptakssteder" placeholder="Tittel, regissør, opptakssted..." %}
- </div>
+ {% include "header_search.html" with title="Norsk opptakssteder" placeholder="Tittel, regissør, opptakssted..." %}
 {% endblock %}
 
 

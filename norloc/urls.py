@@ -40,7 +40,10 @@ urlpatterns = [
     url(r'^json/tmdb/people/details/(?P<tmdb_id>\d+)$', prd.tmdb_person_details, name='tmdb_person_details'),
 
     url(r'^opptakssteder/$', loc.locations, name='locations'),
-    url(r'^opptakssteder/(?P<filter>[\w-]+)/$', loc.locations, name='filtered_locations'),
+    url(r'^opptakssteder/(?P<county>[\w-]+)/$', loc.locations, name='locations'),
+    url(r'^opptakssteder/(?P<county>[\w-]+)/(?P<place>[\w-]+)/$', loc.locations, name='locations'),
+    url(r'^opptakssteder/(?P<county>[\w-]+)/(?P<place>[\w-]+)/(?P<slug>[\w-]+)$', loc.location, name='location'),
+
     url(r'^json/locations/$', loc.locations, {'json': 'True'}, name='json_locations'),
 
     url(r'^json/location/(?P<lpk>\d+)/details$', loc.location_details, name='location_details'),

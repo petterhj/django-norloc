@@ -67,6 +67,21 @@ var NORLOC = NORLOC || {
                 $('section#header form').submit();
             });
         }
+
+        // Debug
+        if (NORLOC.options.debug) {
+            var debug = $('<div>', {'id': 'debug'});
+            debug.append($('<span>', {'class': 'mq'}).text('MQ:'));
+            debug.append($('<span>', {'class': 'res'}));
+            update_debug();
+            function update_debug(e) {
+                var w = document.body.clientWidth;
+                let h = document.body.clientHeight;
+                debug.find('span.res').text(w + ' x ' + h);
+            }
+            $(window).resize(update_debug);
+            $('body').append(debug);
+        }
     },
 
     // View: Index
@@ -199,7 +214,9 @@ var NORLOC = NORLOC || {
             // Search productions
             $.getJSON('/json/tmdb/production/search/?title={0}'.format(title), function(results) {
                 // Append results
-                $.each(results.films, function(i, production) {
+                console.log(results);
+                
+                $.each(results.productions, function(i, production) {
                     console.log(production);
                     console.log('-------------------')
                     // Production

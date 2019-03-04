@@ -1,26 +1,21 @@
 {% extends "base.html" %}
 
 {% block view %}error{% endblock %}
-{% block title %}{% endblock %}
 
-{# Navigation #}
 {% block navigation %}
- Feilmelding
+ Feil ({{ status_code }})
 {% endblock %}
 
-
-{# Header #}
-{% block header-content %}
- <h1>Ooops, noe gikk visst galt!</h1>
- <h3>{{message}}</h3>
-{% endblock %} 
-
-
-{# Menu #}
-{% block menu %}{# No menu #}{% endblock %}
-
-
-{# Content #}
-{% block content %}
- 
+{% block page %}
+ <div class="cover-image">
+  <img src="/media/shots/uQhBjkogTs-RfVZjXICtHg.jpg">
+  <div class="heading">
+   <h1>{% if title %}{{ title }}{% else %}Feil{% endif %} <span class="code">&mdash; {{ status_code }}</span></h1>
+   <h2>{% if message %}{{ message }}{% else %}Du venner deg til det.{% endif %}</h2>
+  </div>
+  <div class="caption">
+   <h1><a href="{% url 'production' 'film' 'den-brysomme-mannen' %}">Den brysomme mannen</a> <span class="year">(2006)</span></h1>
+   <h2>Nydalen stasjon, Nydalen, Oslo</h2>
+ </div>
+</div>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_page.html" %}
 
 {% load staticfiles %}
 {% load markdownify %}
@@ -12,7 +12,7 @@
  <a href="{% url 'productions' %}">Produksjoner</a> <span class="accent">&raquo;</span> <a href="{% url 'filtered_productions' production.type %}">{{ production.type }}</a> <span class="accent">&raquo;</span> {{production.title}}
 
  {% if edit_mode %}
-  <a href="{%url 'production' production.slug %}" class="right icon" title="Avbryt endringer"><i class="zmdi zmdi-close"></i></a>
+  <a href="{%url 'production' production.type production.slug %}" class="right icon" title="Avbryt endringer"><i class="zmdi zmdi-close"></i></a>
   <a href="" class="right icon" title="Lagre endringer"><i class="zmdi zmdi-save"></i></a>
  {% else %}
   {% if user.is_authenticated %}

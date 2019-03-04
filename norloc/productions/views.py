@@ -13,7 +13,7 @@ from django.db.models import Count
 from lib.tmdb import TMDb
 from lib.image_from_url import ImageFileFromUrl
 
-from common.views import error
+from common.views import error, not_found
 from .models import Production, Scene, Shot, Person, Company
 from .forms import ProductionForm, PersonForm
 
@@ -42,7 +42,7 @@ def productions(request, filter=None):
 
     else:
         # Invalid filter
-        return error(request)
+        return not_found(request)
 
     # Render template
     return render(request, 'productions.html', {
@@ -80,7 +80,7 @@ def production(request, production_type, slug):
             form.save()
 
             # Redirect
-            return redirect(reverse('production', args=[form.instance.slug]) + '?edit=true')
+            return redirect(reverse('production', args=[form.instance.type, form.instance.slug]) + '?edit=true')
 
         else:
             logger.error('Form invalid')
@@ -103,17 +103,37 @@ def people(request, filter=None):
     # Filter
     if not filter:
         people = Person.objects.annotate(
-            production_count=Count('directors', distinct=True) + Count('writers', distinct=True) + Count('photographers', distinct=True)
+            # production_count=Count(
+            #     'directors', distinct=True
+            # ) + Count(
+            #     'writers', distinct=True
+            # ) + Count(
+            #     'photographers', distinct=True
+            # )
+            production_count=Count(
+                'directors', distinct=True
+            ) + Count(
+                'writers', distinct=True
+            ) + Count(
+                'photographers', distinct=True
+            )
         ).order_by('-production_count')
 
     elif filter in ['regi', 'manus', 'foto']:
         # Filter by role
         people = Person.objects.annotate(
-            production_count=Count({
-                'regi': 'directors',
-                'manus': 'writers',
-                'foto': 'photographers',
-            }.get(filter), distinct=True)
+            # production_count=Count({
+            #     'regi': 'directors',
+            #     'manus': 'writers',
+            #     'foto': 'photographers',
+            # }.get(filter), distinct=True)
+            production_count=Count(
+                'directors', distinct=True
+            ) + Count(
+                'writers', distinct=True
+            ) + Count(
+                'photographers', distinct=True
+            )
         ).filter(production_count__gt=0).order_by('-production_count')
 
     else:
@@ -205,7 +225,7 @@ def import_production(request, production_type=None, tmdb_id=None):
     if existing:
         # Redirect to production
         logger.info('Production (tmdb_id=%s) already exists, redirecting' % (tmdb_id))
-        return redirect(reverse('production', args=[existing.slug]) + '?edit=true')
+        return redirect(reverse('production', args=[existing.type, existing.slug]) + '?edit=true')
 
     # Get details
     try:
@@ -270,7 +290,7 @@ def import_production(request, production_type=None, tmdb_id=None):
 
 
             # Redirect to production view
-            return redirect(production, slug=p.slug)
+            return redirect(production, production_type=p.type, slug=p.slug)
 
     # Error occured
     return error(request)

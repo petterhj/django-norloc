@@ -6,16 +6,16 @@ from django.shortcuts import render
 
 
 # View: Error
-def error(request, message=None, status=400):
+def error(request, title=None, message=None, status=400):
     # Render template  
     return render(request, 'error.html', {
-        'message': message if message else ':(('
+        'title': title,
+        'message': message,
+        'status_code': status
     }, status=status)
 
 
 # View: Not found
-def not_found(request, message=None):
+def not_found(request, title=None, message=None):
     # Render template  
-    return render(request, 'error.html', {
-        'message': message if message else ':(( NOT FOUND'
-    }, status=404)
+    return error(request, 'Side ikke funnet', message, status=404)

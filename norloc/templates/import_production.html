@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_page.html" %}
 
 {% block view %}import_production{% endblock %}
 {% block title %}Legg til produksjon | {% endblock %}
@@ -12,6 +12,7 @@
 
 
 {# Header #}
+{% block header-class %}search{% endblock %}
 {% block header-content %}
  {% include "header_search.html" with title="Legg til produksjon" placeholder="Tittel" %}
 {% endblock %} 

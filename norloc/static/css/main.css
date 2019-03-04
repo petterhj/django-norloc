@@ -12,6 +12,42 @@ body {
   background: #1A1919;
 }
 
+div#debug {
+  position: fixed;
+  top: 0;
+  left: 100px;
+  padding: 1px 15px;
+  border-radius: 0 0 4px 4px;
+  background: #FF5722;
+  font: 0.5rem "Monda", sans-serif;
+  color: white;
+}
+div#debug span.mq {
+  position: relative;
+  display: inline-block;
+  width: 95px;
+}
+div#debug span.mq:before {
+  position: absolute;
+  width: inherit;
+  padding-left: 30px;
+}
+@media only screen and (max-width: 500px) {
+  div#debug span.mq:before {
+    content: "handheld";
+  }
+}
+@media only screen and (min-width: 501px) {
+  div#debug span.mq:before {
+    content: "medium";
+  }
+}
+@media only screen and (min-width: 1200px) {
+  div#debug span.mq:before {
+    content: "wide";
+  }
+}
+
 input, button, textarea, select {
   border: 1px solid transparent;
   outline: 0;
@@ -49,6 +85,9 @@ h1, h2, h3, h4, h5 {
   font: 1.2rem "Unica One", Helvetica, Arial, sans-serif;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.8);
+}
+h1 span.year, h1 span.code, h2 span.year, h2 span.code, h3 span.year, h3 span.code, h4 span.year, h4 span.code, h5 span.year, h5 span.code {
+  opacity: 0.7;
 }
 
 .faded {
@@ -127,7 +166,7 @@ div.meta .tag > i.zmdi + span {
 }
 
 /* ========================================================================
-    Caption
+	Caption
    ======================================================================== */
 section#caption {
   overflow: auto;
@@ -168,22 +207,24 @@ section#caption nav i.zmdi:hover {
 }
 
 /* ========================================================================
-   	Header
+	Header
    ======================================================================== */
 section#header {
-  padding: 30px 20vw;
+  display: inline-block;
+  width: 100%;
+  padding: 10vw 5vw;
   background: #FFF;
   text-align: center;
 }
-section#header img.poster, section#header img.headshot {
+section#header img.poster, section#header img.headshot, section#header img.photo {
   width: 180px;
   height: 267px;
   margin-top: 45px;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
   border-radius: 4px;
 }
 section#header h1 {
-  margin: 10px 0;
+  margin: 0;
   font: 1.7rem "Unica One", Helvetica, Arial, sans-serif;
   color: #C31;
   text-transform: uppercase;
@@ -246,57 +287,89 @@ section#header p a:hover {
 section#header input, section#header textarea, section#header select {
   background: #EFEFEF;
 }
+section#header form[name=search] {
+  margin-top: 5vw;
+}
+section#header form[name=search] input[name=query] {
+  border-radius: 0;
+}
 section#header form div.input-icon {
   position: relative;
   display: inline-block;
+  width: 100%;
 }
 section#header form div.input-icon > input {
-  padding-right: 50px;
+  width: 100%;
+  margin: 0;
+  padding-right: 65px;
 }
 section#header form div.input-icon > button {
   position: absolute;
   top: 13px;
-  right: 15px;
+  right: 25px;
+  margin: 0;
   padding: 0;
-  font-size: 2rem;
   border: 0;
   background: transparent;
+  font-size: 2rem;
   color: rgba(0, 0, 0, 0.5);
 }
 section#header form div.input-icon > button:hover, section#header form div.input-icon > button:focus {
   color: rgba(0, 0, 0, 0.75);
 }
+section#header.search {
+  padding: 0;
+}
+@media only screen and (min-width: 501px) {
+  section#header {
+    padding: 7vw 10vw;
+  }
+  section#header.search {
+    padding: 5vw 10vw;
+  }
+  section#header form[name=search] input[name=query] {
+    border-radius: 4px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  section#header {
+    padding: 7vw 15vw;
+  }
+  section#header.search {
+    padding: 5vw 15vw;
+  }
+}
 
 body[data-view=index] > section#header {
-  padding: 0;
+  position: relative;
+}
+body[data-view=index] > section#header::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
   background-image: url("/media/shots/vlcs-Oslo_31_August-00_30_23-2018-09-20-22h52m28s340.png");
   background-repeat: no-repeat;
   background-position: 0 80%;
   background-size: cover;
+  filter: grayscale(40%) saturate(0.25);
 }
-body[data-view=index] > section#header .title {
-  width: 100%;
-  height: 100%;
-  padding: 30px 20vw;
-  background: rgba(240, 128, 128, 0.5);
-}
-body[data-view=index] > section#header .title h1 {
+body[data-view=index] > section#header h1 {
+  position: relative;
   display: inline-block;
-  margin: 15px 0 15px 0;
-  padding: 5px 15px;
   font-size: 3rem;
   color: #FFF;
   border-bottom: 2px solid #FFF;
 }
-body[data-view=index] > section#header .title .input-icon, body[data-view=index] > section#header .title input {
-  width: 100%;
-}
-body[data-view=index] > section#header .title input {
-  background: #FFF;
-}
-
-body[data-view=production] > section#header {
-  padding-bottom: 60px;
+@media only screen and (max-width: 500px) {
+  body[data-view=index] > section#header form[name=search] {
+    margin: 0;
+  }
+  body[data-view=index] > section#header h1 {
+    display: none;
+  }
 }
 
 body[data-view=production][data-edit=true] > section#header div.imageselect > .imageselect-buttons,
@@ -469,8 +542,18 @@ body[data-view=person] > section#header img.headshot {
   filter: grayscale(100%);
 }
 
+body[data-view=location] > section#header {
+  padding-bottom: 60px;
+}
+body[data-view=location] > section#header img.photo {
+  height: 250px;
+  width: auto;
+  margin-top: 0;
+  border-radius: 4px;
+}
+
 /* ========================================================================
-    Menu
+	Menu
    ======================================================================== */
 nav#menu {
   padding: 0 20px;
@@ -493,107 +576,127 @@ nav#menu a {
 nav#menu a:hover {
   color: rgba(255, 255, 255, 0.7);
 }
+nav#menu select {
+  display: inline-block;
+  padding: 0;
+  margin: 0 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  font: inherit;
+  color: rgba(255, 255, 255, 0.7);
+}
 
 /* ========================================================================
-    Content
+	Content
    ======================================================================== */
 section#content {
   width: 100%;
-  padding: 5vw;
+  padding: 10vw 5vw;
   color: rgba(255, 255, 255, 0.8);
 }
 section#content.grid {
+  padding-top: 5vw;
+  padding-bottom: 5vw;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-column-gap: 3vw;
   grid-row-gap: 3vw;
+  grid-auto-rows: 1fr;
 }
-section#content h2 {
-  font-size: 1.5rem;
-  margin: 0 0 5px 0;
-}
-section#content h4 {
-  font-size: 0.9rem;
-  margin: 0 0 5px 0;
-}
-section#content .meta > .tag {
-  color: rgba(255, 255, 255, 0.25);
-}
-section#content .meta > .tag > i.zmdi {
-  color: rgba(255, 255, 255, 0.1);
-}
-
-body[data-view=index] > section#content,
-body[data-view=productions] > section#content,
-body[data-view=people] > section#content,
-body[data-view=person] > section#content {
-  grid-template-columns: repeat(3, 1fr);
-}
-@media only screen and (min-width: 501px) and (max-width: 1199px) {
-  body[data-view=index] > section#content,
-body[data-view=productions] > section#content,
-body[data-view=people] > section#content,
-body[data-view=person] > section#content {
-    grid-template-columns: repeat(5, 1fr);
-  }
-}
-@media only screen and (min-width: 1200px) {
-  body[data-view=index] > section#content,
-body[data-view=productions] > section#content,
-body[data-view=people] > section#content,
-body[data-view=person] > section#content {
-    grid-template-columns: repeat(7, 1fr);
-  }
-}
-body[data-view=index] > section#content div.person,
-body[data-view=productions] > section#content div.person,
-body[data-view=people] > section#content div.person,
-body[data-view=person] > section#content div.person {
-  background: #FFF;
-  padding: 30px;
-}
-body[data-view=index] > section#content div.production,
-body[data-view=productions] > section#content div.production,
-body[data-view=people] > section#content div.production,
-body[data-view=person] > section#content div.production {
-  position: relative;
+section#content.grid .grid-item {
+  display: flex;
+  flex-flow: column;
   width: 100%;
   height: 100%;
-  border-radius: 3px;
+  overflow: hidden;
+  background: transparent;
+  border-radius: 4px;
   border: 2px solid #181818;
-  background: #333;
 }
-body[data-view=index] > section#content div.production.faded,
-body[data-view=productions] > section#content div.production.faded,
-body[data-view=people] > section#content div.production.faded,
-body[data-view=person] > section#content div.production.faded {
+section#content.grid .grid-item.faded {
   opacity: 0.2;
 }
-body[data-view=index] > section#content div.production:hover,
-body[data-view=productions] > section#content div.production:hover,
-body[data-view=people] > section#content div.production:hover,
-body[data-view=person] > section#content div.production:hover {
+section#content.grid .grid-item:hover {
   border: 2px solid #9E9E9E;
 }
-body[data-view=index] > section#content div.production > img,
-body[data-view=productions] > section#content div.production > img,
-body[data-view=people] > section#content div.production > img,
-body[data-view=person] > section#content div.production > img {
+section#content.grid .grid-item img {
   display: inline;
   width: inherit;
   height: inherit;
   border-radius: inherit;
 }
+section#content.grid .grid-item div.cover {
+  flex: 0 1 auto;
+  height: 15vw;
+  background: #666;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+section#content.grid .grid-item div.details {
+  flex: 1 1 auto;
+  padding: 10px 15px;
+  background: #FFF;
+}
+section#content.grid .grid-item div.details h1, section#content.grid .grid-item div.details h2 {
+  font-family: "Unica One", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+}
+section#content.grid .grid-item div.details h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #C31;
+}
+section#content.grid .grid-item div.details h2 {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #666;
+}
+section#content.grid .grid-item div.details div.meta {
+  margin: 0;
+}
+@media only screen and (min-width: 501px) {
+  section#content {
+    padding: 7vw 10vw;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  section#content {
+    padding: 7vw 15vw;
+  }
+}
+
+body[data-view=index] > section#content,
+body[data-view=productions] > section#content,
+body[data-view=person] > section#content {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media only screen and (min-width: 501px) {
+  body[data-view=index] > section#content,
+body[data-view=productions] > section#content,
+body[data-view=person] > section#content {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+body[data-view=locations] > section#content {
+  grid-template-columns: repeat(3, 1fr);
+}
+body[data-view=people] > section#content {
+  grid-template-columns: repeat(5, 1fr);
+}
+body[data-view=people] > section#content .grid-item.person div.cover {
+  height: 10vw;
+}
 
 body[data-view=production] > section#content {
-  padding: 5vw calc(20vw - 60px);
+  padding: 10vw calc(5vw - 3vw);
 }
 body[data-view=production] > section#content div.location {
   position: relative;
   width: calc(50% - 15px);
-  margin: 15px 0 55px 0;
+  margin: 0 0 55px 0;
   border-left: 2px solid rgba(255, 255, 255, 0.02);
-  padding: 0 60px 20px 60px;
+  padding: 0 3vw;
 }
 body[data-view=production] > section#content div.location.double {
   width: 100%;
@@ -677,7 +780,7 @@ body[data-view=production] > section#content div.location div.scenes div.scene:l
 body[data-view=production] > section#content div.location div.scenes div.scene:before {
   position: absolute;
   top: -5px;
-  left: -69px;
+  left: calc(-3vw + -9px);
   width: 16px;
   line-height: 30px;
   content: "";
@@ -729,6 +832,25 @@ body[data-view=production] > section#content div.location.uncertain h2:after {
   content: "";
   font-family: "Material-Design-Iconic-Font";
 }
+@media only screen and (max-width: 500px) {
+  body[data-view=production] > section#content div.location {
+    border: 0;
+  }
+  body[data-view=production] > section#content div.location:before,
+body[data-view=production] > section#content div.scene:before {
+    display: none;
+  }
+}
+@media only screen and (min-width: 501px) {
+  body[data-view=production] > section#content {
+    padding: 7vw calc(10vw - 3vw);
+  }
+}
+@media only screen and (min-width: 1200px) {
+  body[data-view=production] > section#content {
+    padding: 7vw calc(15vw - 3vw);
+  }
+}
 
 body[data-view=map] > section#content {
   padding: 0;
@@ -769,11 +891,6 @@ body[data-view=import_person] > section#content div.person > .headshot > img {
   height: inherit;
   border-radius: inherit;
 }
-body[data-view=import_production] > section#content div.production > .details h2 span.year, body[data-view=import_production] > section#content div.person > .details h2 span.year,
-body[data-view=import_person] > section#content div.production > .details h2 span.year,
-body[data-view=import_person] > section#content div.person > .details h2 span.year {
-  opacity: 0.7;
-}
 body[data-view=import_production] > section#content div.production > .details h2 span.add, body[data-view=import_production] > section#content div.person > .details h2 span.add,
 body[data-view=import_person] > section#content div.production > .details h2 span.add,
 body[data-view=import_person] > section#content div.person > .details h2 span.add {
@@ -811,7 +928,7 @@ body[data-view=import_person] > section#content div.person.minified > .headshot 
 }
 
 /* ========================================================================
-   	Footer
+	Footer
    ======================================================================== */
 footer {
   width: 100%;
@@ -827,6 +944,61 @@ footer a {
 }
 footer a:hover {
   color: rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================================================
+	Cover image
+   ======================================================================== */
+div.cover-image {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 56px);
+  padding: 0 16px 16px 16px;
+  background: #FFF;
+}
+div.cover-image a {
+  color: inherit;
+  text-decoration: none;
+}
+div.cover-image a:hover {
+  text-decoration: underline;
+}
+div.cover-image > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+div.cover-image > .heading {
+  position: absolute;
+  top: 15px;
+  left: 30px;
+}
+div.cover-image > .heading h1 {
+  font-size: 1.5rem;
+  color: #FFF;
+}
+div.cover-image > .heading h2 {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+div.cover-image > .caption {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  width: auto;
+  text-align: left;
+  color: #FFF;
+}
+div.cover-image > .caption h1 {
+  margin: 0;
+  font-size: 0.8rem;
+}
+div.cover-image > .caption h2 {
+  margin: 3px 0 0 0;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .my-label {

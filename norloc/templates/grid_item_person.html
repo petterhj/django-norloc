@@ -1,0 +1,19 @@
+{% load staticfiles %}
+
+<div class="grid-item person {% if person.production_count == 0 %}faded{% endif %}" data-href="{% url 'person' person.slug %}" title="{{ person.name }}">
+ <div class="cover" style="background-image: url('{%if person.headshot %}{{ person.headshot.url }}{% else %}{% static "img/no-headshot.png" %}{% endif %}');">
+ </div>
+ <div class="details">
+  <h1>{{ person.name }}</h1>
+  <h2>{{ person.job_title }}</h2>
+  <div class="meta">
+   <span class="tag" title="Produksjoner"><i class="zmdi zmdi-videocam"></i><span>{{ person.productions.count }} produksjon{{ person.productions.count|pluralize:",er" }}</span></span>
+  </div>
+ </div>
+</div>
+
+
+<!--div class="person" style="background: transparent; padding:1vw;" data-href="">
+   <img src="{%if person.headshot %}{{person.headshot.url}}{% else %}{% static "img/no-headshot.png" %}{% endif %}" style="width:100%; border-radius: 50%;">
+   <div class="nametag" style="font-size: 0.8rem; font-family: 'Unica One', Helvetica, Arial, sans-serif; width: 100%; text-align: center; background: #FFF; color: #333; border-radius: 4px; padding: 10px 4px; margin-top: -10px; text-transform: uppercase;">{{ person.name }} ({{ person.production_count }})</div>
+  </div-->

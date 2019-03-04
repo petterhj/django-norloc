@@ -1,0 +1,11 @@
+<div class="grid-item location {% if location.production_count == 0 %}faded{% endif %}" data-href="{% url 'location' location.county location.place_slug location.slug %}" title="{{ location.full_address }}">
+ <div class="cover" style="{%if location.photo %}background-image: url('{{ location.photo.url }}');{% endif %}">
+ </div>
+ <div class="details">
+  <h1>{{ location.address }}</h1>
+  <h2>{{ location.place }}, {{ location.county }}</h2>
+  <div class="meta">
+   <span class="tag" title="Produksjoner"><i class="zmdi zmdi-videocam"></i><span>{{ location.production_count }} produksjon{{ location.production_count|pluralize:",er" }}</span></span>
+  </div>
+ </div>
+</div>
