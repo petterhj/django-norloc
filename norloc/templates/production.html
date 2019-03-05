@@ -23,7 +23,7 @@
 
 
 {# Header #}
-{% block header-content %}
+{% block header %}
  {% if not edit_mode %}
   <!-- Poster -->
   {% if production.poster %}
@@ -170,8 +170,6 @@
     {{#each scenes}}
      <div class="scene {{#if uncertain}}uncertain{{/if}}">
       {{#each shots}}
-       <!-- <div class="shot {{shot_size2 ../../scene_count ../shot_count @index}}"> -->
-       <!-- <div class="shot{{#if double}} double{{/if}}"> -->
        <div class="shot {{shot_size2 double ../shot_count}}">
         <img src="{{image}}" style="">
         {{#if timecode}}<span class="timecode">{{timecode timecode}}</span>{{/if}}
@@ -191,7 +189,6 @@
     {{#if description}}
      <p>{{{description}}}{{#if description_credit}} <span class="source">&mdash; {{description_credit}}</span>{{/if}}</p>
     {{/if}}
-    <!--i class="zmdi zmdi-map"></i-->
     <div class="photos">
      {{#each photos}}
       <img src="{{photo}}" alt="{{credit}}{{#if license}} [{{license}}]{{/if}}" title="Fra: {{credit}}{{#if license}} [{{license}}]{{/if}}">

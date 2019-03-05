@@ -1,4 +1,4 @@
-{% extends "base_grid.html" %}
+{% extends "base_page.html" %}
 
 {% load staticfiles %}
 {% load internal_links %}
@@ -25,7 +25,8 @@
 
 
 {# Header #}
-{% block header-content %}
+{% block header-class %}{% endblock %}
+{% block header %}
  {% if not edit_mode %}
   {% if person.headshot %}
    <img src="{{person.headshot.url}}" class="headshot">
@@ -80,10 +81,11 @@
 
 
 {# Menu #}
-{% block menu %}{# No menu #}{% endblock %}
+{% block menu %}{% endblock %}
 
 
 {# Content #}
+{% block content-class %}grid{% endblock %}
 {% block content %}
  {% for production in person.productions %}
   {% include "grid_item_production.html" with production=production %}

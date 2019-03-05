@@ -90,7 +90,7 @@ function NLMap(container, center, zoom) {
 	this.instance = L.map(this.container, {
 		center: this.center,
 		zoom: this.zoom,
-		layers: [mapbox]
+		layers: [nldark]
 	});
 
 	// Locations

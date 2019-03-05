@@ -1,4 +1,4 @@
-{% extends "base_grid.html" %}
+{% extends "base_page.html" %}
 
 {% block view %}index{% endblock %}
 
@@ -15,16 +15,13 @@
 
 {# Header #}
 {% block header-class %}search{% endblock %}
-{% block header-content %}
- {% include "header_search.html" with title="Norsk opptakssteder" placeholder="Tittel, regissør, opptakssted..." %}
+{% block header %}
+ {% include "header_search.html" with title="Norske opptakssteder" placeholder="Tittel, regissør, opptakssted..." %}
 {% endblock %}
 
 
-{# Menu #}
-{% block menu %}{# No menu #}{% endblock %}
-
-
 {# Content #}
+{% block content-class %}grid{% endblock %}
 {% block content %}
  {% for production in productions %}
   {% include "grid_item_production.html" with production=production %}

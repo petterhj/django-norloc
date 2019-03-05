@@ -1,9 +1,9 @@
-{% extends "base_grid.html" %}
+{% extends "base_page.html" %}
 
 {% load staticfiles %}
 
 {% block view %}locations{% endblock %}
-{% block title %}Opptakssteder | {% endblock %}
+{% block title %}Steder | {% endblock %}
 
 
 {# Navigation #}
@@ -11,7 +11,7 @@
  {% if not filter %}
   Opptakssteder
  {% else %}
-  <a href="{% url 'locations' %}">Opptakssteder</a> <span class="accent">&raquo;</span> {{filter}}
+  <a href="{% url 'locations' %}">Steder</a> <span class="accent">&raquo;</span> {{filter}}
  {% endif  %}
 
  {% if user.is_authenticated %}
@@ -21,11 +21,12 @@
 
 
 {# Header #}
-{% block header %}{# No header #}{% endblock %}
+{% block header-class %}{% endblock %}
+{% block header %}{% endblock %}
 
 
 {# Menu #}
-{% block menu-content %}
+{% block menu %}
  <span class="group">Fylke: 
   <select>
    <option value="all">Alle</option>
@@ -38,6 +39,7 @@
 
 
 {# Content #}
+{% block content-class %}grid{% endblock %}
 {% block content %}
  {% for location in locations %}
   {% include "grid_item_location.html" with location=location %}

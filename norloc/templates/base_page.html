@@ -1,29 +1,18 @@
 {% extends "base.html" %}
 
-{% block page %}
- <!-- Header -->
- {% block header %}
-  <section id="header" class="{% block header-class %}{% endblock %}">
-   {% block header-content %}{% endblock %}
-  </section>
- {% endblock %}
+{% block document %}
+ <!-- Page -->
+	<section id="page">
+	 <!-- Header -->
+	 <section id="header" class="{% block header-class %}{% endblock %}">{% block header %}{% endblock %}</section>
 
+	 <!-- Menu -->
+	 <nav id="menu" class="{% block menu-class %}{% endblock %}">{% block menu %}{% endblock %}</nav>
 
- <!-- Menu -->
- {% block menu %}
-  <nav id="menu">
-   {% block menu-content %}{% endblock %}
-  </nav>
- {% endblock %}
+	 <!-- Content -->
+	 <section id="content" class="{% block content-class %}{% endblock %}">{% block content %}{% endblock %}</section>
+	</section>
 
-
- <!-- Content -->
- {%block body %}
-  <section id="content" class="{% block content-class %}{% endblock %}">
-   {% block content %}{% endblock %}
-  </section>
- {% endblock %}
-
- <!-- Footer -->
- <footer><a href="/">Norske opptakssteder</a> | <a href="http://www.petterhj.net">Petter Holt Juliussen</a> | <a href="https://github.com/petterhj/django-norloc">GitHub</a></footer>
+	<!-- Footer -->
+	<footer><a href="/">Norske opptakssteder</a> | <a href="http://www.petterhj.net">Petter Holt Juliussen</a> | <a href="https://github.com/petterhj/django-norloc">GitHub</a></footer>
 {% endblock %}

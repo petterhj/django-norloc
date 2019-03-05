@@ -43,16 +43,18 @@
   <title>{% block title %}{% endblock %}Norske opptakssteder</title>
  </head>
 
- <body data-view="{% block view %}{% endblock %}" data-content-pk="{% block content_pk %}{% endblock %}">
+ <body>
   <!-- Caption -->
   <section id="caption">
    <nav>
-    <a href="{% url 'index' %}">Norske opptakssteder</a><span class="accent">&#9642;</span> 
+    <a href="{% url 'index' %}"><span class="hide-small">NO</span><span class="hide-handheld">Norske opptakssteder</span></a><span class="accent">&#9642;</span> 
     {% block navigation %}{% endblock %}
    </nav>
   </section>
   
-  {% block page %}{% endblock %}
-
+  <!-- Document -->
+  <section id="document" data-view="{% block view %}{% endblock %}" data-content-pk="{% block content_pk %}{% endblock %}">
+   {% block document %}{% endblock %}
+  </section>
  </body>
 </html>

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_full.html" %}
 
 {% block view %}map{% endblock %}
 
@@ -10,18 +10,15 @@
 
 
 {# Header #}
-{% block header %}{# No header #}{% endblock %}
-
-
-{# Menu #}
-{% block menu %}{# No menu #}{% endblock %}
+{% block header-class %}search{% endblock %}
+{% block header %}{% endblock %}
 
 
 {# Content #}
+{% block content-class %}{% endblock %}
 {% block content %}
- <div id="map" style="height: 500px; width: 100%;"></div>
+ <div id="map"></div>
 
- 
  <!-- Template: Location details edit -->
  {% if user.is_authenticated %}
   {% verbatim %}

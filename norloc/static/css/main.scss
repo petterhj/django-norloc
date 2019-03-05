@@ -9,20 +9,31 @@ $color-accent-light:		#F5D8D1;
 
 $border-radius: 			4px;
 
-$break-small: 				500px;
-$break-large: 				1200px;
+$break-small: 				576px;
+$break-medium: 				768px;
+$break-large: 				992px;
+$break-wide: 				1200px;
+$break-extra-wide:			2045px;
 
 
 @mixin respond-to($media) {
-  @if $media == handhelds {
-	@media only screen and (max-width: $break-small) { @content; }
+  @if $media == small-screens {
+	// @media only screen and (max-width: $break-small) { @content; }
+	@media only screen and (min-width: $break-small) { @content; }
   }
   @else if $media == medium-screens {
     // @media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) { @content; }
-	@media only screen and (min-width: $break-small + 1) { @content; }
+	@media only screen and (min-width: $break-medium) { @content; }
+  }
+  @else if $media == large-screens {
+    // @media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) { @content; }
+	@media only screen and (min-width: $break-large) { @content; }
   }
   @else if $media == wide-screens {
-	@media only screen and (min-width: $break-large) { @content; }
+	@media only screen and (min-width: $break-wide) { @content; }
+  }
+  @else if $media == extra-wide-screens {
+	@media only screen and (min-width: $break-extra-wide) { @content; }
   }
 }
 
@@ -30,7 +41,10 @@ $break-large: 				1200px;
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-body { margin: 0; background: $color-background-main; }
+body { 
+	margin: 0; 
+	background: $color-background-main; 
+}
 
 div#debug {
 	position: fixed; top: 0; left: 100px;
@@ -38,21 +52,25 @@ div#debug {
     background: #FF5722;
     font: 0.5rem $font-sans-serif-simple;
     color: rgb(255, 255, 255);
-
+    span { margin-right: 30px; }
     span.mq { 
     	position: relative; display: inline-block;
-    	width: 95px;
+    	padding-right: 50px;
     	&:before {
-    		position: absolute; width: inherit;
+    		position: absolute; 
     		padding-left: 30px;
     	}
     }
+    a { color: #FFF; }
 
-    @include respond-to(handhelds) { 
-    	span.mq:before { content: 'handheld'; }
+    @include respond-to(small-screens) { 
+    	span.mq:before { content: 'small'; }
     }
     @include respond-to(medium-screens) { 
     	span.mq:before { content: 'medium'; }
+    }
+    @include respond-to(large-screens) { 
+    	span.mq:before { content: 'large'; }
     }
     @include respond-to(wide-screens) {
     	span.mq:before { content: 'wide'; }
@@ -81,17 +99,31 @@ button {
 }
 
 h1, h2, h3, h4, h5 { 
-	margin: 0 0 10px 0;
+	margin: 0;
 	font: 1.2rem $font-sans-serif; 
 	text-transform: uppercase; color: rgba(255, 255, 255, 0.8); 
 
 	span.year, span.code { opacity: 0.7; }
 }
+p { margin: 0; }
 
 .faded { opacity: 0.2; }
-.hidden { display: none; }
+.hidden { display: none !important; }
 .accent { color: $color-accent !important; }
 .uppercase { text-transform: uppercase; }
+
+.hide-handheld {
+	display: none;
+	@include respond-to(small-screens) {
+		display: initial;
+    }
+}
+.hide-small {
+	display: initial;
+	@include respond-to(small-screens) {
+		display: none;
+    }
+}
 
 .errorlist {
 	padding: 15px 40px;
@@ -109,7 +141,7 @@ h1, h2, h3, h4, h5 {
 
 
 div.meta { 
-	display: inline-block; overflow: auto; margin-top: 10px;
+	display: inline-block; overflow: auto; margin-top: 15px;
 	font: 0.7rem $font-sans-serif-simple; color: rgba(0, 0, 0, 0.6);
 
 	a {
@@ -140,7 +172,7 @@ div.meta {
 
 
 /* ========================================================================
-	Caption
+	Skeleton
    ======================================================================== */
 
 section#caption { 
@@ -170,6 +202,14 @@ section#caption {
 	}
 }
 
+section#document {
+	height: calc(100% - 56px);
+}
+
+section#page {
+	min-height: calc(100% - 43px);
+}
+
 
 
 /* ========================================================================
@@ -177,24 +217,25 @@ section#caption {
    ======================================================================== */
 
 section#header { 
-	display: inline-block; width: 100%;
-	padding: 10vw 5vw;
+	// flex: 1 1 auto;
+	width: 100%;
+	padding: 5vw 5vw;
 	background: #FFF;
 	text-align: center; 
 
 	img.poster, img.headshot, img.photo {
 		width: 180px; height: 267px;
-		margin-top: 45px; margin-bottom: 35px; 
+		margin: 30px 0 50px 0;
 		border-radius: 4px; 
 	}
 
 	h1 {
-		margin: 0;
+		// margin-bottom: 30px;
 		font: 1.7rem $font-sans-serif; color: $color-accent;
 		text-transform: uppercase; text-align: center;
 	}
 	h3, h4 { color: #666; }
-	h3 { margin: 20px 0; }
+	h3 { margin-top: 20px; }
 	h4 { 
 		font-family: $font-sans-serif; 
 		padding: 0 15%;
@@ -213,7 +254,7 @@ section#header {
 	}
 
 	p {
-		margin: 15px auto;
+		margin-top: 30px;
 		font: 1.2rem $font-serif; color: #666; 
 		text-align: justify; line-height: 1.7rem;
 
@@ -232,8 +273,7 @@ section#header {
 
 	form {
         &[name="search"] { 
-            // margin: -10vw -5vw -10vw -5vw;
-            margin-top: 5vw;
+        	margin: 30px -5vw -5vw -5vw;
             input[name="query"] { border-radius: 0; }
         }
 
@@ -258,74 +298,94 @@ section#header {
 	}
 
 	&.search {
-		padding: 0;
+
 	}
 
-    @include respond-to(medium-screens) { 	
-    	padding: 7vw 10vw; 
-
-    	&.search { 
-    		padding: 5vw 10vw;
-    	}
-
-        form[name="search"] { 
-        	// margin: 3vw -5vw -3vw -5vw;
-
-        	input[name="query"] { 
-        		border-radius: $border-radius; 
-        	}
-        }
-    }
-    @include respond-to(wide-screens) { 	
-    	padding: 7vw 15vw; 
-
-    	&.search { 
-    		padding: 5vw 15vw;
-    	}
-
-    	form[name="search"] {
-			
+	@include respond-to(small-screens) {
+		padding: 5vw 7vw;
+		form[name="search"] {
+			margin: 30px 0 0 0;
+			input[name="query"] { border-radius: $border-radius; }
 		}
     }
+    @include respond-to(medium-screens) {}
+    @include respond-to(large-screens) { 	
+    	padding: 5vw 10vw;
+    }
+    @include respond-to(wide-screens) { 	
+    	padding: 5vw 25vw;
+    }
+
+	&:empty { display: none; }
 }
 
 // View: Index
-body[data-view="index"] > section#header {
+[data-view="index"] section#header {
     position: relative; 
+    padding-top: 0;
 
     &::before {
         position: absolute; top: 0; left: 0;
         content: ''; width: 100%; height: 100%;
-    	background-image: url('/media/shots/vlcs-Oslo_31_August-00_30_23-2018-09-20-22h52m28s340.png');
+    	background-image: url('/static/img/landing-header.jpg');
     	background-repeat: no-repeat;
     	background-position: 0 80%;
     	background-size: cover;
-        filter: grayscale(40%) saturate(0.25);
+        // filter: grayscale(40%) saturate(0.25);
         // filter: sepia(0.83) brightness(0.4);
     }
 
 	h1 {
-		position: relative; display: inline-block;
+		position: relative; display: none;
 		font-size: 3rem; color: #FFF;
 		border-bottom: 2px solid #FFF;
 	}
 
-    @include respond-to(handhelds) {
-    	form[name="search"] { 
-        	margin: 0;
-        }
+	form[name="search"] {
+		margin-top: 0;
+	}
+
+    @include respond-to(small-screens) {
+    	padding-top: 5vw;
+        
         h1 { 
-            display: none;
+            display: inline-block;
         }
+
+        form[name="search"] {
+			margin-top: 30px;
+		}
     }
 }
 
-// View: Production
-body[data-view="production"] > section#header {
-	// padding-bottom: 10vw;
+// View: Person
+[data-view="person"] section#header {
+	img.headshot {
+		height: 180px; margin: 30px 0;
+		border-radius: 50%; 
+		filter: grayscale(100%);
+	}
+
+	@include respond-to(large-screens) {
+		img.headshot {
+			margin-top: 0;
+		}
+	}
 }
-body[data-view="production"][data-edit="true"] > section#header,
-body[data-view="person"][data-edit="true"] > section#header {
+
+// View: Location
+[data-view="location"] section#header {
+	padding-bottom: 60px;
+
+	img.photo {
+		height: 250px; width: auto; margin-top: 0;
+		border-radius: 4px; 
+	}
+}
+
+// View (edit): Production / Person / Location
+[data-view="production"][data-edit="true"] section#header,
+[data-view="person"][data-edit="true"] section#header {
 	div.imageselect > .imageselect-buttons { bottom: 30px; padding: 0 5px; }
 	div.imageselect > .imageselect-buttons .imageselect-btn::before {
 		background: rgba(255, 255, 255, 0.5);
@@ -410,27 +470,6 @@ body[data-view="person"][data-edit="true"] > section#header {
 	}
 }
 
-// View: Person
-body[data-view="person"] > section#header {
-	padding-bottom: 60px;
-
-	img.headshot {
-		height: 180px; margin-top: 0;
-		border-radius: 50%; 
-		filter: grayscale(100%);
-	}
-}
-
-// View: Location
-body[data-view="location"] > section#header {
-	padding-bottom: 60px;
-
-	img.photo {
-		height: 250px; width: auto; margin-top: 0;
-		border-radius: 4px; 
-	}
-}
-
 
 
 /* ========================================================================
@@ -460,7 +499,11 @@ nav#menu {
 		padding: 0; margin: 0 5px;
 		background-color: rgba(255, 255, 255, 0.3);
 		font: inherit; color: rgba(255, 255, 255, 0.7);
+
+		option { background-color: rgb(111, 110, 110); }
 	}
+
+	&:empty { display: none; }
 }
 
 
@@ -470,14 +513,14 @@ nav#menu {
    ======================================================================== */
 
 section#content {
+	// flex: 0 1 auto;
 	width: 100%;
-	padding: 10vw 5vw;
+	padding: 5vw 5vw;
 	color: rgba(255, 255, 255, 0.8); 
 
 	&.grid {
-		padding-top: 5vw; padding-bottom: 5vw;
 		display: grid; 
-		grid-template-columns: repeat(1, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 		grid-column-gap: 3vw; grid-row-gap: 3vw;
 		grid-auto-rows: 1fr;
 
@@ -511,65 +554,105 @@ section#content {
 					text-transform: uppercase;
 				}
 				h1 {
-					margin: 0; font-size: 1.3rem; color: #C31; 
+					margin: 0; font-size: 1.0rem; color: #C31; 
 				}
 				h2 {
-					margin: 5px 0; font-size: 1rem; color: #666;
+					margin: 5px 0; font-size: 0.8rem; color: #666;
 				}
 				div.meta { margin: 0; }				
 			}
 		}
 	}
 
-	// h2 { font-size: 1.5rem; margin: 0 0 5px 0; }
-	// h4 { font-size: 0.9rem; margin: 0 0 5px 0; }
+	@include respond-to(small-screens) { 	
+		padding: 5vw 7vw;
+		&.grid {
+			// grid-template-columns: repeat(3, 1fr);
+		}
+    }
+    @include respond-to(medium-screens) { 	
+    	&.grid {
+			grid-template-columns: repeat(4, 1fr);
+		}
+    }
+    @include respond-to(large-screens) { 	
+    	padding: 5vw 10vw;
+    	&.grid {
+			grid-template-columns: repeat(5, 1fr);
 
-	// .meta > .tag { color: rgba(255, 255, 255, 0.25); }
-	// .meta > .tag > i.zmdi { color: rgba(255, 255, 255, 0.1); }
-
-	@include respond-to(medium-screens) { 	
-    	padding: 7vw 10vw; 
+			.grid-item > div.details {
+				h1 { font-size: 1.3rem; }
+				h2 { font-size: 1.0rem; }
+			}
+		}
     }
     @include respond-to(wide-screens) { 	
-    	padding: 7vw 15vw; 
+    	padding: 5vw 25vw;
+    	&.grid {
+    		padding: 5vw 15vw;
+			// grid-template-columns: repeat(6, 1fr);
+		}
     }
+    @include respond-to(extra-wide-screens) { 	
+    	&.grid {
+			grid-template-columns: repeat(6, 1fr);
+		}
+    }
+
+	&:empty { display: none; }
 }
 
 // View: Index / Direcor
-body[data-view="index"] > section#content,
-body[data-view="productions"] > section#content,
-body[data-view="person"] > section#content {
-	grid-template-columns: repeat(3, 1fr);
+// [data-view="index"] > section#content,
+// [data-view="productions"] > section#content,
+// [data-view="person"] > section#content {}
 
-	@include respond-to(medium-screens) { grid-template-columns: repeat(5, 1fr); }
-	// @include respond-to(wide-screens) { grid-template-columns: repeat(7, 1fr); }
+// View: Locations
+[data-view="locations"] section#content {
+	grid-template-columns: repeat(1, 1fr);
+
+	@include respond-to(small-screens) { 	
+		grid-template-columns: repeat(2, 1fr);
+    }
+    @include respond-to(medium-screens) { 	
+		grid-template-columns: repeat(3, 1fr);
+
+		.grid-item.location {
+			div.cover { height: 10vw; }
+		}
+    }
+    @include respond-to(large-screens) {}
+    @include respond-to(wide-screens) {}
 }
 
-body[data-view="locations"] > section#content {
-	grid-template-columns: repeat(3, 1fr);
-	.grid-item.location {
+// View: People
+[data-view="people"] section#content {
+	grid-template-columns: repeat(2, 1fr);
 
-	}
+	@include respond-to(small-screens) { 	
+		grid-template-columns: repeat(3, 1fr);
+    }
+    @include respond-to(medium-screens) { 	
+		grid-template-columns: repeat(4, 1fr);
+
+		.grid-item.person {
+			div.cover { height: 10vw; }
+		}
+    }
+    @include respond-to(large-screens) {}
+    @include respond-to(wide-screens) {}
 }
-
-body[data-view="people"] > section#content {
-	grid-template-columns: repeat(5, 1fr);
-	.grid-item.person {
-		div.cover { height: 10vw; }
-	}
-}
-
 
 // View: Production
-body[data-view="production"] > section#content {
-	padding: 10vw calc(5vw - 3vw);
+[data-view="production"] section#content {
+	padding: 5vw calc(5vw - 3vw);
 
 	// Location
 	div.location {
 		position: relative; 
 		width: calc(50% - 15px); 
-		margin: 0 0 55px 0; 
-		border-left: 2px solid rgba(255, 255, 255, 0.02);
+		margin: 0 0 75px 0; 
+		border-left: 2px solid transparent;
 		padding: 0 3vw;
 
 		&.double { width: 100%; }
@@ -580,8 +663,8 @@ body[data-view="production"] > section#content {
 		}
 
 		&:before {
-			position: absolute; top: 0; left: 0; margin-left: -21px;
-			width: 40px; height: 45px;
+			position: absolute; top: -5px; left: 0; display: none;
+			margin-left: -21px; width: 40px; height: 45px;
 			content: '\f1ab'; background: #1A1919;
 			font: normal normal normal 2rem/1 'Material-Design-Iconic-Font';
 			text-align: center; color: rgba(255, 255, 255, 0.05);
@@ -599,7 +682,7 @@ body[data-view="production"] > section#content {
 				justify-content: space-between; 
 				margin-bottom: 45px;
 
-				&:last-of-type { margin-bottom: 15px; }
+				
 
 				div.shot {
 					position: relative;
@@ -627,11 +710,13 @@ body[data-view="production"] > section#content {
 					margin: -15px 0 0 0;
 					font: 0.8rem $font-serif2; color: rgba(255, 255, 255, 0.2);
 				}
+
+				&:last-of-type { margin-bottom: 15px; }
 				&:last-of-type > p { margin-bottom: 25px; }
 
 				&:before {
 					position: absolute; top: -5px; left: calc(-3vw + -9px);
-					width: 16px; line-height: 30px;
+					display: none; width: 16px; line-height: 30px;
 					content: '\f19d';
 					color: rgba(255, 255, 255, 0.05);
 					font-family: 'Material-Design-Iconic-Font';
@@ -682,27 +767,31 @@ body[data-view="production"] > section#content {
 		}
 	}
 
-	@include respond-to(handhelds) {
-		div.location { border: 0; }
+	// @include respond-to(handhelds) {
+	// 	div.location { border: 0; }
+	// }
+
+	@include respond-to(small-screens) { 	
+		padding: 5vw calc(7vw - 3vw);
+		div.location { border-color: rgba(255, 255, 255, 0.02); }
 		div.location:before,
-		div.scene:before { display: none; }
-	}
-	@include respond-to(medium-screens) {
-    	padding: 7vw calc(10vw - 3vw); 
+		div.location div.scenes div.scene:before { display: block; }
     }
-    @include respond-to(wide-screens) {
-    	padding: 7vw calc(15vw - 3vw); 
+    @include respond-to(medium-screens) { 	
+
+    }
+    @include respond-to(large-screens) { 	
+    	padding: 5vw calc(10vw - 3vw);
+    }
+    @include respond-to(wide-screens) { 	
+    	padding: 5vw calc(25vw - 3vw);
     }
 }
 
-// View: Map
-body[data-view="map"] > section#content {
-	padding: 0; margin: 0;
-}
 
 // View: Import production
-body[data-view="import_production"] > section#content,
-body[data-view="import_person"] > section#content {
+[data-view="import_production"] section#content,
+[data-view="import_person"] section#content {
 	// Focused results
 	div#focused {
 		div.production, div.person {
@@ -758,6 +847,7 @@ body[data-view="import_person"] > section#content {
    ======================================================================== */
 
 footer {
+	// position: absolute; bottom: 0;
 	width: 100%; padding: 15px;
 	font: 0.7rem $font-sans-serif;
 	text-align: center; text-transform: uppercase;
@@ -774,7 +864,7 @@ footer {
 
 div.cover-image {
 	position: relative;
-	width: 100%; height: calc(100% - 56px); 
+	width: 100%; height: 100%; 
 	padding: 0 16px 16px 16px; background: #FFF;
 
 	a { color: inherit; text-decoration: none; }
@@ -788,7 +878,7 @@ div.cover-image {
 		position: absolute; top: 15px; left: 30px; 
 
 		h1 { font-size: 1.5rem; color: #FFF; }
-		h2 { font-size: 1.0rem; color: rgba(255, 255, 255, 0.75); }
+		h2 { margin-top: 10px; font-size: 1.0rem; color: rgba(255, 255, 255, 0.75); }
 	}
 	> .caption {
 		position: absolute; bottom: 30px; left: 30px; 
@@ -799,6 +889,19 @@ div.cover-image {
 	}
 }
 
+
+
+
+
+#map { 
+	width: 100%; height: 100%; 
+
+	input, button { 
+		display: initial; 
+		margin: initial; padding: initial;
+		font-size: initial; font-family: initial;
+	}
+}
 
 
 .my-label {

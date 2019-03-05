@@ -1,4 +1,4 @@
-{% extends "base_grid.html" %}
+{% extends "base_page.html" %}
 
 {% load staticfiles %}
 
@@ -21,11 +21,12 @@
 
 
 {# Header #}
-{% block header %}{# No header #}{% endblock %}
+{% block header-class %}{% endblock %}
+{% block header %}{% endblock %}
 
 
 {# Menu #}
-{% block menu-content %}
+{% block menu %}
  <span class="group">Type: 
   <a href="{% url 'productions' %}">Alle</a> &#9642; 
   <a href="{% url 'filtered_productions' 'film' %}">Film</a> &#9642; 
@@ -34,6 +35,7 @@
 
 
 {# Content #}
+{% block content-class %}grid{% endblock %}
 {% block content %}
  {% for production in productions %}
   {% include "grid_item_production.html" with production=production %}

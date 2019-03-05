@@ -29,9 +29,9 @@ var NORLOC = NORLOC || {
 
         // Edit mode
         if (getURLParameter('edit') === 'true') {
-            $('body').attr('data-edit', true);
+            $('section#document').attr('data-edit', true);
             
-            UTIL.log('Edit mode enabled for view "{0}"'.format($('body').data('view')));
+            UTIL.log('Edit mode enabled for view "{0}"'.format($('#page').data('view')));
 
             // Poster/Headshot
             // $('input[name="poster"],input[name="headshot"]').on('change', function(e) {
@@ -73,6 +73,12 @@ var NORLOC = NORLOC || {
             var debug = $('<div>', {'id': 'debug'});
             debug.append($('<span>', {'class': 'mq'}).text('MQ:'));
             debug.append($('<span>', {'class': 'res'}));
+            debug.append($('<span>', {'class': 'links'})
+                .append('<a href="/produksjoner/import/">Import</a> | ')
+                .append('<a href="/produksjoner/film/folk-flest-bor-i-kina/">P1: FFBIK</a> | ')
+                .append('<a href="/produksjoner/film/oslo-31-august/">P1: O31A</a> | ')
+                .append('<a href="/produksjoner/film2/">ERROR</a>')
+            );
             update_debug();
             function update_debug(e) {
                 var w = document.body.clientWidth;
@@ -118,7 +124,7 @@ var NORLOC = NORLOC || {
         });
                 
         // Load locations
-        var ppk = $('body').data('content-pk');
+        var ppk = $('#page').data('content-pk');
 
         UTIL.log('Fetching locations for production {0}'.format(ppk));
 

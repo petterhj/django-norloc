@@ -1,4 +1,4 @@
-{% extends "base_grid.html" %}
+{% extends "base_page.html" %}
 
 {% block view %}people{% endblock %}
 {% block title %}Folk | {% endblock %}
@@ -19,11 +19,12 @@
 
 
 {# Header #}
-{% block header %}{# No header #}{% endblock %}
+{% block header-class %}{% endblock %}
+{% block header %}{% endblock %}
 
 
 {# Menu #}
-{% block menu-content %}
+{% block menu %}
  <span class="group">Avdeling: 
   <a href="{% url 'people' %}">Alle</a> &#9642; 
   <a href="{% url 'filtered_people' 'regi' %}">Regi</a> &#9642; 
@@ -33,6 +34,7 @@
 
 
 {# Content #}
+{% block content-class %}grid{% endblock %}
 {% block content %}
  {% for person in people %}
   {% include "grid_item_person.html" with person=person %}

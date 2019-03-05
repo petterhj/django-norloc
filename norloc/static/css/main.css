@@ -22,24 +22,34 @@ div#debug {
   font: 0.5rem "Monda", sans-serif;
   color: white;
 }
+div#debug span {
+  margin-right: 30px;
+}
 div#debug span.mq {
   position: relative;
   display: inline-block;
-  width: 95px;
+  padding-right: 50px;
 }
 div#debug span.mq:before {
   position: absolute;
-  width: inherit;
   padding-left: 30px;
 }
-@media only screen and (max-width: 500px) {
+div#debug a {
+  color: #FFF;
+}
+@media only screen and (min-width: 576px) {
   div#debug span.mq:before {
-    content: "handheld";
+    content: "small";
   }
 }
-@media only screen and (min-width: 501px) {
+@media only screen and (min-width: 768px) {
   div#debug span.mq:before {
     content: "medium";
+  }
+}
+@media only screen and (min-width: 992px) {
+  div#debug span.mq:before {
+    content: "large";
   }
 }
 @media only screen and (min-width: 1200px) {
@@ -81,7 +91,7 @@ button:hover {
 }
 
 h1, h2, h3, h4, h5 {
-  margin: 0 0 10px 0;
+  margin: 0;
   font: 1.2rem "Unica One", Helvetica, Arial, sans-serif;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.8);
@@ -90,12 +100,16 @@ h1 span.year, h1 span.code, h2 span.year, h2 span.code, h3 span.year, h3 span.co
   opacity: 0.7;
 }
 
+p {
+  margin: 0;
+}
+
 .faded {
   opacity: 0.2;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .accent {
@@ -104,6 +118,24 @@ h1 span.year, h1 span.code, h2 span.year, h2 span.code, h3 span.year, h3 span.co
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.hide-handheld {
+  display: none;
+}
+@media only screen and (min-width: 576px) {
+  .hide-handheld {
+    display: initial;
+  }
+}
+
+.hide-small {
+  display: initial;
+}
+@media only screen and (min-width: 576px) {
+  .hide-small {
+    display: none;
+  }
 }
 
 .errorlist {
@@ -131,7 +163,7 @@ h1 span.year, h1 span.code, h2 span.year, h2 span.code, h3 span.year, h3 span.co
 div.meta {
   display: inline-block;
   overflow: auto;
-  margin-top: 10px;
+  margin-top: 15px;
   font: 0.7rem "Monda", sans-serif;
   color: rgba(0, 0, 0, 0.6);
 }
@@ -166,7 +198,7 @@ div.meta .tag > i.zmdi + span {
 }
 
 /* ========================================================================
-	Caption
+	Skeleton
    ======================================================================== */
 section#caption {
   overflow: auto;
@@ -206,25 +238,30 @@ section#caption nav i.zmdi:hover {
   cursor: pointer;
 }
 
+section#document {
+  height: calc(100% - 56px);
+}
+
+section#page {
+  min-height: calc(100% - 43px);
+}
+
 /* ========================================================================
 	Header
    ======================================================================== */
 section#header {
-  display: inline-block;
   width: 100%;
-  padding: 10vw 5vw;
+  padding: 5vw 5vw;
   background: #FFF;
   text-align: center;
 }
 section#header img.poster, section#header img.headshot, section#header img.photo {
   width: 180px;
   height: 267px;
-  margin-top: 45px;
-  margin-bottom: 35px;
+  margin: 30px 0 50px 0;
   border-radius: 4px;
 }
 section#header h1 {
-  margin: 0;
   font: 1.7rem "Unica One", Helvetica, Arial, sans-serif;
   color: #C31;
   text-transform: uppercase;
@@ -234,7 +271,7 @@ section#header h3, section#header h4 {
   color: #666;
 }
 section#header h3 {
-  margin: 20px 0;
+  margin-top: 20px;
 }
 section#header h4 {
   font-family: "Unica One", Helvetica, Arial, sans-serif;
@@ -265,7 +302,7 @@ section#header h4 a:last-of-type {
   margin-right: 0;
 }
 section#header p {
-  margin: 15px auto;
+  margin-top: 30px;
   font: 1.2rem "Vollkorn", serif;
   color: #666;
   text-align: justify;
@@ -288,7 +325,7 @@ section#header input, section#header textarea, section#header select {
   background: #EFEFEF;
 }
 section#header form[name=search] {
-  margin-top: 5vw;
+  margin: 30px -5vw -5vw -5vw;
 }
 section#header form[name=search] input[name=query] {
   border-radius: 0;
@@ -317,68 +354,98 @@ section#header form div.input-icon > button {
 section#header form div.input-icon > button:hover, section#header form div.input-icon > button:focus {
   color: rgba(0, 0, 0, 0.75);
 }
-section#header.search {
-  padding: 0;
-}
-@media only screen and (min-width: 501px) {
+@media only screen and (min-width: 576px) {
   section#header {
-    padding: 7vw 10vw;
+    padding: 5vw 7vw;
   }
-  section#header.search {
-    padding: 5vw 10vw;
+  section#header form[name=search] {
+    margin: 30px 0 0 0;
   }
   section#header form[name=search] input[name=query] {
     border-radius: 4px;
   }
 }
+@media only screen and (min-width: 992px) {
+  section#header {
+    padding: 5vw 10vw;
+  }
+}
 @media only screen and (min-width: 1200px) {
   section#header {
-    padding: 7vw 15vw;
+    padding: 5vw 25vw;
   }
-  section#header.search {
-    padding: 5vw 15vw;
-  }
+}
+section#header:empty {
+  display: none;
 }
 
-body[data-view=index] > section#header {
+[data-view=index] section#header {
   position: relative;
+  padding-top: 0;
 }
-body[data-view=index] > section#header::before {
+[data-view=index] section#header::before {
   position: absolute;
   top: 0;
   left: 0;
   content: "";
   width: 100%;
   height: 100%;
-  background-image: url("/media/shots/vlcs-Oslo_31_August-00_30_23-2018-09-20-22h52m28s340.png");
+  background-image: url("/static/img/landing-header.jpg");
   background-repeat: no-repeat;
   background-position: 0 80%;
   background-size: cover;
-  filter: grayscale(40%) saturate(0.25);
 }
-body[data-view=index] > section#header h1 {
+[data-view=index] section#header h1 {
   position: relative;
-  display: inline-block;
+  display: none;
   font-size: 3rem;
   color: #FFF;
   border-bottom: 2px solid #FFF;
 }
-@media only screen and (max-width: 500px) {
-  body[data-view=index] > section#header form[name=search] {
-    margin: 0;
+[data-view=index] section#header form[name=search] {
+  margin-top: 0;
+}
+@media only screen and (min-width: 576px) {
+  [data-view=index] section#header {
+    padding-top: 5vw;
   }
-  body[data-view=index] > section#header h1 {
-    display: none;
+  [data-view=index] section#header h1 {
+    display: inline-block;
+  }
+  [data-view=index] section#header form[name=search] {
+    margin-top: 30px;
   }
 }
 
-body[data-view=production][data-edit=true] > section#header div.imageselect > .imageselect-buttons,
-body[data-view=person][data-edit=true] > section#header div.imageselect > .imageselect-buttons {
+[data-view=person] section#header img.headshot {
+  height: 180px;
+  margin: 30px 0;
+  border-radius: 50%;
+  filter: grayscale(100%);
+}
+@media only screen and (min-width: 992px) {
+  [data-view=person] section#header img.headshot {
+    margin-top: 0;
+  }
+}
+
+[data-view=location] section#header {
+  padding-bottom: 60px;
+}
+[data-view=location] section#header img.photo {
+  height: 250px;
+  width: auto;
+  margin-top: 0;
+  border-radius: 4px;
+}
+
+[data-view=production][data-edit=true] section#header div.imageselect > .imageselect-buttons,
+[data-view=person][data-edit=true] section#header div.imageselect > .imageselect-buttons {
   bottom: 30px;
   padding: 0 5px;
 }
-body[data-view=production][data-edit=true] > section#header div.imageselect > .imageselect-buttons .imageselect-btn::before,
-body[data-view=person][data-edit=true] > section#header div.imageselect > .imageselect-buttons .imageselect-btn::before {
+[data-view=production][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn::before,
+[data-view=person][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn::before {
   background: rgba(255, 255, 255, 0.5);
   font: 0.7rem "Monda", sans-serif;
   font-weight: bold;
@@ -386,21 +453,21 @@ body[data-view=person][data-edit=true] > section#header div.imageselect > .image
   border-radius: 4px;
   color: rgba(0, 0, 0, 0.75);
 }
-body[data-view=production][data-edit=true] > section#header div.imageselect > .imageselect-buttons .imageselect-btn:hover::before,
-body[data-view=production][data-edit=true] > section#header div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before,
-body[data-view=person][data-edit=true] > section#header div.imageselect > .imageselect-buttons .imageselect-btn:hover::before,
-body[data-view=person][data-edit=true] > section#header div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before {
+[data-view=production][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn:hover::before,
+[data-view=production][data-edit=true] section#header div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before,
+[data-view=person][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn:hover::before,
+[data-view=person][data-edit=true] section#header div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before {
   background: rgba(255, 255, 255, 0.8);
   border-color: rgba(0, 0, 0, 0.75);
 }
-body[data-view=production][data-edit=true] > section#header input,
-body[data-view=person][data-edit=true] > section#header input {
+[data-view=production][data-edit=true] section#header input,
+[data-view=person][data-edit=true] section#header input {
   padding: 5px 10px;
   color: #666;
 }
-body[data-view=production][data-edit=true] > section#header input[name=title], body[data-view=production][data-edit=true] > section#header input[name=name],
-body[data-view=person][data-edit=true] > section#header input[name=title],
-body[data-view=person][data-edit=true] > section#header input[name=name] {
+[data-view=production][data-edit=true] section#header input[name=title], [data-view=production][data-edit=true] section#header input[name=name],
+[data-view=person][data-edit=true] section#header input[name=title],
+[data-view=person][data-edit=true] section#header input[name=name] {
   width: 100%;
   margin: 5px 0;
   font: 1.7rem "Unica One", Helvetica, Arial, sans-serif;
@@ -408,20 +475,20 @@ body[data-view=person][data-edit=true] > section#header input[name=name] {
   text-align: center;
   text-transform: uppercase;
 }
-body[data-view=production][data-edit=true] > section#header input[name=name],
-body[data-view=person][data-edit=true] > section#header input[name=name] {
+[data-view=production][data-edit=true] section#header input[name=name],
+[data-view=person][data-edit=true] section#header input[name=name] {
   margin-bottom: 15px;
 }
-body[data-view=production][data-edit=true] > section#header input[name=release],
-body[data-view=person][data-edit=true] > section#header input[name=release] {
+[data-view=production][data-edit=true] section#header input[name=release],
+[data-view=person][data-edit=true] section#header input[name=release] {
   display: inline-block;
   margin: 5px 0 20px 0;
   font: 1.2rem "Unica One", Helvetica, Arial, sans-serif;
   text-align: center;
 }
-body[data-view=production][data-edit=true] > section#header textarea[name=summary], body[data-view=production][data-edit=true] > section#header textarea[name=bio],
-body[data-view=person][data-edit=true] > section#header textarea[name=summary],
-body[data-view=person][data-edit=true] > section#header textarea[name=bio] {
+[data-view=production][data-edit=true] section#header textarea[name=summary], [data-view=production][data-edit=true] section#header textarea[name=bio],
+[data-view=person][data-edit=true] section#header textarea[name=summary],
+[data-view=person][data-edit=true] section#header textarea[name=bio] {
   width: 100%;
   height: 330px;
   margin: 0 0 5px 0;
@@ -431,32 +498,32 @@ body[data-view=person][data-edit=true] > section#header textarea[name=bio] {
   text-align: justify;
   line-height: 1.7rem;
 }
-body[data-view=production][data-edit=true] > section#header input[name$=_credit], body[data-view=production][data-edit=true] > section#header input[name=runtime], body[data-view=production][data-edit=true] > section#header input[name$=_id],
-body[data-view=person][data-edit=true] > section#header input[name$=_credit],
-body[data-view=person][data-edit=true] > section#header input[name=runtime],
-body[data-view=person][data-edit=true] > section#header input[name$=_id] {
+[data-view=production][data-edit=true] section#header input[name$=_credit], [data-view=production][data-edit=true] section#header input[name=runtime], [data-view=production][data-edit=true] section#header input[name$=_id],
+[data-view=person][data-edit=true] section#header input[name$=_credit],
+[data-view=person][data-edit=true] section#header input[name=runtime],
+[data-view=person][data-edit=true] section#header input[name$=_id] {
   margin: 10px 0 15px 0;
   font: 0.8rem "Vollkorn", serif;
 }
-body[data-view=production][data-edit=true] > section#header input[name=runtime],
-body[data-view=person][data-edit=true] > section#header input[name=runtime] {
+[data-view=production][data-edit=true] section#header input[name=runtime],
+[data-view=person][data-edit=true] section#header input[name=runtime] {
   margin-top: 15px;
 }
-body[data-view=production][data-edit=true] > section#header div.people, body[data-view=production][data-edit=true] > section#header div.companies,
-body[data-view=person][data-edit=true] > section#header div.people,
-body[data-view=person][data-edit=true] > section#header div.companies {
+[data-view=production][data-edit=true] section#header div.people, [data-view=production][data-edit=true] section#header div.companies,
+[data-view=person][data-edit=true] section#header div.people,
+[data-view=person][data-edit=true] section#header div.companies {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
 }
-body[data-view=production][data-edit=true] > section#header div.people > .tagify, body[data-view=production][data-edit=true] > section#header div.companies > .tagify,
-body[data-view=person][data-edit=true] > section#header div.people > .tagify,
-body[data-view=person][data-edit=true] > section#header div.companies > .tagify {
+[data-view=production][data-edit=true] section#header div.people > .tagify, [data-view=production][data-edit=true] section#header div.companies > .tagify,
+[data-view=person][data-edit=true] section#header div.people > .tagify,
+[data-view=person][data-edit=true] section#header div.companies > .tagify {
   margin-bottom: 20px;
 }
-body[data-view=production][data-edit=true] > section#header div.people > .tagify:before, body[data-view=production][data-edit=true] > section#header div.companies > .tagify:before,
-body[data-view=person][data-edit=true] > section#header div.people > .tagify:before,
-body[data-view=person][data-edit=true] > section#header div.companies > .tagify:before {
+[data-view=production][data-edit=true] section#header div.people > .tagify:before, [data-view=production][data-edit=true] section#header div.companies > .tagify:before,
+[data-view=person][data-edit=true] section#header div.people > .tagify:before,
+[data-view=person][data-edit=true] section#header div.companies > .tagify:before {
   position: absolute;
   left: -4px;
   top: 13px;
@@ -466,9 +533,9 @@ body[data-view=person][data-edit=true] > section#header div.companies > .tagify:
   border-radius: 50%;
   background: #EFEFEF;
 }
-body[data-view=production][data-edit=true] > section#header div.people > .tagify:after, body[data-view=production][data-edit=true] > section#header div.companies > .tagify:after,
-body[data-view=person][data-edit=true] > section#header div.people > .tagify:after,
-body[data-view=person][data-edit=true] > section#header div.companies > .tagify:after {
+[data-view=production][data-edit=true] section#header div.people > .tagify:after, [data-view=production][data-edit=true] section#header div.companies > .tagify:after,
+[data-view=person][data-edit=true] section#header div.people > .tagify:after,
+[data-view=person][data-edit=true] section#header div.companies > .tagify:after {
   position: absolute;
   left: 0;
   top: -8px;
@@ -481,27 +548,27 @@ body[data-view=person][data-edit=true] > section#header div.companies > .tagify:
   font: 0.4rem "Monda", sans-serif;
   text-transform: uppercase;
 }
-body[data-view=production][data-edit=true] > section#header div.people > .tagify > label, body[data-view=production][data-edit=true] > section#header div.companies > .tagify > label,
-body[data-view=person][data-edit=true] > section#header div.people > .tagify > label,
-body[data-view=person][data-edit=true] > section#header div.companies > .tagify > label {
+[data-view=production][data-edit=true] section#header div.people > .tagify > label, [data-view=production][data-edit=true] section#header div.companies > .tagify > label,
+[data-view=person][data-edit=true] section#header div.people > .tagify > label,
+[data-view=person][data-edit=true] section#header div.companies > .tagify > label {
   position: absolute;
   top: 3px;
   right: 5px;
   font-size: 0.8rem;
   color: #B3B3B3;
 }
-body[data-view=production][data-edit=true] > section#header div.people.companies, body[data-view=production][data-edit=true] > section#header div.companies.companies,
-body[data-view=person][data-edit=true] > section#header div.people.companies,
-body[data-view=person][data-edit=true] > section#header div.companies.companies {
+[data-view=production][data-edit=true] section#header div.people.companies, [data-view=production][data-edit=true] section#header div.companies.companies,
+[data-view=person][data-edit=true] section#header div.people.companies,
+[data-view=person][data-edit=true] section#header div.companies.companies {
   margin-top: 25px;
 }
-body[data-view=production][data-edit=true] > section#header div.people.people > .tagify:first-of-type, body[data-view=production][data-edit=true] > section#header div.companies.people > .tagify:first-of-type,
-body[data-view=person][data-edit=true] > section#header div.people.people > .tagify:first-of-type,
-body[data-view=person][data-edit=true] > section#header div.companies.people > .tagify:first-of-type {
+[data-view=production][data-edit=true] section#header div.people.people > .tagify:first-of-type, [data-view=production][data-edit=true] section#header div.companies.people > .tagify:first-of-type,
+[data-view=person][data-edit=true] section#header div.people.people > .tagify:first-of-type,
+[data-view=person][data-edit=true] section#header div.companies.people > .tagify:first-of-type {
   grid-column: 1/-1;
 }
-body[data-view=production][data-edit=true] > section#header div.external_ids,
-body[data-view=person][data-edit=true] > section#header div.external_ids {
+[data-view=production][data-edit=true] section#header div.external_ids,
+[data-view=person][data-edit=true] section#header div.external_ids {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 10px;
@@ -510,46 +577,26 @@ body[data-view=person][data-edit=true] > section#header div.external_ids {
   font-size: 0.6rem;
   font-family: "Unica One", Helvetica, Arial, sans-serif;
 }
-body[data-view=production][data-edit=true] > section#header div.external_ids > div, body[data-view=production][data-edit=true] > section#header div.external_ids input,
-body[data-view=person][data-edit=true] > section#header div.external_ids > div,
-body[data-view=person][data-edit=true] > section#header div.external_ids input {
+[data-view=production][data-edit=true] section#header div.external_ids > div, [data-view=production][data-edit=true] section#header div.external_ids input,
+[data-view=person][data-edit=true] section#header div.external_ids > div,
+[data-view=person][data-edit=true] section#header div.external_ids input {
   display: inline-block;
   width: 100%;
 }
-body[data-view=production][data-edit=true] > section#header div.external_ids input,
-body[data-view=person][data-edit=true] > section#header div.external_ids input {
+[data-view=production][data-edit=true] section#header div.external_ids input,
+[data-view=person][data-edit=true] section#header div.external_ids input {
   margin: 0 0 3px 0;
   height: 32px;
 }
-body[data-view=production][data-edit=true] > section#header div.external_ids a,
-body[data-view=person][data-edit=true] > section#header div.external_ids a {
+[data-view=production][data-edit=true] section#header div.external_ids a,
+[data-view=person][data-edit=true] section#header div.external_ids a {
   color: #999;
   text-decoration: none;
   text-transform: uppercase;
 }
-body[data-view=production][data-edit=true] > section#header div.external_ids a:hover,
-body[data-view=person][data-edit=true] > section#header div.external_ids a:hover {
+[data-view=production][data-edit=true] section#header div.external_ids a:hover,
+[data-view=person][data-edit=true] section#header div.external_ids a:hover {
   color: #666;
-}
-
-body[data-view=person] > section#header {
-  padding-bottom: 60px;
-}
-body[data-view=person] > section#header img.headshot {
-  height: 180px;
-  margin-top: 0;
-  border-radius: 50%;
-  filter: grayscale(100%);
-}
-
-body[data-view=location] > section#header {
-  padding-bottom: 60px;
-}
-body[data-view=location] > section#header img.photo {
-  height: 250px;
-  width: auto;
-  margin-top: 0;
-  border-radius: 4px;
 }
 
 /* ========================================================================
@@ -584,20 +631,24 @@ nav#menu select {
   font: inherit;
   color: rgba(255, 255, 255, 0.7);
 }
+nav#menu select option {
+  background-color: #6f6e6e;
+}
+nav#menu:empty {
+  display: none;
+}
 
 /* ========================================================================
 	Content
    ======================================================================== */
 section#content {
   width: 100%;
-  padding: 10vw 5vw;
+  padding: 5vw 5vw;
   color: rgba(255, 255, 255, 0.8);
 }
 section#content.grid {
-  padding-top: 5vw;
-  padding-bottom: 5vw;
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 3vw;
   grid-row-gap: 3vw;
   grid-auto-rows: 1fr;
@@ -643,80 +694,120 @@ section#content.grid .grid-item div.details h1, section#content.grid .grid-item 
 }
 section#content.grid .grid-item div.details h1 {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1rem;
   color: #C31;
 }
 section#content.grid .grid-item div.details h2 {
   margin: 5px 0;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #666;
 }
 section#content.grid .grid-item div.details div.meta {
   margin: 0;
 }
-@media only screen and (min-width: 501px) {
+@media only screen and (min-width: 576px) {
   section#content {
-    padding: 7vw 10vw;
+    padding: 5vw 7vw;
+  }
+}
+@media only screen and (min-width: 768px) {
+  section#content.grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media only screen and (min-width: 992px) {
+  section#content {
+    padding: 5vw 10vw;
+  }
+  section#content.grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  section#content.grid .grid-item > div.details h1 {
+    font-size: 1.3rem;
+  }
+  section#content.grid .grid-item > div.details h2 {
+    font-size: 1rem;
   }
 }
 @media only screen and (min-width: 1200px) {
   section#content {
-    padding: 7vw 15vw;
+    padding: 5vw 25vw;
+  }
+  section#content.grid {
+    padding: 5vw 15vw;
   }
 }
-
-body[data-view=index] > section#content,
-body[data-view=productions] > section#content,
-body[data-view=person] > section#content {
-  grid-template-columns: repeat(3, 1fr);
-}
-@media only screen and (min-width: 501px) {
-  body[data-view=index] > section#content,
-body[data-view=productions] > section#content,
-body[data-view=person] > section#content {
-    grid-template-columns: repeat(5, 1fr);
+@media only screen and (min-width: 2045px) {
+  section#content.grid {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
-
-body[data-view=locations] > section#content {
-  grid-template-columns: repeat(3, 1fr);
-}
-body[data-view=people] > section#content {
-  grid-template-columns: repeat(5, 1fr);
-}
-body[data-view=people] > section#content .grid-item.person div.cover {
-  height: 10vw;
+section#content:empty {
+  display: none;
 }
 
-body[data-view=production] > section#content {
-  padding: 10vw calc(5vw - 3vw);
+[data-view=locations] section#content {
+  grid-template-columns: repeat(1, 1fr);
 }
-body[data-view=production] > section#content div.location {
+@media only screen and (min-width: 576px) {
+  [data-view=locations] section#content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (min-width: 768px) {
+  [data-view=locations] section#content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  [data-view=locations] section#content .grid-item.location div.cover {
+    height: 10vw;
+  }
+}
+[data-view=people] section#content {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media only screen and (min-width: 576px) {
+  [data-view=people] section#content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media only screen and (min-width: 768px) {
+  [data-view=people] section#content {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  [data-view=people] section#content .grid-item.person div.cover {
+    height: 10vw;
+  }
+}
+[data-view=production] section#content {
+  padding: 5vw calc(5vw - 3vw);
+}
+[data-view=production] section#content div.location {
   position: relative;
   width: calc(50% - 15px);
-  margin: 0 0 55px 0;
-  border-left: 2px solid rgba(255, 255, 255, 0.02);
+  margin: 0 0 75px 0;
+  border-left: 2px solid transparent;
   padding: 0 3vw;
 }
-body[data-view=production] > section#content div.location.double {
+[data-view=production] section#content div.location.double {
   width: 100%;
 }
-body[data-view=production] > section#content div.location.add {
+[data-view=production] section#content div.location.add {
   opacity: 0.3;
   font: 1rem "Unica One", Helvetica, Arial, sans-serif;
   cursor: pointer;
 }
-body[data-view=production] > section#content div.location.add:hover {
+[data-view=production] section#content div.location.add:hover {
   opacity: 1;
 }
-body[data-view=production] > section#content div.location.add > i.zmdi {
+[data-view=production] section#content div.location.add > i.zmdi {
   margin-right: 15px;
   color: rgba(255, 255, 255, 0.4);
 }
-body[data-view=production] > section#content div.location:before {
+[data-view=production] section#content div.location:before {
   position: absolute;
-  top: 0;
+  top: -5px;
   left: 0;
+  display: none;
   margin-left: -21px;
   width: 40px;
   height: 45px;
@@ -726,36 +817,33 @@ body[data-view=production] > section#content div.location:before {
   text-align: center;
   color: rgba(255, 255, 255, 0.05);
 }
-body[data-view=production] > section#content div.location h2 {
+[data-view=production] section#content div.location h2 {
   margin-top: 2px;
 }
-body[data-view=production] > section#content div.location div.scenes {
+[data-view=production] section#content div.location div.scenes {
   margin: 40px 0 0 0;
 }
-body[data-view=production] > section#content div.location div.scenes div.scene {
+[data-view=production] section#content div.location div.scenes div.scene {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 45px;
 }
-body[data-view=production] > section#content div.location div.scenes div.scene:last-of-type {
-  margin-bottom: 15px;
-}
-body[data-view=production] > section#content div.location div.scenes div.scene div.shot {
+[data-view=production] section#content div.location div.scenes div.scene div.shot {
   position: relative;
   margin: 0 0 30px 0;
   width: calc(50% - 15px);
 }
-body[data-view=production] > section#content div.location div.scenes div.scene div.shot.double {
+[data-view=production] section#content div.location div.scenes div.scene div.shot.double {
   width: 100%;
 }
-body[data-view=production] > section#content div.location div.scenes div.scene div.shot img {
+[data-view=production] section#content div.location div.scenes div.scene div.shot img {
   display: block;
   width: 100%;
   border-radius: 4px;
 }
-body[data-view=production] > section#content div.location div.scenes div.scene div.shot .timecode {
+[data-view=production] section#content div.location div.scenes div.scene div.shot .timecode {
   position: absolute;
   top: 0;
   left: 0;
@@ -766,21 +854,25 @@ body[data-view=production] > section#content div.location div.scenes div.scene d
   font: 0.6rem "Monda", sans-serif;
   color: rgba(255, 255, 255, 0.4);
 }
-body[data-view=production] > section#content div.location div.scenes div.scene div.shot:hover .timecode {
+[data-view=production] section#content div.location div.scenes div.scene div.shot:hover .timecode {
   display: inline-block;
 }
-body[data-view=production] > section#content div.location div.scenes div.scene p {
+[data-view=production] section#content div.location div.scenes div.scene p {
   margin: -15px 0 0 0;
   font: 0.8rem "Noto Serif", serif;
   color: rgba(255, 255, 255, 0.2);
 }
-body[data-view=production] > section#content div.location div.scenes div.scene:last-of-type > p {
+[data-view=production] section#content div.location div.scenes div.scene:last-of-type {
+  margin-bottom: 15px;
+}
+[data-view=production] section#content div.location div.scenes div.scene:last-of-type > p {
   margin-bottom: 25px;
 }
-body[data-view=production] > section#content div.location div.scenes div.scene:before {
+[data-view=production] section#content div.location div.scenes div.scene:before {
   position: absolute;
   top: -5px;
   left: calc(-3vw + -9px);
+  display: none;
   width: 16px;
   line-height: 30px;
   content: "";
@@ -789,30 +881,30 @@ body[data-view=production] > section#content div.location div.scenes div.scene:b
   background: #1A1919;
   text-align: center;
 }
-body[data-view=production] > section#content div.location div.scenes div.scene.uncertain:before {
+[data-view=production] section#content div.location div.scenes div.scene.uncertain:before {
   content: "";
   color: #C31;
 }
-body[data-view=production] > section#content div.location div.description {
+[data-view=production] section#content div.location div.description {
   padding: 30px;
   background: rgba(255, 255, 255, 0.02);
   border-radius: 4px;
 }
-body[data-view=production] > section#content div.location div.description p {
+[data-view=production] section#content div.location div.description p {
   margin: 0;
   font: 0.9rem "Noto Serif", serif;
   line-height: 1.7rem;
   color: rgba(255, 255, 255, 0.5);
 }
-body[data-view=production] > section#content div.location div.description p .source {
+[data-view=production] section#content div.location div.description p .source {
   color: rgba(255, 255, 255, 0.1);
   font-size: 12px;
   font-style: italic;
 }
-body[data-view=production] > section#content div.location div.description div.photos {
+[data-view=production] section#content div.location div.description div.photos {
   overflow: auto;
 }
-body[data-view=production] > section#content div.location div.description div.photos img {
+[data-view=production] section#content div.location div.description div.photos img {
   display: block;
   float: left;
   margin: 20px 15px 0 0;
@@ -820,51 +912,49 @@ body[data-view=production] > section#content div.location div.description div.ph
   border-radius: 4px;
   opacity: 0.5;
 }
-body[data-view=production] > section#content div.location div.description div.photos img:hover {
+[data-view=production] section#content div.location div.description div.photos img:hover {
   opacity: 1;
   cursor: pointer;
 }
-body[data-view=production] > section#content div.location.uncertain h2 {
+[data-view=production] section#content div.location.uncertain h2 {
   color: #C31;
 }
-body[data-view=production] > section#content div.location.uncertain h2:after {
+[data-view=production] section#content div.location.uncertain h2:after {
   margin-left: 10px;
   content: "";
   font-family: "Material-Design-Iconic-Font";
 }
-@media only screen and (max-width: 500px) {
-  body[data-view=production] > section#content div.location {
-    border: 0;
+@media only screen and (min-width: 576px) {
+  [data-view=production] section#content {
+    padding: 5vw calc(7vw - 3vw);
   }
-  body[data-view=production] > section#content div.location:before,
-body[data-view=production] > section#content div.scene:before {
-    display: none;
+  [data-view=production] section#content div.location {
+    border-color: rgba(255, 255, 255, 0.02);
+  }
+  [data-view=production] section#content div.location:before,
+[data-view=production] section#content div.location div.scenes div.scene:before {
+    display: block;
   }
 }
-@media only screen and (min-width: 501px) {
-  body[data-view=production] > section#content {
-    padding: 7vw calc(10vw - 3vw);
+@media only screen and (min-width: 992px) {
+  [data-view=production] section#content {
+    padding: 5vw calc(10vw - 3vw);
   }
 }
 @media only screen and (min-width: 1200px) {
-  body[data-view=production] > section#content {
-    padding: 7vw calc(15vw - 3vw);
+  [data-view=production] section#content {
+    padding: 5vw calc(25vw - 3vw);
   }
 }
 
-body[data-view=map] > section#content {
-  padding: 0;
-  margin: 0;
-}
-
-body[data-view=import_production] > section#content div#focused div.production, body[data-view=import_production] > section#content div#focused div.person,
-body[data-view=import_person] > section#content div#focused div.production,
-body[data-view=import_person] > section#content div#focused div.person {
+[data-view=import_production] section#content div#focused div.production, [data-view=import_production] section#content div#focused div.person,
+[data-view=import_person] section#content div#focused div.production,
+[data-view=import_person] section#content div#focused div.person {
   margin-bottom: 5vw;
 }
-body[data-view=import_production] > section#content div.production, body[data-view=import_production] > section#content div.person,
-body[data-view=import_person] > section#content div.production,
-body[data-view=import_person] > section#content div.person {
+[data-view=import_production] section#content div.production, [data-view=import_production] section#content div.person,
+[data-view=import_person] section#content div.production,
+[data-view=import_person] section#content div.person {
   margin-bottom: 4vw;
   display: grid;
   width: 100%;
@@ -872,57 +962,57 @@ body[data-view=import_person] > section#content div.person {
   grid-column-gap: 30px;
   grid-row-gap: 0;
 }
-body[data-view=import_production] > section#content div.production > .poster, body[data-view=import_production] > section#content div.production > .headshot, body[data-view=import_production] > section#content div.person > .poster, body[data-view=import_production] > section#content div.person > .headshot,
-body[data-view=import_person] > section#content div.production > .poster,
-body[data-view=import_person] > section#content div.production > .headshot,
-body[data-view=import_person] > section#content div.person > .poster,
-body[data-view=import_person] > section#content div.person > .headshot {
+[data-view=import_production] section#content div.production > .poster, [data-view=import_production] section#content div.production > .headshot, [data-view=import_production] section#content div.person > .poster, [data-view=import_production] section#content div.person > .headshot,
+[data-view=import_person] section#content div.production > .poster,
+[data-view=import_person] section#content div.production > .headshot,
+[data-view=import_person] section#content div.person > .poster,
+[data-view=import_person] section#content div.person > .headshot {
   width: 100px;
   height: 150px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.025);
 }
-body[data-view=import_production] > section#content div.production > .poster > img, body[data-view=import_production] > section#content div.production > .headshot > img, body[data-view=import_production] > section#content div.person > .poster > img, body[data-view=import_production] > section#content div.person > .headshot > img,
-body[data-view=import_person] > section#content div.production > .poster > img,
-body[data-view=import_person] > section#content div.production > .headshot > img,
-body[data-view=import_person] > section#content div.person > .poster > img,
-body[data-view=import_person] > section#content div.person > .headshot > img {
+[data-view=import_production] section#content div.production > .poster > img, [data-view=import_production] section#content div.production > .headshot > img, [data-view=import_production] section#content div.person > .poster > img, [data-view=import_production] section#content div.person > .headshot > img,
+[data-view=import_person] section#content div.production > .poster > img,
+[data-view=import_person] section#content div.production > .headshot > img,
+[data-view=import_person] section#content div.person > .poster > img,
+[data-view=import_person] section#content div.person > .headshot > img {
   width: inherit;
   height: inherit;
   border-radius: inherit;
 }
-body[data-view=import_production] > section#content div.production > .details h2 span.add, body[data-view=import_production] > section#content div.person > .details h2 span.add,
-body[data-view=import_person] > section#content div.production > .details h2 span.add,
-body[data-view=import_person] > section#content div.person > .details h2 span.add {
+[data-view=import_production] section#content div.production > .details h2 span.add, [data-view=import_production] section#content div.person > .details h2 span.add,
+[data-view=import_person] section#content div.production > .details h2 span.add,
+[data-view=import_person] section#content div.person > .details h2 span.add {
   float: right;
   opacity: 0.7;
   color: #4CAF50;
 }
-body[data-view=import_production] > section#content div.production > .details h2 span.add:hover, body[data-view=import_production] > section#content div.person > .details h2 span.add:hover,
-body[data-view=import_person] > section#content div.production > .details h2 span.add:hover,
-body[data-view=import_person] > section#content div.person > .details h2 span.add:hover {
+[data-view=import_production] section#content div.production > .details h2 span.add:hover, [data-view=import_production] section#content div.person > .details h2 span.add:hover,
+[data-view=import_person] section#content div.production > .details h2 span.add:hover,
+[data-view=import_person] section#content div.person > .details h2 span.add:hover {
   opacity: 1;
   cursor: pointer;
 }
-body[data-view=import_production] > section#content div.production > .details h4, body[data-view=import_production] > section#content div.person > .details h4,
-body[data-view=import_person] > section#content div.production > .details h4,
-body[data-view=import_person] > section#content div.person > .details h4 {
+[data-view=import_production] section#content div.production > .details h4, [data-view=import_production] section#content div.person > .details h4,
+[data-view=import_person] section#content div.production > .details h4,
+[data-view=import_person] section#content div.person > .details h4 {
   color: rgba(255, 255, 255, 0.5);
 }
-body[data-view=import_production] > section#content div.production > .details p, body[data-view=import_production] > section#content div.person > .details p,
-body[data-view=import_person] > section#content div.production > .details p,
-body[data-view=import_person] > section#content div.person > .details p {
+[data-view=import_production] section#content div.production > .details p, [data-view=import_production] section#content div.person > .details p,
+[data-view=import_person] section#content div.production > .details p,
+[data-view=import_person] section#content div.person > .details p {
   margin: 2px 10vw 0 0;
   font-family: "Noto Serif", serif;
   font-size: 0.8rem;
   text-align: justify;
   line-height: 1.3rem;
 }
-body[data-view=import_production] > section#content div.production.minified > .poster, body[data-view=import_production] > section#content div.production.minified > .headshot, body[data-view=import_production] > section#content div.person.minified > .poster, body[data-view=import_production] > section#content div.person.minified > .headshot,
-body[data-view=import_person] > section#content div.production.minified > .poster,
-body[data-view=import_person] > section#content div.production.minified > .headshot,
-body[data-view=import_person] > section#content div.person.minified > .poster,
-body[data-view=import_person] > section#content div.person.minified > .headshot {
+[data-view=import_production] section#content div.production.minified > .poster, [data-view=import_production] section#content div.production.minified > .headshot, [data-view=import_production] section#content div.person.minified > .poster, [data-view=import_production] section#content div.person.minified > .headshot,
+[data-view=import_person] section#content div.production.minified > .poster,
+[data-view=import_person] section#content div.production.minified > .headshot,
+[data-view=import_person] section#content div.person.minified > .poster,
+[data-view=import_person] section#content div.person.minified > .headshot {
   width: 60px;
   height: 90px;
 }
@@ -952,7 +1042,7 @@ footer a:hover {
 div.cover-image {
   position: relative;
   width: 100%;
-  height: calc(100% - 56px);
+  height: 100%;
   padding: 0 16px 16px 16px;
   background: #FFF;
 }
@@ -980,6 +1070,7 @@ div.cover-image > .heading h1 {
   color: #FFF;
 }
 div.cover-image > .heading h2 {
+  margin-top: 10px;
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.75);
 }
@@ -999,6 +1090,18 @@ div.cover-image > .caption h2 {
   margin: 3px 0 0 0;
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.5);
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+#map input, #map button {
+  display: initial;
+  margin: initial;
+  padding: initial;
+  font-size: initial;
+  font-family: initial;
 }
 
 .my-label {

@@ -95,7 +95,8 @@ UTIL = {
  
     // Start
     start: function() {
-        var body = document.body,
+        // var body = document.body,
+        var body = document.getElementById('document'),
             view = body.getAttribute('data-view')
         
         UTIL.exec('common');
