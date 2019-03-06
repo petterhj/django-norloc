@@ -9,7 +9,7 @@
 
 {# Navigation #}
 {% block navigation %}
- <a href="{% url 'locations' %}">Opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county %}">{{ location.county }}</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county location.place_slug %}">{{ location.place }}</a> <span class="accent">&raquo;</span> {{ location.address }}
+ <a href="{% url 'locations' %}">Opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county %}">{{ location.get_county_display }}</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county location.place_slug %}">{{ location.place }}</a> <span class="accent">&raquo;</span> {{ location.address }}
 {% endblock %}
 
 
@@ -17,14 +17,21 @@
 {% block header-class %}{% endblock %}
 {% block header %}
  {% if location.photo %}
-  <img src="{{ location.photo.url }}" class="photo" alt="photo" title="">
+  <img src="{{ location.photo.photo.url }}" class="photo" alt="{{ location.photo.title }}" title="{{ location.photo.caption }}">
  {% endif %}
  <h1>{{ location.address }}</h1>
- <h3>{{ location.place }}</h3>
- <h4>{{ location.county }}</h4>
+ <h3>{{ location.place }}, {{ location.get_county_display }}</h3>
+ <h4><!-- {{ location.county }} --></h4>
  <p>
   {{ location.description|markdownify }}{% if location.description_credit %} <span class="source">&mdash; {{ location.description_credit }}</span>{% endif %}
  </p>
+ <div class="gallery">
+  {% for photo in location.photo_set.all %}
+   <a href="{{ photo.photo.url }}" data-lightbox="location" data-title="{{ photo.caption }}">
+   	<div class="image" title="{{ photo.caption }}" style="{% if location.photo %}background-image: url('{{ photo.photo.url }}');{% endif %}"></div>
+   </a>
+  {% endfor %}
+ </div>
 {% endblock %}
 
 

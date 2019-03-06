@@ -1,5 +1,5 @@
 <div class="grid-item location {% if location.production_count == 0 %}faded{% endif %}" data-href="{% url 'location' location.county location.place_slug location.slug %}" title="{{ location.full_address }}">
- <div class="cover" style="{%if location.photo %}background-image: url('{{ location.photo.url }}');{% endif %}">
+ <div class="cover" style="{% if location.photo %}background-image: url('{{ location.photo.photo.url }}');{% endif %}">
  </div>
  <div class="details">
   <h1>{{ location.address }}</h1>

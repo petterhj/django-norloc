@@ -1,4 +1,10 @@
 @charset "UTF-8";
+/* ========================================================================
+	Variables and mixins
+   ======================================================================== */
+/* ========================================================================
+	General
+   ======================================================================== */
 * {
   box-sizing: border-box;
 }
@@ -9,6 +15,7 @@ html, body {
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background: #1A1919;
 }
 
@@ -201,6 +208,46 @@ div.meta .tag > i.zmdi + span {
   margin-left: 7px;
 }
 
+div.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 25vw;
+  grid-column-gap: 1vw;
+  grid-row-gap: 1vw;
+  width: 100%;
+}
+div.gallery div.image {
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 4px;
+}
+div.gallery div.image:hover {
+  opacity: 1;
+}
+@media only screen and (min-width: 576px) {
+  div.gallery {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 18vw;
+  }
+}
+@media only screen and (min-width: 768px) {
+  div.gallery {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 15vw;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  div.gallery {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 8vw;
+  }
+}
+
 /* ========================================================================
 	Skeleton
    ======================================================================== */
@@ -359,6 +406,11 @@ section#header form div.input-icon > button {
 section#header form div.input-icon > button:hover, section#header form div.input-icon > button:focus {
   color: rgba(0, 0, 0, 0.75);
 }
+section#header div.gallery {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #EFEFEF;
+}
 @media only screen and (min-width: 576px) {
   section#header {
     padding: 5vw 7vw;
@@ -438,7 +490,8 @@ section#header:empty {
   padding-bottom: 60px;
 }
 [data-view=location] section#header img.photo {
-  height: 250px;
+  height: auto;
+  max-height: 250px;
   width: auto;
   max-width: 100%;
   margin-top: 0;
@@ -829,6 +882,10 @@ section#content:empty {
 [data-view=production] section#content div.location h2 a {
   color: inherit;
   text-decoration: none;
+  opacity: 0.8;
+}
+[data-view=production] section#content div.location h2 a:hover {
+  opacity: 1;
 }
 [data-view=production] section#content div.location div.scenes {
   margin: 40px 0 0 0;
@@ -911,20 +968,16 @@ section#content:empty {
   font-size: 12px;
   font-style: italic;
 }
-[data-view=production] section#content div.location div.description div.photos {
-  overflow: auto;
+[data-view=production] section#content div.location div.description div.gallery {
+  margin-top: 20px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 10vw;
 }
-[data-view=production] section#content div.location div.description div.photos img {
-  display: block;
-  float: left;
-  margin: 20px 15px 0 0;
-  height: 60px;
-  border-radius: 4px;
+[data-view=production] section#content div.location div.description div.gallery div.image {
   opacity: 0.5;
 }
-[data-view=production] section#content div.location div.description div.photos img:hover {
+[data-view=production] section#content div.location div.description div.gallery div.image:hover {
   opacity: 1;
-  cursor: pointer;
 }
 [data-view=production] section#content div.location.uncertain h2 {
   color: #C31;
@@ -950,10 +1003,18 @@ section#content:empty {
   [data-view=production] section#content {
     padding: 5vw calc(10vw - 3vw);
   }
+  [data-view=production] section#content div.location div.description div.gallery {
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 7vw;
+  }
 }
 @media only screen and (min-width: 1200px) {
   [data-view=production] section#content {
     padding: 5vw calc(25vw - 3vw);
+  }
+  [data-view=production] section#content div.location div.description div.gallery {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 5vw;
   }
 }
 
@@ -1112,6 +1173,13 @@ div.cover-image > .caption h2 {
   margin: 3px 0 0 0;
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.5);
+}
+
+/* ========================================================================
+	Various
+   ======================================================================== */
+div#lightbox div.lb-details {
+  font-family: "Monda", sans-serif;
 }
 
 #map {

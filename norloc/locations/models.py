@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models import Count
 from autoslug import AutoSlugField
 from jsonfield import JSONField
+from urlparse import urlparse
 from uuid_upload_path import upload_to_factory
 
 
@@ -86,7 +87,7 @@ class Location(models.Model):
     @property
     def photo(self):
         photo = self.photo_set.first()
-        return photo.photo if photo and photo.photo else None
+        return photo if photo and photo.photo else None
     
     
     # Representation
@@ -100,8 +101,21 @@ class Photo(models.Model):
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
     photo = models.ImageField(upload_to=upload_to_photos)
     title = models.CharField(max_length=100)
+    year = models.PositiveSmallIntegerField(blank=True, null=True)
     credit = models.CharField(max_length=50)
+    source = models.URLField(max_length=200, blank=True, null=True)
     license = models.CharField(max_length=50, blank=True)
+
+    # Properties
+    @property
+    def caption(self):
+        return '%s%s [%s%s%s]' % (
+            self.title,
+            ' (%s)' % (self.year) if self.year else '',
+            self.credit,
+            ' - %s' % (urlparse(self.source).hostname.replace('www.', '')) if self.source else '',
+            ' - %s' % (self.license) if self.license else ''
+        )
 
     # Representation
     def __unicode__(self):

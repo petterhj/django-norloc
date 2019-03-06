@@ -308,6 +308,7 @@ def locations(request, ppk):
         if scene.location:
             if scene.location.pk not in locations:
                 locations[scene.location.pk] = {
+                    'address': scene.location.address,
                     'full_address': scene.location.full_address,
                     'description': scene.location.description,
                     'url': reverse('location', args=[scene.location.county, scene.location.place_slug, scene.location.slug]),
@@ -317,8 +318,7 @@ def locations(request, ppk):
                     'scene_count': scene.shot_set.count(),
                     'photos': [{
                         'photo': p.photo.url,
-                        'credit': p.credit,
-                        'license': p.license,
+                        'caption': p.caption
                     } for p in scene.location.photo_set.all()],
                     'scenes': []
                 }

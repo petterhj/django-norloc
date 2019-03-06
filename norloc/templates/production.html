@@ -189,9 +189,11 @@
     {{#if description}}
      <p>{{{description}}}{{#if description_credit}} <span class="source">&mdash; {{description_credit}}</span>{{/if}}</p>
     {{/if}}
-    <div class="photos">
+    <div class="gallery">
      {{#each photos}}
-      <img src="{{photo}}" alt="{{credit}}{{#if license}} [{{license}}]{{/if}}" title="Fra: {{credit}}{{#if license}} [{{license}}]{{/if}}">
+      <a href="{{photo}}" data-lightbox="location" data-title="{{../address}}: {{caption}}">
+       <div class="image" title="{{caption}}" style="background-image: url('{{photo}}');"></div>
+      </a>
      {{/each}}
     </div>
    </div>
