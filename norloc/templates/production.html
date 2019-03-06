@@ -163,14 +163,14 @@
 {% block content %}
  {% verbatim %}
  <script id="location-template" type="text/x-handlebars-template">
-  <div class="location double {{#if uncertain}}uncertain{{/if}}">
+  <div class="scene-block location {{#if uncertain}}uncertain{{/if}}">
    <h2><a href="{{url}}">{{full_address}}</a></h2>
 
    <div class="scenes">
     {{#each scenes}}
      <div class="scene {{#if uncertain}}uncertain{{/if}}">
       {{#each shots}}
-       <div class="shot {{shot_size2 double ../shot_count}}">
+       <div class="shot {{shot_size double ../shot_count}}">
         <img src="{{image}}" style="">
         {{#if timecode}}<span class="timecode">{{timecode timecode}}</span>{{/if}}
        </div>
@@ -182,7 +182,7 @@
     {{/each}}
    </div>
    
-   <div class="description">
+   <div class="details">
     {{#if uncertain}}
      <p class="accent">En eller flere scener knyttet til denne lokasjonen er usikker, sannsynligvis feil!</p>
     {{/if}}

@@ -44,6 +44,8 @@ urlpatterns = [
     url(r'^opptakssteder/(?P<county>[\w-]+)/(?P<place>[\w-]+)/$', loc.locations, name='locations'),
     url(r'^opptakssteder/(?P<county>[\w-]+)/(?P<place>[\w-]+)/(?P<slug>[\w-]+)$', loc.location, name='location'),
 
+    url(r'^json/location/(?P<lpk>\d+)/productions/$', loc.productions, name='location_productions'),
+
     url(r'^json/locations/$', loc.locations, {'json': 'True'}, name='json_locations'),
 
     url(r'^json/location/(?P<lpk>\d+)/details$', loc.location_details, name='location_details'),

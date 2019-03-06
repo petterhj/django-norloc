@@ -695,19 +695,17 @@ section#content {
     @include respond-to(wide-screens) {}
 }
 
-// View: Production
-[data-view="production"] section#content {
+// View: Production / Location
+[data-view="production"] section#content,
+[data-view="location"] section#content {
 	padding: 5vw calc(5vw - 3vw);
 
-	// Location
-	div.location {
-		position: relative; 
-		width: calc(50% - 15px); 
-		margin: 0 0 75px 0; 
+	// Scene block
+	div.scene-block {
+		position: relative; width: 100%;
+		margin: 0 0 50px 0; padding: 0 3vw;
 		border-left: 2px solid transparent;
-		padding: 0 3vw;
 
-		&.double { width: 100%; }
 		&.add { 
 			opacity: 0.3; font: 1rem $font-sans-serif; cursor: pointer;
 			&:hover { opacity: 1; }
@@ -717,7 +715,7 @@ section#content {
 		&:before {
 			position: absolute; top: -5px; left: 0; display: none;
 			margin-left: -21px; width: 40px; height: 45px;
-			content: '\f1ab'; background: #1A1919;
+			content: ''; background: #1A1919;
 			font: normal normal normal 2rem/1 'Material-Design-Iconic-Font';
 			text-align: center; color: rgba(255, 255, 255, 0.05);
 		}
@@ -731,19 +729,17 @@ section#content {
 
 		// Scenes
 		div.scenes {
-			margin: 40px 0 0 0;
+			margin: 25px 0 0 0;
 
 			div.scene {
 				position: relative;
 				display: flex; flex-wrap: wrap; 
 				justify-content: space-between; 
-				margin-bottom: 45px;
-
-				
+				margin-bottom: 25px;
 
 				div.shot {
 					position: relative;
-					margin: 0 0 30px 0; 
+					margin: 0 0 25px 0; 
 					width: calc(50% - 15px); 
 
 					&.double { width: 100%; }
@@ -768,7 +764,7 @@ section#content {
 					font: 0.8rem $font-serif2; color: rgba(255, 255, 255, 0.2);
 				}
 
-				&:last-of-type { margin-bottom: 15px; }
+				&:last-of-type { margin-bottom: 0; }
 				&:last-of-type > p { margin-bottom: 25px; }
 
 				&:before {
@@ -786,18 +782,20 @@ section#content {
 			}
 		}
 
-		// Description
-		div.description { 
-			padding: 30px;
+		// Details
+		div.details { 
+			padding: 20px;
 			background: rgba(255, 255, 255, 0.02);
 			border-radius: 4px;
+
+			&.top { margin: 25px 0 30px 0; }
 
 			p {
 				margin: 0;
 				font: 0.9rem $font-serif2; line-height: 1.7rem;
 				color: rgba(255, 255, 255, 0.5);
 
-				.source { color: rgba(255, 255, 255, 0.1); font-size: 12px; font-style: italic; }
+				.source { color: rgba(255, 255, 255, 0.1); font-size: 0.7rem; font-style: italic; }
 			}
 
 			p + div.gallery {
@@ -807,10 +805,17 @@ section#content {
 			div.gallery {
 				margin-top: 0;
 				grid-template-columns: repeat(5, 1fr);
-				grid-auto-rows: 10vw;
+				grid-auto-rows: 6vw;
 
 				div.image { opacity: 0.5; }
 				div.image:hover { opacity: 1; }
+			}
+
+			&.compact {
+				p { 
+					font-size: 0.7rem; line-height: 1.2rem;
+					.source { font-size: 0.5rem; }
+				}
 			}
 		}
 
@@ -822,19 +827,43 @@ section#content {
 				font-family: 'Material-Design-Iconic-Font';
 			}
 		}
+
+		// Location
+		&.location {
+			padding-bottom: 25px;
+			&:before { content: '\f1ab'; }
+		}
+
+		// Production
+		&.production {
+			&:before { content: '\f2e0'; }
+			div.details { 
+				display: flex;
+
+				img.poster { 
+					flex: 0 1 auto; display: block;
+					height: 100px; border-radius: 4px;
+				}
+
+				p {
+					flex: 1 1 auto; margin: 0 0 0 20px;
+				}
+			}
+		}
 	}
+
 
 	@include respond-to(small-screens) {
 		padding: 5vw calc(7vw - 3vw);
-		div.location { border-color: rgba(255, 255, 255, 0.02); }
-		div.location:before,
-		div.location div.scenes div.scene:before { display: block; }
+		div.scene-block { border-color: rgba(255, 255, 255, 0.02); }
+		div.scene-block:before,
+		div.scene-block div.scenes div.scene:before { display: block; }
     }
     @include respond-to(medium-screens) {}
     @include respond-to(large-screens) {
     	padding: 5vw calc(10vw - 3vw);
 		
-		div.location div.description div.gallery {
+		div.scene-block div.description div.gallery {
 			grid-template-columns: repeat(7, 1fr);
 			grid-auto-rows: 7vw;
 		}
@@ -842,7 +871,7 @@ section#content {
     @include respond-to(wide-screens) {
     	padding: 5vw calc(25vw - 3vw);
 
-    	div.location div.description div.gallery {
+    	div.scene-block div.description div.gallery {
 			grid-template-columns: repeat(6, 1fr);
 			grid-auto-rows: 5vw;
 		}

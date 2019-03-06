@@ -124,6 +124,46 @@ def location_details(request, lpk):
     })
 
 
+# JSON: Productions (by location)
+def productions(request, lpk):
+    # Production
+    location = get_object_or_404(Location, pk=lpk)
+
+    # Find all production for given location
+    productions = {}
+
+    for scene in location.scene_set.all():
+        print scene
+
+        if scene.production.pk not in productions:
+            productions[scene.production.pk] = {
+                'title': scene.production.title_with_year,
+                'release': scene.production.release,
+                'summary': scene.production.summary,
+                'summary_credit': scene.production.summary_credit,
+                'url': reverse('production', args=[scene.production.type, scene.production.slug]),
+                'uncertain': False,
+                'poster': scene.production.poster.url if scene.production.poster else None,
+                'scenes': []
+            }
+
+        productions[scene.production.pk]['uncertain'] = scene.uncertain
+
+        productions[scene.production.pk]['scenes'].append({
+            'description': scene.description,
+            'shot_count': scene.shot_set.count(),
+            'uncertain': scene.uncertain,
+            'shots': [{
+                'image': s.image.url,
+                'timecode': s.timecode,
+                'double': s.double,
+            } for s in scene.shot_set.order_by('timecode', 'pk')]
+        })
+
+    # Return JSON
+    return JsonResponse(productions)
+
+
 # JSON: Update location bounds
 @login_required
 @require_POST

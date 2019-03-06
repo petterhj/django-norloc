@@ -68,5 +68,39 @@
 {# Content #}
 {% block content-class %}{% endblock %}
 {% block content %}
- 
+ {% verbatim %}
+ <script id="production-template" type="text/x-handlebars-template">
+  <div class="scene-block production {{#if uncertain}}uncertain{{/if}}">
+  	<h2><a href="{{url}}">{{title}}</a></h2>
+
+  	<div class="details compact top">
+    <img src="{{poster}}" class="poster" alt="poster">
+    <p>
+    	{{#if uncertain}}
+      <span class="accent">En eller flere scener knyttet til denne produksjonen er usikker, sannsynligvis feil!</span><br>
+     {{/if}}
+     {{#if summary}}
+      {{{summary}}}{{#if summary_credit}} <span class="source">&mdash; {{summary_credit}}</span>{{/if}}
+     {{/if}}
+    </p>
+   </div>
+
+  	<div class="scenes">
+    {{#each scenes}}
+     <div class="scene {{#if uncertain}}uncertain{{/if}}">
+      {{#each shots}}
+       <div class="shot {{shot_size double ../shot_count}}">
+        <img src="{{image}}" style="">
+        {{#if timecode}}<span class="timecode">{{timecode timecode}}</span>{{/if}}
+       </div>
+      {{/each}}
+      {{#if description}}
+       <p>{{description}}</p>
+      {{/if}}
+     </div>
+    {{/each}}
+   </div>
+  </div>
+ </script>
+ {% endverbatim %}
 {% endblock %}

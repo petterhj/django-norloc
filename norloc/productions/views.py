@@ -296,7 +296,7 @@ def import_production(request, production_type=None, tmdb_id=None):
     return error(request)
 
     
-# JSON: Locations
+# JSON: Locations (by production)
 def locations(request, ppk):
     # Production
     production = get_object_or_404(Production, pk=ppk)
