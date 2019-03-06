@@ -3,7 +3,7 @@
  </div>
  <div class="details">
   <h1>{{ location.address }}</h1>
-  <h2>{{ location.place }}, {{ location.county }}</h2>
+  <h2>{{ location.place }}, {{ location.get_county_display }}</h2>
   <div class="meta">
    <span class="tag" title="Produksjoner"><i class="zmdi zmdi-videocam"></i><span>{{ location.production_count }} produksjon{{ location.production_count|pluralize:",er" }}</span></span>
   </div>

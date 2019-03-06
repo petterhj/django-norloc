@@ -20,11 +20,6 @@
 {% endblock %}
 
 
-{# Header #}
-{% block header-class %}{% endblock %}
-{% block header %}{% endblock %}
-
-
 {# Menu #}
 {% block menu %}
  <span class="group">Fylke: 
@@ -34,6 +29,12 @@
     <option value="{{ county_slug }}">{{ county }}</option>
    {% endfor %}
   </select>
+ </span>
+ <span class="group">Type: 
+  <a href="">Alle</a> &#9642; 
+  {% for type_slug, type_display in location_types %}
+   <a href="">{{ type_display }}</a> &#9642; 
+  {% endfor %}
  </span>
 {% endblock %}
 

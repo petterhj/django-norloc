@@ -9,7 +9,16 @@
 
 {# Navigation #}
 {% block navigation %}
- <a href="{% url 'locations' %}">Opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county %}">{{ location.get_county_display }}</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county location.place_slug %}">{{ location.place }}</a> <span class="accent">&raquo;</span> {{ location.address }}
+ <a href="{% url 'locations' %}">Steder</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county %}">{{ location.get_county_display }}</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county location.place_slug %}">{{ location.place }}</a> <span class="accent">&raquo;</span> {{ location.address }}
+
+ {% if edit_mode %}
+  <a href="{% url 'location' location.county location.place_slug location.slug %}" class="right icon" title="Avbryt endringer"><i class="zmdi zmdi-close"></i></a>
+  <a href="" class="right icon" title="Lagre endringer"><i class="zmdi zmdi-save"></i></a>
+ {% else %}
+  {% if user.is_authenticated %}
+   <a href="?edit=true" class="right icon" title="Rediger sted"><i class="zmdi zmdi-edit"></i></a>
+  {% endif %}
+ {% endif %}
 {% endblock %}
 
 
@@ -17,21 +26,42 @@
 {% block header-class %}{% endblock %}
 {% block header %}
  {% if location.photo %}
-  <img src="{{ location.photo.photo.url }}" class="photo" alt="{{ location.photo.title }}" title="{{ location.photo.caption }}">
+  <a href="{{ location.photo.photo.url }}" data-lightbox="location" data-title="{{ location.photo.caption }}"><img src="{{ location.photo.photo.url }}" class="photo" alt="{{ location.photo.title }}" title="{{ location.photo.caption }}"></a>
  {% endif %}
- <h1>{{ location.address }}</h1>
- <h3>{{ location.place }}, {{ location.get_county_display }}</h3>
- <h4><!-- {{ location.county }} --></h4>
- <p>
-  {{ location.description|markdownify }}{% if location.description_credit %} <span class="source">&mdash; {{ location.description_credit }}</span>{% endif %}
- </p>
- <div class="gallery">
-  {% for photo in location.photo_set.all %}
-   <a href="{{ photo.photo.url }}" data-lightbox="location" data-title="{{ photo.caption }}">
-   	<div class="image" title="{{ photo.caption }}" style="{% if location.photo %}background-image: url('{{ photo.photo.url }}');{% endif %}"></div>
-   </a>
-  {% endfor %}
- </div>
+
+ {% if not edit_mode %}
+	 <h1>{{ location.address }}</h1>
+	 <h3>{{ location.place }}, {{ location.get_county_display }}</h3>
+	 <h4><!-- {{ location.county }} --></h4>
+	 <p>
+	  {{ location.description|markdownify }}{% if location.description_credit %} <span class="source">&mdash; {{ location.description_credit }}</span>{% endif %}
+	 </p>
+	 {% if location.photo_set.count > 1 %}
+	  <div class="gallery">
+	   {% for photo in location.photo_set.all|slice:"1:" %}
+	    <a href="{{ photo.photo.url }}" data-lightbox="location" data-title="{{ photo.caption }}">
+	   	 <div class="image" title="{{ photo.caption }}" style="{% if location.photo %}background-image: url('{{ photo.photo.url }}');{% endif %}"></div>
+	    </a>
+	   {% endfor %}
+	  </div>
+	 {% endif %}
+	{% else %}
+  <form id="location_form" method="post" enctype="multipart/form-data">
+  	{{ form.media }}
+   {% csrf_token %}
+
+   {{ form.address }}
+
+   <div class="geography">
+    {{ form.place }}
+    {{ form.county }}
+    {{ form.location_type }}
+   </div>
+
+   {{ form.description }}
+   {{ form.description_credit }}
+  </form>
+ {% endif %}
 {% endblock %}
 
 

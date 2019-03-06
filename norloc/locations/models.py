@@ -37,7 +37,8 @@ NO_COUNTIES = (
 )
 
 LOCATION_TYPES = (
-    ('park', 'Park'), ('street', 'Gate'),
+    ('park', 'Park'), ('skole', 'Skole'), 
+    ('gate', 'Gate'), 
 )
 
 

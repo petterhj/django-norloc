@@ -238,7 +238,7 @@ div.gallery div.image:hover {
 @media only screen and (min-width: 768px) {
   div.gallery {
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 15vw;
+    grid-auto-rows: 12vw;
   }
 }
 @media only screen and (min-width: 1200px) {
@@ -408,8 +408,6 @@ section#header form div.input-icon > button:hover, section#header form div.input
 }
 section#header div.gallery {
   margin-top: 30px;
-  padding: 15px;
-  background-color: #EFEFEF;
 }
 @media only screen and (min-width: 576px) {
   section#header {
@@ -499,11 +497,13 @@ section#header:empty {
 }
 
 [data-view=production][data-edit=true] section#header div.imageselect > .imageselect-buttons,
+[data-view=location][data-edit=true] section#header div.imageselect > .imageselect-buttons,
 [data-view=person][data-edit=true] section#header div.imageselect > .imageselect-buttons {
   bottom: 30px;
   padding: 0 5px;
 }
 [data-view=production][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn::before,
+[data-view=location][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn::before,
 [data-view=person][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn::before {
   background: rgba(255, 255, 255, 0.5);
   font: 0.7rem "Monda", sans-serif;
@@ -514,39 +514,54 @@ section#header:empty {
 }
 [data-view=production][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn:hover::before,
 [data-view=production][data-edit=true] section#header div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before,
+[data-view=location][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn:hover::before,
+[data-view=location][data-edit=true] section#header div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before,
 [data-view=person][data-edit=true] section#header div.imageselect > .imageselect-buttons .imageselect-btn:hover::before,
 [data-view=person][data-edit=true] section#header div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before {
   background: rgba(255, 255, 255, 0.8);
   border-color: rgba(0, 0, 0, 0.75);
 }
-[data-view=production][data-edit=true] section#header input,
-[data-view=person][data-edit=true] section#header input {
+[data-view=production][data-edit=true] section#header input, [data-view=production][data-edit=true] section#header select,
+[data-view=location][data-edit=true] section#header input,
+[data-view=location][data-edit=true] section#header select,
+[data-view=person][data-edit=true] section#header input,
+[data-view=person][data-edit=true] section#header select {
   padding: 5px 10px;
   color: #666;
 }
-[data-view=production][data-edit=true] section#header input[name=title], [data-view=production][data-edit=true] section#header input[name=name],
+[data-view=production][data-edit=true] section#header input[name=title], [data-view=production][data-edit=true] section#header input[name=address], [data-view=production][data-edit=true] section#header input[name=name],
+[data-view=location][data-edit=true] section#header input[name=title],
+[data-view=location][data-edit=true] section#header input[name=address],
+[data-view=location][data-edit=true] section#header input[name=name],
 [data-view=person][data-edit=true] section#header input[name=title],
+[data-view=person][data-edit=true] section#header input[name=address],
 [data-view=person][data-edit=true] section#header input[name=name] {
   width: 100%;
-  margin: 5px 0;
+  margin: 0;
   font: 1.7rem "Unica One", Helvetica, Arial, sans-serif;
   color: #C31;
   text-align: center;
   text-transform: uppercase;
 }
 [data-view=production][data-edit=true] section#header input[name=name],
+[data-view=location][data-edit=true] section#header input[name=name],
 [data-view=person][data-edit=true] section#header input[name=name] {
   margin-bottom: 15px;
 }
 [data-view=production][data-edit=true] section#header input[name=release],
+[data-view=location][data-edit=true] section#header input[name=release],
 [data-view=person][data-edit=true] section#header input[name=release] {
   display: inline-block;
   margin: 5px 0 20px 0;
   font: 1.2rem "Unica One", Helvetica, Arial, sans-serif;
   text-align: center;
 }
-[data-view=production][data-edit=true] section#header textarea[name=summary], [data-view=production][data-edit=true] section#header textarea[name=bio],
+[data-view=production][data-edit=true] section#header textarea[name=summary], [data-view=production][data-edit=true] section#header textarea[name=description], [data-view=production][data-edit=true] section#header textarea[name=bio],
+[data-view=location][data-edit=true] section#header textarea[name=summary],
+[data-view=location][data-edit=true] section#header textarea[name=description],
+[data-view=location][data-edit=true] section#header textarea[name=bio],
 [data-view=person][data-edit=true] section#header textarea[name=summary],
+[data-view=person][data-edit=true] section#header textarea[name=description],
 [data-view=person][data-edit=true] section#header textarea[name=bio] {
   width: 100%;
   height: 330px;
@@ -558,6 +573,9 @@ section#header:empty {
   line-height: 1.7rem;
 }
 [data-view=production][data-edit=true] section#header input[name$=_credit], [data-view=production][data-edit=true] section#header input[name=runtime], [data-view=production][data-edit=true] section#header input[name$=_id],
+[data-view=location][data-edit=true] section#header input[name$=_credit],
+[data-view=location][data-edit=true] section#header input[name=runtime],
+[data-view=location][data-edit=true] section#header input[name$=_id],
 [data-view=person][data-edit=true] section#header input[name$=_credit],
 [data-view=person][data-edit=true] section#header input[name=runtime],
 [data-view=person][data-edit=true] section#header input[name$=_id] {
@@ -565,23 +583,36 @@ section#header:empty {
   font: 0.8rem "Vollkorn", serif;
 }
 [data-view=production][data-edit=true] section#header input[name=runtime],
+[data-view=location][data-edit=true] section#header input[name=runtime],
 [data-view=person][data-edit=true] section#header input[name=runtime] {
   margin-top: 15px;
 }
-[data-view=production][data-edit=true] section#header div.people, [data-view=production][data-edit=true] section#header div.companies,
+[data-view=production][data-edit=true] section#header div.people, [data-view=production][data-edit=true] section#header div.geography, [data-view=production][data-edit=true] section#header div.companies,
+[data-view=location][data-edit=true] section#header div.people,
+[data-view=location][data-edit=true] section#header div.geography,
+[data-view=location][data-edit=true] section#header div.companies,
 [data-view=person][data-edit=true] section#header div.people,
+[data-view=person][data-edit=true] section#header div.geography,
 [data-view=person][data-edit=true] section#header div.companies {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 40% 1fr 1fr;
   grid-column-gap: 10px;
 }
-[data-view=production][data-edit=true] section#header div.people > .tagify, [data-view=production][data-edit=true] section#header div.companies > .tagify,
+[data-view=production][data-edit=true] section#header div.people > .tagify, [data-view=production][data-edit=true] section#header div.geography > .tagify, [data-view=production][data-edit=true] section#header div.companies > .tagify,
+[data-view=location][data-edit=true] section#header div.people > .tagify,
+[data-view=location][data-edit=true] section#header div.geography > .tagify,
+[data-view=location][data-edit=true] section#header div.companies > .tagify,
 [data-view=person][data-edit=true] section#header div.people > .tagify,
+[data-view=person][data-edit=true] section#header div.geography > .tagify,
 [data-view=person][data-edit=true] section#header div.companies > .tagify {
   margin-bottom: 20px;
 }
-[data-view=production][data-edit=true] section#header div.people > .tagify:before, [data-view=production][data-edit=true] section#header div.companies > .tagify:before,
+[data-view=production][data-edit=true] section#header div.people > .tagify:before, [data-view=production][data-edit=true] section#header div.geography > .tagify:before, [data-view=production][data-edit=true] section#header div.companies > .tagify:before,
+[data-view=location][data-edit=true] section#header div.people > .tagify:before,
+[data-view=location][data-edit=true] section#header div.geography > .tagify:before,
+[data-view=location][data-edit=true] section#header div.companies > .tagify:before,
 [data-view=person][data-edit=true] section#header div.people > .tagify:before,
+[data-view=person][data-edit=true] section#header div.geography > .tagify:before,
 [data-view=person][data-edit=true] section#header div.companies > .tagify:before {
   position: absolute;
   left: -4px;
@@ -592,8 +623,12 @@ section#header:empty {
   border-radius: 50%;
   background: #EFEFEF;
 }
-[data-view=production][data-edit=true] section#header div.people > .tagify:after, [data-view=production][data-edit=true] section#header div.companies > .tagify:after,
+[data-view=production][data-edit=true] section#header div.people > .tagify:after, [data-view=production][data-edit=true] section#header div.geography > .tagify:after, [data-view=production][data-edit=true] section#header div.companies > .tagify:after,
+[data-view=location][data-edit=true] section#header div.people > .tagify:after,
+[data-view=location][data-edit=true] section#header div.geography > .tagify:after,
+[data-view=location][data-edit=true] section#header div.companies > .tagify:after,
 [data-view=person][data-edit=true] section#header div.people > .tagify:after,
+[data-view=person][data-edit=true] section#header div.geography > .tagify:after,
 [data-view=person][data-edit=true] section#header div.companies > .tagify:after {
   position: absolute;
   left: 0;
@@ -607,8 +642,12 @@ section#header:empty {
   font: 0.4rem "Monda", sans-serif;
   text-transform: uppercase;
 }
-[data-view=production][data-edit=true] section#header div.people > .tagify > label, [data-view=production][data-edit=true] section#header div.companies > .tagify > label,
+[data-view=production][data-edit=true] section#header div.people > .tagify > label, [data-view=production][data-edit=true] section#header div.geography > .tagify > label, [data-view=production][data-edit=true] section#header div.companies > .tagify > label,
+[data-view=location][data-edit=true] section#header div.people > .tagify > label,
+[data-view=location][data-edit=true] section#header div.geography > .tagify > label,
+[data-view=location][data-edit=true] section#header div.companies > .tagify > label,
 [data-view=person][data-edit=true] section#header div.people > .tagify > label,
+[data-view=person][data-edit=true] section#header div.geography > .tagify > label,
 [data-view=person][data-edit=true] section#header div.companies > .tagify > label {
   position: absolute;
   top: 3px;
@@ -616,17 +655,35 @@ section#header:empty {
   font-size: 0.8rem;
   color: #B3B3B3;
 }
-[data-view=production][data-edit=true] section#header div.people.companies, [data-view=production][data-edit=true] section#header div.companies.companies,
+[data-view=production][data-edit=true] section#header div.people.companies, [data-view=production][data-edit=true] section#header div.geography.companies, [data-view=production][data-edit=true] section#header div.companies.companies,
+[data-view=location][data-edit=true] section#header div.people.companies,
+[data-view=location][data-edit=true] section#header div.geography.companies,
+[data-view=location][data-edit=true] section#header div.companies.companies,
 [data-view=person][data-edit=true] section#header div.people.companies,
+[data-view=person][data-edit=true] section#header div.geography.companies,
 [data-view=person][data-edit=true] section#header div.companies.companies {
   margin-top: 25px;
 }
-[data-view=production][data-edit=true] section#header div.people.people > .tagify:first-of-type, [data-view=production][data-edit=true] section#header div.companies.people > .tagify:first-of-type,
+[data-view=production][data-edit=true] section#header div.people .geography, [data-view=production][data-edit=true] section#header div.geography .geography, [data-view=production][data-edit=true] section#header div.companies .geography,
+[data-view=location][data-edit=true] section#header div.people .geography,
+[data-view=location][data-edit=true] section#header div.geography .geography,
+[data-view=location][data-edit=true] section#header div.companies .geography,
+[data-view=person][data-edit=true] section#header div.people .geography,
+[data-view=person][data-edit=true] section#header div.geography .geography,
+[data-view=person][data-edit=true] section#header div.companies .geography {
+  grid-template-columns: repeat(3, 1fr);
+}
+[data-view=production][data-edit=true] section#header div.people.people > .tagify:first-of-type, [data-view=production][data-edit=true] section#header div.geography.people > .tagify:first-of-type, [data-view=production][data-edit=true] section#header div.companies.people > .tagify:first-of-type,
+[data-view=location][data-edit=true] section#header div.people.people > .tagify:first-of-type,
+[data-view=location][data-edit=true] section#header div.geography.people > .tagify:first-of-type,
+[data-view=location][data-edit=true] section#header div.companies.people > .tagify:first-of-type,
 [data-view=person][data-edit=true] section#header div.people.people > .tagify:first-of-type,
+[data-view=person][data-edit=true] section#header div.geography.people > .tagify:first-of-type,
 [data-view=person][data-edit=true] section#header div.companies.people > .tagify:first-of-type {
   grid-column: 1/-1;
 }
 [data-view=production][data-edit=true] section#header div.external_ids,
+[data-view=location][data-edit=true] section#header div.external_ids,
 [data-view=person][data-edit=true] section#header div.external_ids {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -637,23 +694,28 @@ section#header:empty {
   font-family: "Unica One", Helvetica, Arial, sans-serif;
 }
 [data-view=production][data-edit=true] section#header div.external_ids > div, [data-view=production][data-edit=true] section#header div.external_ids input,
+[data-view=location][data-edit=true] section#header div.external_ids > div,
+[data-view=location][data-edit=true] section#header div.external_ids input,
 [data-view=person][data-edit=true] section#header div.external_ids > div,
 [data-view=person][data-edit=true] section#header div.external_ids input {
   display: inline-block;
   width: 100%;
 }
 [data-view=production][data-edit=true] section#header div.external_ids input,
+[data-view=location][data-edit=true] section#header div.external_ids input,
 [data-view=person][data-edit=true] section#header div.external_ids input {
   margin: 0 0 3px 0;
   height: 32px;
 }
 [data-view=production][data-edit=true] section#header div.external_ids a,
+[data-view=location][data-edit=true] section#header div.external_ids a,
 [data-view=person][data-edit=true] section#header div.external_ids a {
   color: #999;
   text-decoration: none;
   text-transform: uppercase;
 }
 [data-view=production][data-edit=true] section#header div.external_ids a:hover,
+[data-view=location][data-edit=true] section#header div.external_ids a:hover,
 [data-view=person][data-edit=true] section#header div.external_ids a:hover {
   color: #666;
 }
@@ -968,8 +1030,11 @@ section#content:empty {
   font-size: 12px;
   font-style: italic;
 }
-[data-view=production] section#content div.location div.description div.gallery {
+[data-view=production] section#content div.location div.description p + div.gallery {
   margin-top: 20px;
+}
+[data-view=production] section#content div.location div.description div.gallery {
+  margin-top: 0;
   grid-template-columns: repeat(5, 1fr);
   grid-auto-rows: 10vw;
 }
