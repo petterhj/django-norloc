@@ -1,4 +1,4 @@
-{% extends "base_grid.html" %}
+{% extends "base_page.html" %}
 
 {% load staticfiles %}
 {% load markdownify %}
@@ -10,14 +10,14 @@
 {# Navigation #}
 {% block navigation %}
  <a href="{% url 'locations' %}">Opptakssteder</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county %}">{{ location.county }}</a> <span class="accent">&raquo;</span> <a href="{% url 'locations' location.county location.place_slug %}">{{ location.place }}</a> <span class="accent">&raquo;</span> {{ location.address }}
-
 {% endblock %}
 
 
 {# Header #}
-{% block header-content %}
+{% block header-class %}{% endblock %}
+{% block header %}
  {% if location.photo %}
-  <img src="{{ location.photo.url }}" class="photo" alt="photo">
+  <img src="{{ location.photo.url }}" class="photo" alt="photo" title="">
  {% endif %}
  <h1>{{ location.address }}</h1>
  <h3>{{ location.place }}</h3>
@@ -28,11 +28,8 @@
 {% endblock %}
 
 
-{# Menu #}
-{% block menu %}{# No menu #}{% endblock %}
-
-
 {# Content #}
+{% block content-class %}{% endblock %}
 {% block content %}
  
 {% endblock %}

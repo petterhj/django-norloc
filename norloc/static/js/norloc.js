@@ -31,7 +31,7 @@ var NORLOC = NORLOC || {
         if (getURLParameter('edit') === 'true') {
             $('section#document').attr('data-edit', true);
             
-            UTIL.log('Edit mode enabled for view "{0}"'.format($('#page').data('view')));
+            UTIL.log('Edit mode enabled for view "{0}"'.format($('#document').data('view')));
 
             // Poster/Headshot
             // $('input[name="poster"],input[name="headshot"]').on('change', function(e) {
@@ -77,6 +77,7 @@ var NORLOC = NORLOC || {
                 .append('<a href="/produksjoner/import/">Import</a> | ')
                 .append('<a href="/produksjoner/film/folk-flest-bor-i-kina/">P1: FFBIK</a> | ')
                 .append('<a href="/produksjoner/film/oslo-31-august/">P1: O31A</a> | ')
+                .append('<a href="/person/erlend-loe/">F1: EL</a> | ')
                 .append('<a href="/produksjoner/film2/">ERROR</a>')
             );
             update_debug();
@@ -124,7 +125,7 @@ var NORLOC = NORLOC || {
         });
                 
         // Load locations
-        var ppk = $('#page').data('content-pk');
+        var ppk = $('#document').data('content-pk');
 
         UTIL.log('Fetching locations for production {0}'.format(ppk));
 

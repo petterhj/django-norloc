@@ -310,6 +310,7 @@ def locations(request, ppk):
                 locations[scene.location.pk] = {
                     'full_address': scene.location.full_address,
                     'description': scene.location.description,
+                    'url': reverse('location', args=[scene.location.county, scene.location.place_slug, scene.location.slug]),
                     'description_credit': scene.location.description_credit,
                     # 'bounds': scene.location.bounds,
                     'uncertain': False,

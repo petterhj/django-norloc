@@ -32,15 +32,15 @@ def internal_links(value):
     }
 
     try:
-        pattern = re.compile(r'{{(\S+):(\S+)}}')
+        pattern = re.compile(r'{{(\S+):(\S+):(\S+)}}')
         
-        for (view, slug) in re.findall(pattern, value):
+        for (view, production_type, slug) in re.findall(pattern, value):
             if view not in link_types_views:
                 raise Exception('invalid view name')
 
-            resolved = reverse(link_types_views[view], args=(slug,))
+            resolved = reverse(link_types_views[view], args=(production_type, slug, ))
 
-            value = value.replace('{{%s:%s}}' % (view, slug), resolved)
+            value = value.replace('{{%s:%s:%s}}' % (view, production_type, slug), resolved)
 
     except:
         logger.exception('Could not parse internal link')

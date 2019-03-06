@@ -164,7 +164,7 @@
  {% verbatim %}
  <script id="location-template" type="text/x-handlebars-template">
   <div class="location double {{#if uncertain}}uncertain{{/if}}">
-   <h2>{{full_address}}</h2>
+   <h2><a href="{{url}}">{{full_address}}</a></h2>
 
    <div class="scenes">
     {{#each scenes}}

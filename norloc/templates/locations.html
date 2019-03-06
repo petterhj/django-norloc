@@ -9,7 +9,7 @@
 {# Navigation #}
 {% block navigation %}
  {% if not filter %}
-  Opptakssteder
+  Steder
  {% else %}
   <a href="{% url 'locations' %}">Steder</a> <span class="accent">&raquo;</span> {{filter}}
  {% endif  %}
