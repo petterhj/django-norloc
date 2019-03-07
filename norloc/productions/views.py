@@ -308,12 +308,12 @@ def locations(request, ppk):
         if scene.location:
             if scene.location.pk not in locations:
                 locations[scene.location.pk] = {
+                    'pk': scene.location.pk,
                     'address': scene.location.address,
                     'full_address': scene.location.full_address,
                     'description': scene.location.description,
-                    'url': reverse('location', args=[scene.location.county, scene.location.place_slug, scene.location.slug]),
                     'description_credit': scene.location.description_credit,
-                    # 'bounds': scene.location.bounds,
+                    'url': reverse('location', args=[scene.location.county, scene.location.place_slug, scene.location.slug]),
                     'uncertain': False,
                     'scene_count': scene.shot_set.count(),
                     'photos': [{

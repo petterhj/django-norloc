@@ -171,7 +171,9 @@
      <div class="scene {{#if uncertain}}uncertain{{/if}}">
       {{#each shots}}
        <div class="shot {{shot_size double ../shot_count}}">
-        <img src="{{image}}" style="">
+        <a href="{{image}}" data-lightbox="location-{{../../pk}}" data-title="{{../../full_address}}{{#if timecode}} - {{timecode timecode}}{{/if}}">
+         <img src="{{image}}" class="shot">
+        </a>
         {{#if timecode}}<span class="timecode">{{timecode timecode}}</span>{{/if}}
        </div>
       {{/each}}

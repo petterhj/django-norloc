@@ -139,6 +139,7 @@ def productions(request, lpk):
             productions[scene.production.pk] = {
                 'title': scene.production.title_with_year,
                 'release': scene.production.release,
+                'directors': [p.name for p in scene.production.directors.all()],
                 'summary': scene.production.summary,
                 'summary_credit': scene.production.summary_credit,
                 'url': reverse('production', args=[scene.production.type, scene.production.slug]),
@@ -150,6 +151,7 @@ def productions(request, lpk):
         productions[scene.production.pk]['uncertain'] = scene.uncertain
 
         productions[scene.production.pk]['scenes'].append({
+            'pk': scene.pk,
             'description': scene.description,
             'shot_count': scene.shot_set.count(),
             'uncertain': scene.uncertain,

@@ -792,7 +792,7 @@ section#content {
 
 			p {
 				margin: 0;
-				font: 0.9rem $font-serif2; line-height: 1.7rem;
+				font: 0.8rem $font-serif2; line-height: 1.5rem;
 				color: rgba(255, 255, 255, 0.5);
 
 				.source { color: rgba(255, 255, 255, 0.1); font-size: 0.7rem; font-style: italic; }
@@ -845,8 +845,9 @@ section#content {
 					height: 100px; border-radius: 4px;
 				}
 
-				p {
+				div.summary {
 					flex: 1 1 auto; margin: 0 0 0 20px;
+					h3 { font-size: 0.6rem; margin-top: 7px; opacity: 0.3; }
 				}
 			}
 		}

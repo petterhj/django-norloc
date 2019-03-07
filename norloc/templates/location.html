@@ -75,14 +75,17 @@
 
   	<div class="details compact top">
     <img src="{{poster}}" class="poster" alt="poster">
-    <p>
-    	{{#if uncertain}}
-      <span class="accent">En eller flere scener knyttet til denne produksjonen er usikker, sannsynligvis feil!</span><br>
+    <div class="summary">
+     {{#if uncertain}}
+      <p><span class="accent">En eller flere scener knyttet til denne produksjonen er usikker, sannsynligvis feil!</span></p>
      {{/if}}
      {{#if summary}}
-      {{{summary}}}{{#if summary_credit}} <span class="source">&mdash; {{summary_credit}}</span>{{/if}}
+      <p>{{{summary}}}{{#if summary_credit}} <span class="source">&mdash; {{summary_credit}}</span>{{/if}}</p>
      {{/if}}
-    </p>
+     {{#if directors}}
+      <h3>{{join directors delimiter=", "}}</h3>
+     {{/if}}
+    </div>
    </div>
 
   	<div class="scenes">
@@ -90,7 +93,7 @@
      <div class="scene {{#if uncertain}}uncertain{{/if}}">
       {{#each shots}}
        <div class="shot {{shot_size double ../shot_count}}">
-        <img src="{{image}}" style="">
+        <a href="{{image}}" data-lightbox="location-{{../pk}}" data-title="{{../../title}}{{#if timecode}} - {{timecode timecode}}{{/if}}"><img src="{{image}}" class="shot"></a>
         {{#if timecode}}<span class="timecode">{{timecode timecode}}</span>{{/if}}
        </div>
       {{/each}}
