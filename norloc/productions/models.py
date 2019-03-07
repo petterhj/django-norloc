@@ -220,33 +220,3 @@ class Company(models.Model):
 
 
 
-'''
-
-# QuerySet: Productions
-class ProductionsQuerySet(models.QuerySet):
-    def films(self):
-        return self.filter(type='film')
-
-    def series(self):
-        return self.filter(type='show')
-
-    def production(self, slug):
-        return self.get(slug=slug)
-
-
-# Model: Production
-class Production(models.Model):
-    # Fields
-    type            = models.CharField(max_length=4, choices=(('film', 'Film'), ('show', 'Serie')))
-    
-    ...
-
-    slug            = AutoSlugField(populate_from='title', editable=True, unique=True, always_update=True)
-    
-    ...
-
-    # Manager
-    productions = ProductionsQuerySet.as_manager()
-
-
-'''

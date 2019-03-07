@@ -98,7 +98,7 @@
        </div>
       {{/each}}
       {{#if description}}
-       <p>{{description}}</p>
+       <p>{{description}}{{#if description_credit}} <span class="source">&mdash; {{description_credit}}</span>{{/if}}</p>
       {{/if}}
      </div>
     {{/each}}
@@ -106,4 +106,16 @@
   </div>
  </script>
  {% endverbatim %}
+
+ <div id="references">
+  {% for reference in location.reference_set.all %}
+   <div class="reference">
+    <h1>{{ reference.title }}</h1>
+    <p>
+     {{ reference.quote }}<br>
+     &mdash; <a href="{{ reference.source }}" target="_blank">{{ reference.display_url }}</a> ({{ reference.date }}) 
+    </p>
+   </div>
+  {% endfor %}
+ </div>
 {% endblock %}

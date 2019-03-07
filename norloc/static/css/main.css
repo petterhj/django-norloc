@@ -826,6 +826,40 @@ section#content.grid .grid-item div.details h2 {
 section#content.grid .grid-item div.details div.meta {
   margin: 0;
 }
+section#content div#references {
+  display: none;
+  margin: 100px 3vw 30px 3vw;
+}
+section#content div#references div.reference {
+  position: relative;
+  margin-bottom: 30px;
+  padding: 0 0 0 20px;
+}
+section#content div#references div.reference:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  color: #36211C;
+  font-family: "Material-Design-Iconic-Font";
+}
+section#content div#references div.reference h1 {
+  color: rgba(255, 255, 255, 0.1);
+  font-style: italic;
+}
+section#content div#references div.reference p {
+  margin-top: 0;
+  font: 0.8rem "Noto Serif", serif;
+  font-style: italic;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.1);
+}
+section#content div#references div.reference a {
+  color: rgba(255, 255, 255, 0.1);
+}
+section#content div#references div.reference a:hover {
+  color: rgba(255, 255, 255, 0.15);
+}
 @media only screen and (min-width: 576px) {
   section#content {
     padding: 5vw 7vw;

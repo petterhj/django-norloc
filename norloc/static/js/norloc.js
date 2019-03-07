@@ -146,7 +146,10 @@ var NORLOC = NORLOC || {
             });
 
             // Move add button
-            $('section#content').append($('div.location.add').show());
+            // $('section#content').append($('div.location.add').show());
+
+            // References
+            $('section#content').append($('div#references').show());
         });
     },
 
@@ -176,6 +179,9 @@ var NORLOC = NORLOC || {
                 
                 $('section#content').append(rendered.hide().fadeIn('slow'));
             });
+
+            // References
+            $('section#content').append($('div#references').show());
         });
     },
 

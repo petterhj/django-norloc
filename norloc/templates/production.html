@@ -191,13 +191,15 @@
     {{#if description}}
      <p>{{{description}}}{{#if description_credit}} <span class="source">&mdash; {{description_credit}}</span>{{/if}}</p>
     {{/if}}
-    <div class="gallery">
-     {{#each photos}}
-      <a href="{{photo}}" data-lightbox="location" data-title="{{../address}}: {{caption}}">
-       <div class="image" title="{{caption}}" style="background-image: url('{{photo}}');"></div>
-      </a>
-     {{/each}}
-    </div>
+    {{#if photos}}
+     <div class="gallery">
+      {{#each photos}}
+       <a href="{{photo}}" data-lightbox="location" data-title="{{../address}}: {{caption}}">
+        <div class="image" title="{{caption}}" style="background-image: url('{{photo}}');"></div>
+       </a>
+      {{/each}}
+     </div>
+    {{/if}}
    </div>
    
   </div>
@@ -216,6 +218,18 @@
    </script>
   {% endverbatim %}
  {% endif %}
+
+ <div id="references">
+  {% for reference in production.reference_set.all %}
+   <div class="reference">
+    <h1>{{ reference.title }}</h1>
+    <p>
+     {{ reference.quote }}<br>
+     &mdash; <a href="{{ reference.source }}" target="_blank">{{ reference.display_url }}</a> ({{ reference.date }})
+    </p>
+   </div>
+  {% endfor %}
+ </div>
 
  {% if user.is_authenticated %}
   <!--div class="location double add">
