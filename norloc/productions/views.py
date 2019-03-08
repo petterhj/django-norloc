@@ -99,9 +99,9 @@ def production(request, production_type, slug):
 
 
 # View: People
-def people(request, filter=None):
+def people(request, job_filter=None):
     # Filter
-    if not filter:
+    if not job_filter:
         people = Person.objects.annotate(
             # production_count=Count(
             #     'directors', distinct=True
@@ -119,21 +119,21 @@ def people(request, filter=None):
             )
         ).order_by('-production_count')
 
-    elif filter in ['regi', 'manus', 'foto']:
+    elif job_filter in ['regi', 'manus', 'foto']:
         # Filter by role
         people = Person.objects.annotate(
-            # production_count=Count({
-            #     'regi': 'directors',
-            #     'manus': 'writers',
-            #     'foto': 'photographers',
-            # }.get(filter), distinct=True)
-            production_count=Count(
-                'directors', distinct=True
-            ) + Count(
-                'writers', distinct=True
-            ) + Count(
-                'photographers', distinct=True
-            )
+            production_count=Count({
+                'regi': 'directors',
+                'manus': 'writers',
+                'foto': 'photographers',
+            }.get(job_filter), distinct=True)
+            # production_count=Count(
+            #     'directors', distinct=True
+            # ) + Count(
+            #     'writers', distinct=True
+            # ) + Count(
+            #     'photographers', distinct=True
+            # )
         ).filter(production_count__gt=0).order_by('-production_count')
 
     else:

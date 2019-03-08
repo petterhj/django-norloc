@@ -113,14 +113,26 @@ def location(request, county, place, slug):
 def location_details(request, lpk):
     # Location
     location = get_object_or_404(Location, pk=lpk)
+    productions = {}
+    for scene in location.scene_set.all().order_by('production__release'):
+        if scene.production.pk not in productions:
+            productions[scene.production.pk] = {
+                'title': scene.production.title_with_year,
+                'poster': scene.production.poster.url if scene.production.poster else None,
+                'directors': [p.name for p in scene.production.directors.all()],
+                'url': reverse('production', args=[scene.production.type, scene.production.slug]),
+            }
 
     # Return JSON
     return JsonResponse({
         'pk': location.pk,
+        'url': reverse('location', args=[location.county, location.place_slug, location.slug]),
         'address': location.address,
-        'municipality': location.municipality,
-        'county': location.county,
+        'place': location.place,
+        'county': location.get_county_display(),
         'description': location.description,
+        'photo': location.photo.photo.url if location.photo else None,
+        'productions': [p for p in productions.values()],
     })
 
 

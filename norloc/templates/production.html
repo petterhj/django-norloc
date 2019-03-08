@@ -194,7 +194,7 @@
     {{#if photos}}
      <div class="gallery">
       {{#each photos}}
-       <a href="{{photo}}" data-lightbox="location" data-title="{{../address}}: {{caption}}">
+       <a href="{{photo}}" data-lightbox="location-{{../pk}}" data-title="{{../address}}: {{caption}}">
         <div class="image" title="{{caption}}" style="background-image: url('{{photo}}');"></div>
        </a>
       {{/each}}
@@ -219,17 +219,19 @@
   {% endverbatim %}
  {% endif %}
 
- <div id="references">
-  {% for reference in production.reference_set.all %}
-   <div class="reference">
-    <h1>{{ reference.title }}</h1>
-    <p>
-     {{ reference.quote }}<br>
-     &mdash; <a href="{{ reference.source }}" target="_blank">{{ reference.display_url }}</a> ({{ reference.date }})
-    </p>
-   </div>
-  {% endfor %}
- </div>
+ {% if production.reference_set.count > 0 %}
+  <div id="references">
+   {% for reference in production.reference_set.all %}
+    <div class="reference">
+     <h1><a href="{{ reference.source }}" target="_blank">{{ reference.title }}</a></h1>
+     <p>
+      {{ reference.quote }}<br>
+      <span class="source">&mdash; {{ reference.display_url }} ({{ reference.date }})</span>
+     </p>
+    </div>
+   {% endfor %}
+  </div>
+ {% endif %}
 
  {% if user.is_authenticated %}
   <!--div class="location double add">

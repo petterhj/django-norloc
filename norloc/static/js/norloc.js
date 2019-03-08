@@ -24,6 +24,7 @@ var NORLOC = NORLOC || {
 
         // Clickable elements
         $('[data-href]').on('click', function() {
+            console.log('Navigating to {0}'.format($(this).data('href')));
             window.location.href = $(this).data('href');
         });
 
@@ -206,7 +207,7 @@ var NORLOC = NORLOC || {
 
 
                 ////////////////////
-                map.toggleEditMode();
+                // map.toggleEditMode();
                 ////////////////////
             });
         });

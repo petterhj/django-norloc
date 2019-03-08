@@ -595,7 +595,7 @@ section#header:empty {
 [data-view=person][data-edit=true] section#header div.geography,
 [data-view=person][data-edit=true] section#header div.companies {
   display: grid;
-  grid-template-columns: 40% 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
 }
 [data-view=production][data-edit=true] section#header div.people > .tagify, [data-view=production][data-edit=true] section#header div.geography > .tagify, [data-view=production][data-edit=true] section#header div.companies > .tagify,
@@ -664,14 +664,14 @@ section#header:empty {
 [data-view=person][data-edit=true] section#header div.companies.companies {
   margin-top: 25px;
 }
-[data-view=production][data-edit=true] section#header div.people .geography, [data-view=production][data-edit=true] section#header div.geography .geography, [data-view=production][data-edit=true] section#header div.companies .geography,
-[data-view=location][data-edit=true] section#header div.people .geography,
-[data-view=location][data-edit=true] section#header div.geography .geography,
-[data-view=location][data-edit=true] section#header div.companies .geography,
-[data-view=person][data-edit=true] section#header div.people .geography,
-[data-view=person][data-edit=true] section#header div.geography .geography,
-[data-view=person][data-edit=true] section#header div.companies .geography {
-  grid-template-columns: repeat(3, 1fr);
+[data-view=production][data-edit=true] section#header div.people.geography, [data-view=production][data-edit=true] section#header div.geography.geography, [data-view=production][data-edit=true] section#header div.companies.geography,
+[data-view=location][data-edit=true] section#header div.people.geography,
+[data-view=location][data-edit=true] section#header div.geography.geography,
+[data-view=location][data-edit=true] section#header div.companies.geography,
+[data-view=person][data-edit=true] section#header div.people.geography,
+[data-view=person][data-edit=true] section#header div.geography.geography,
+[data-view=person][data-edit=true] section#header div.companies.geography {
+  grid-template-columns: 40% 1fr 1fr;
 }
 [data-view=production][data-edit=true] section#header div.people.people > .tagify:first-of-type, [data-view=production][data-edit=true] section#header div.geography.people > .tagify:first-of-type, [data-view=production][data-edit=true] section#header div.companies.people > .tagify:first-of-type,
 [data-view=location][data-edit=true] section#header div.people.people > .tagify:first-of-type,
@@ -832,8 +832,8 @@ section#content div#references {
 }
 section#content div#references div.reference {
   position: relative;
-  margin-bottom: 30px;
-  padding: 0 0 0 20px;
+  margin-bottom: 50px;
+  padding: 0 20px;
 }
 section#content div#references div.reference:before {
   position: absolute;
@@ -847,6 +847,13 @@ section#content div#references div.reference h1 {
   color: rgba(255, 255, 255, 0.1);
   font-style: italic;
 }
+section#content div#references div.reference h1 a {
+  color: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+section#content div#references div.reference h1 a:hover {
+  color: rgba(255, 255, 255, 0.15);
+}
 section#content div#references div.reference p {
   margin-top: 0;
   font: 0.8rem "Noto Serif", serif;
@@ -854,11 +861,9 @@ section#content div#references div.reference p {
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.1);
 }
-section#content div#references div.reference a {
-  color: rgba(255, 255, 255, 0.1);
-}
-section#content div#references div.reference a:hover {
-  color: rgba(255, 255, 255, 0.15);
+section#content div#references div.reference p .source {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.075);
 }
 @media only screen and (min-width: 576px) {
   section#content {
@@ -1408,21 +1413,97 @@ div.leaflet-control-attribution > a {
   border-radius: 3px;
 }
 
-.location-details-control {
-  top: 10px;
-  left: 55px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+div.leaflet-info-wrapper {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  margin: 10px;
+  width: calc(100% - 20px);
   background-clip: padding-box;
+  border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
-
-.location-details-control > div.location {
-  width: 500px;
-  height: 147px;
+div.leaflet-info-wrapper i.zmdi-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.2rem;
+  color: #36211C;
+  opacity: 0.6;
+}
+div.leaflet-info-wrapper i.zmdi-close:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+div.leaflet-info-wrapper div.leaflet-info {
+  padding: 10px;
+  overflow: auto;
+  border-radius: 2px;
   background: #FFF;
+  font: 0.8rem "Vollkorn", serif;
+  color: #666;
+  text-align: justify;
+}
+div.leaflet-info-wrapper div.leaflet-info a {
+  text-decoration: none;
+}
+div.leaflet-info-wrapper div.leaflet-info div.photo {
+  width: 100px;
+  height: 100px;
+  float: left;
+  margin: 0 10px 10px 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 4px;
+}
+div.leaflet-info-wrapper div.leaflet-info h1 {
+  display: inline;
+  margin-right: 15px;
+  font: 1.2rem "Unica One", Helvetica, Arial, sans-serif;
+  color: #C31;
+  text-transform: uppercase;
+  text-align: left;
+}
+div.leaflet-info-wrapper div.leaflet-info h3 {
+  margin: 5px 0 10px 0;
+  font-size: 1rem;
+  color: #666;
+  text-align: left;
+}
+div.leaflet-info-wrapper div.leaflet-info div.related-objects {
+  margin-top: 15px;
+  clear: both;
+}
+div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production {
+  display: flex;
+  margin-top: 5px;
+}
+div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production img.poster {
+  flex: 0 1 auto;
+  width: 25px;
+  height: 40px;
+  margin-right: 10px;
   border-radius: 2px;
 }
-
+div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production div.title {
+  flex: 1 1 auto;
+}
+div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production div.title h2 {
+  font-size: 1rem;
+  color: #666;
+}
+div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production div.title h3 {
+  font-size: 0.7rem;
+  color: #666;
+}
+@media only screen and (min-width: 768px) {
+  div.leaflet-info-wrapper {
+    width: 500px;
+  }
+}
 .location-details-control > div.location input,
 .location-details-control > div.location textarea {
   margin: 10px;

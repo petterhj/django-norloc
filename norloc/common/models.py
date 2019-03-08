@@ -17,6 +17,11 @@ class Reference(models.Model):
     source = models.URLField(max_length=200)
 
 
+    # Metadata
+    class Meta:
+        ordering = ['date']
+
+
     # Properties
     @property
     def display_url(self):

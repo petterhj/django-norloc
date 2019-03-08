@@ -19,6 +19,37 @@
 {% block content %}
  <div id="map"></div>
 
+ <!-- Template: Location details -->
+ {% verbatim %}
+  <script id="location-details-template" type="text/x-handlebars-template">
+    <div class="leaflet-info-wrapper leaflet-control">
+     <div class="leaflet-info location">
+      <i class="zmdi zmdi-close" title="Lukk"></i>
+      {{#if photo}}
+       <div style="background-image: url('{{photo}}')" class="photo"></div>
+      {{/if}}
+      <a href="{{url}}"><h1>{{address}}</h1></a>
+      <h3>{{place}}, {{county}}</h3>
+      {{description}}
+
+      <div class="related-objects">
+       {{#each productions}}
+        <a href="{{url}}">
+         <div class="production">
+          <img src="{{poster}}" class="poster">
+          <div class="title">
+           <h2>{{title}}</h2>
+           <h3>{{join directors delimiter=", "}}</h3>
+          </div>
+         </div>
+        </a>
+       {{/each}}
+      </div>
+     </div>
+    </div>
+  </script>
+ {% endverbatim %}
+
  <!-- Template: Location details edit -->
  {% if user.is_authenticated %}
   {% verbatim %}

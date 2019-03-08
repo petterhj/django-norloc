@@ -287,13 +287,14 @@ NLMap.prototype.toggleEditMode = function() {
 
 		// Bind created event
 		this.instance.on(L.Draw.Event.CREATED, function(e) {
-			UTIL.log('Map event fired - draw:created');
-
 			var type = e.layerType;
             var layer = e.layer;
 
-            console.log(type);
+			UTIL.log('Map event fired - draw:created, type={0}'.format(type));
+
             console.log(layer);
+
+            console.log(layer.getLatLngs())
 
 
 		}.bind(this));
@@ -317,13 +318,66 @@ NLMap.prototype.toggleEditMode = function() {
 }
 
 
+// Enable map controls
+NLMap.prototype.enableMapControls = function(enable) {
+	if (enable) {
+		this.instance.dragging.enable();
+		this.instance.touchZoom.enable();
+		this.instance.doubleClickZoom.enable();
+		this.instance.scrollWheelZoom.enable();
+		this.instance.boxZoom.enable();
+		this.instance.keyboard.enable();
+		if (this.instance.tap) this.instance.tap.enable();
+	} else {
+		this.instance.dragging.disable();
+		this.instance.touchZoom.disable();
+		this.instance.doubleClickZoom.disable();
+		this.instance.scrollWheelZoom.disable();
+		this.instance.boxZoom.disable();
+		this.instance.keyboard.disable();
+		if (this.instance.tap) this.instance.tap.disable();
+		// this.instance.style.cursor = 'default';
+	}
+}
+
+
 // Event: Polygon click
 NLMap.prototype.onPolygonClick = function(event) {
 	var polygon = event.target;
 
 	if (!this.editMode) {
 		// View mode
-		UTIL.log('View polygon')
+		UTIL.log('View polygon: {0}:{1}'.format(
+			polygon.options.locationId, polygon.options.locationAddress
+		));
+
+		var nlmap = this;
+
+		nlmap.instance.on('click', function() {
+			console.log('test');
+		})
+
+		// Template
+		$.getJSON('/json/location/{0}/details'.format(polygon.options.locationId), function(location) {
+	        var source   = $('#location-details-template').html();
+	        var template = Handlebars.compile(source);
+	        var rendered = $(template(location));
+
+	        rendered.on('mouseover', function () {
+    			nlmap.enableMapControls(false);
+			});
+	        rendered.on('mouseout', function () {
+    			nlmap.enableMapControls(true);
+			});
+
+	        $('div.leaflet-info-wrapper').fadeOut(function(e) { $(this).remove(); });
+	        $('div.leaflet-control-container').append(rendered);
+
+	        rendered.find('i.zmdi-close').on('click', function(e) {
+	        	e.preventDefault();
+	        	rendered.fadeOut(function(e) { $(this).remove(); });
+	        });
+	    });
 
 	} else {
 		// Set layer editable

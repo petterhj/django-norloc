@@ -24,7 +24,7 @@ urlpatterns = [
 
     url(r'^folk/$', prd.people, name='people'),
     url(r'^folk/import/$', prd.import_person, name='import_person'),
-    url(r'^folk/(?P<filter>[\w-]+)/$', prd.people, name='filtered_people'),
+    url(r'^folk/(?P<job_filter>[\w-]+)/$', prd.people, name='filtered_people'),
     url(r'^person/(?P<slug>[\w-]+)/$', prd.person, name='person'),
     
     url(r'^kart/$', prd.map, name='map'),

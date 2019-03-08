@@ -86,6 +86,11 @@ class Location(models.Model):
     #     return self.scene_set.count()
 
     @property
+    def has_bounds(self):
+        return True if self.bounds else False
+    
+
+    @property
     def photo(self):
         photo = self.photo_set.first()
         return photo if photo and photo.photo else None

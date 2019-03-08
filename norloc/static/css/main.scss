@@ -476,7 +476,7 @@ section#header {
 
 	div.people, div.geography, div.companies {
 		display: grid;
-		grid-template-columns: 40% 1fr 1fr;
+		grid-template-columns: 1fr 1fr;
 		grid-column-gap: 10px;
 
 		> .tagify { 
@@ -506,7 +506,7 @@ section#header {
 			}
 		}
 		&.companies { margin-top: 25px; }
-		.geography { grid-template-columns: repeat(3, 1fr); }
+		&.geography { grid-template-columns: 40% 1fr 1fr; }
 		&.people > .tagify:first-of-type { grid-column: 1 / -1; }
 	}
 	div.external_ids {
@@ -621,7 +621,7 @@ section#content {
 
 		div.reference {
 			position: relative; 
-			margin-bottom: 30px; padding: 0 0 0 20px;
+			margin-bottom: 50px; padding: 0 20px;
 
 			&:before { 
 				position: absolute; top: 0; left: 0;
@@ -629,14 +629,19 @@ section#content {
 				font-family: 'Material-Design-Iconic-Font';
 			}
 
-			h1 { color: rgba(255, 255, 255, 0.1); font-style: italic; }
+			h1 { 
+				color: rgba(255, 255, 255, 0.1); font-style: italic; 
+
+				a { color: rgba(255, 255, 255, 0.1); text-decoration: none; }
+				a:hover { color: rgba(255, 255, 255, 0.15); }
+			}
 			p { 
 				margin-top: 0; 
 				font: 0.8rem $font-serif2; font-style: italic;
 				line-height: 1.7; color: rgba(255, 255, 255, 0.1); 
+
+				.source { font-size: 0.7rem; color: rgba(255, 255, 255, 0.075); }
 			}
-			a { color: rgba(255, 255, 255, 0.1); }
-			a:hover { color: rgba(255, 255, 255, 0.15); }
 		}
 	}
 
@@ -1055,17 +1060,77 @@ div.leaflet-control-attribution > a { color: rgba(0, 255, 0, 0.2); }
 	/*background: #f30e5c; border-radius: 50%; */
 }
 .mapShotMarker > img { width: 20px; height: 12px; border-radius: 3px; }
-.location-details-control {
-	top: 10px; left: 55px;
-	border: 2px solid rgba(0,0,0,0.2);
+
+
+div.leaflet-info-wrapper {
+	position: absolute; top: auto; bottom: 0; left: 0; 
+	margin: 10px; width: calc(100% - 20px);
 	background-clip: padding-box;
-	border-radius: 4px;
+	border: 2px solid rgba(0,0,0,0.2); border-radius: 4px; 
+
+	i.zmdi-close {
+		position: absolute; top: 10px; right: 10px;
+		font-size: 1.2rem; color: #36211C; opacity: 0.6;
+
+		&:hover { opacity: 1; cursor: pointer; }
+	}
+
+	div.leaflet-info {
+		padding: 10px; overflow: auto;
+		border-radius: 2px; background: #FFF;
+		font: 0.8rem $font-serif; color: #666; 
+		text-align: justify; 
+
+		a { text-decoration: none; }
+
+		div.photo {
+			width: 100px; height: 100px; float: left;
+			margin: 0 10px 10px 0;
+			background-color: rgba(0, 0, 0, 0.2); 
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			border-radius: $border-radius;
+		}
+
+		h1 {
+			display: inline; margin-right: 15px;
+			font: 1.2rem $font-sans-serif; color: $color-accent;
+			text-transform: uppercase; text-align: left;
+		}
+		h3 { 
+			margin: 5px 0 10px 0; font-size: 1rem; 
+			color: #666; text-align: left;
+		}
+
+		div.related-objects {
+			margin-top: 15px; clear: both;
+
+			div.production {
+				display: flex; margin-top: 5px; 
+
+				// &:first-of-type { margin-top: 15px; }
+
+				img.poster { 
+					flex: 0 1 auto; width: 25px; height: 40px; 
+					margin-right: 10px; border-radius: 2px; 
+				}
+				div.title {
+					flex: 1 1 auto;
+
+					h2 { font-size: 1rem; color: #666; }
+					h3 { font-size: 0.7rem; color: #666; }
+				}
+			}
+		}
+	}
+
+	@include respond-to(small-screens) {}
+    @include respond-to(medium-screens) { width: 500px; }
+    @include respond-to(large-screens) {}
+    @include respond-to(wide-screens) {}
 }
-.location-details-control > div.location {
-	width: 500px; height: 147px;
-	background: #FFF;
-	border-radius: 2px;
-}
+
 .location-details-control > div.location input,
 .location-details-control > div.location textarea { 
 	margin: 10px; background: #EFEFEF;

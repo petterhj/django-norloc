@@ -32,7 +32,6 @@
  {% if not edit_mode %}
 	 <h1>{{ location.address }}</h1>
 	 <h3>{{ location.place }}, {{ location.get_county_display }}</h3>
-	 <h4><!-- {{ location.county }} --></h4>
 	 <p>
 	  {{ location.description|markdownify }}{% if location.description_credit %} <span class="source">&mdash; {{ location.description_credit }}</span>{% endif %}
 	 </p>
@@ -107,15 +106,18 @@
  </script>
  {% endverbatim %}
 
- <div id="references">
-  {% for reference in location.reference_set.all %}
-   <div class="reference">
-    <h1>{{ reference.title }}</h1>
-    <p>
-     {{ reference.quote }}<br>
-     &mdash; <a href="{{ reference.source }}" target="_blank">{{ reference.display_url }}</a> ({{ reference.date }}) 
-    </p>
-   </div>
-  {% endfor %}
- </div>
+ {% if location.reference_set.count > 0 %}
+  <div id="references">
+   {% for reference in location.reference_set.all %}
+    <div class="reference">
+     <h1><a href="{{ reference.source }}" target="_blank">{{ reference.title }}</a></h1>
+     <p>
+      {{ reference.quote }}<br>
+      <span class="source">&mdash; {{ reference.display_url }} ({{ reference.date }})</span>
+     </p>
+    </div>
+   {% endfor %}
+  </div>
+ {% endif %}
+
 {% endblock %}
