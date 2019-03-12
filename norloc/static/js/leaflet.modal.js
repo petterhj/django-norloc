@@ -186,6 +186,8 @@ L.Map.Modal = L.Handler.extend( /** @lends {L.Map.Hadler.prototype} */ {
 
     if (options.positioned === true) {
       L.DomUtil.addClass(this._container, 'positioned');
+    } else {
+      L.DomUtil.removeClass(this._container, 'positioned');
     }
 
     L.DomEvent.disableClickPropagation(contentContainer);

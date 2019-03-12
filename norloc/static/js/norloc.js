@@ -243,14 +243,21 @@ var NORLOC = NORLOC || {
                 // map.fitBounds(map.featureGroups.locations.getBounds());
 
                 ////////////////////
-                map.toggleEditMode();
+                // map.toggleEditMode();
                 ////////////////////
             });
         });
 
-        $('i.zmdi-edit').on('click', function(e) {
+        $('section#caption a.right > i.zmdi').on('click', function(e) {
             e.preventDefault();
-            window.history.pushState({}, '', '?edit=true' );
+
+            if ($(this).hasClass('zmdi-edit')) {
+                window.history.replaceState(null, null, '?edit=true');
+                $(this).removeClass('zmdi-edit').addClass('zmdi-close');
+            } else {
+                window.history.replaceState(null, null, window.location.pathname);
+                $(this).removeClass('zmdi-close').addClass('zmdi-edit');
+            }
             map.toggleEditMode();
         });
     },
