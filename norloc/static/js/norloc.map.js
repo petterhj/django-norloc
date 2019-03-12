@@ -88,13 +88,13 @@ L.Map.NorlocMap = L.Map.extend({
 
 		L.easyButton('zmdi zmdi-gps-dot', function(btn, map) {
 	    	// Fit bounds
+	    	map.closeModal();
 			map.fitBounds(map.featureGroups.locations.getBounds());
 		}, 'Zoom til alle').addTo(this);
 
 		L.easyButton('zmdi zmdi-flare', function(btn, map) {
 			// Fly to "random" location
 			map.closeModal();
-			
 	    	let locations = map.featureGroups.locations.getLayers();
 	    	let location = locations[Math.floor(Math.random() * locations.length)];
 	    	let bounds = location.getBounds();
