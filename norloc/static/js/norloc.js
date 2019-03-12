@@ -179,10 +179,12 @@ var NORLOC = NORLOC || {
         $.getJSON('/json/locations/?bounds=true', function(result) {
             $.each(result.locations, function(i, location) {
                 // Create location polygon
-                new L.Polygon.LocationPolygon(location.bounds, {
-                    locationId: location.pk,
-                    locationAddress: location.full_address,
-                }).addTo(map.featureGroups.locations);
+                if (location.bounds.length > 3) {
+                    new L.Polygon.LocationPolygon(location.bounds, {
+                        locationId: location.pk,
+                        locationAddress: location.full_address,
+                    }).addTo(map.featureGroups.locations);
+                }
             });
 
             // Scenes

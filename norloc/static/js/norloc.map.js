@@ -91,6 +91,22 @@ L.Map.NorlocMap = L.Map.extend({
 			map.fitBounds(map.featureGroups.locations.getBounds());
 		}, 'Zoom til alle').addTo(this);
 
+		L.easyButton('zmdi zmdi-flare', function(btn, map) {
+			// Fly to "random" location
+			map.closeModal();
+			
+	    	let locations = map.featureGroups.locations.getLayers();
+	    	let location = locations[Math.floor(Math.random() * locations.length)];
+	    	let bounds = location.getBounds();
+
+	    	if (bounds.length > 0) {
+	    		map.flyToBounds(bounds, {maxZoom: 17});
+	    		map.once('moveend', function() {
+	    			location.fireEvent('click');
+				});
+	    	}
+		}, 'Vis tilfeldig').addTo(this);
+
 		// Events
 		this.on('baselayerchange', this.onBaseLayerChange);
 	},
