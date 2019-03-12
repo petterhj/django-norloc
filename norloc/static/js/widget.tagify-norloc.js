@@ -46,3 +46,12 @@ function TagInput(input, template) {
 
     return taginput;
 }
+
+$(document).ready(function(e) {
+    // Tag fields
+    if ($('#tag-template').length > 0) {
+        $('input.tagify').each(function() {
+            TagInput($(this), $('#tag-template'))
+        });
+    }
+});

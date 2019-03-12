@@ -50,6 +50,10 @@ class TagsInput(forms.TextInput):
     Partly inspired by "django-searchable-select"
     '''
 
+    class Media:
+        css = {'all': ('css/widget.tagify.css',)}
+        js = ('js/widget.tagify.js', 'js/widget.tagify-norloc.js', )
+
     # Init
     def __init__(self, *args, **kwargs):
         self.model = kwargs.pop('model')
