@@ -76,11 +76,11 @@ input, button, textarea, select {
 
 input, textarea, select, button {
   display: block;
-  margin: 15px 0;
-  padding: 15px 20px;
+  padding: 5px 10px;
   background: #FFF;
   border-radius: 4px;
   font: 1.3rem "Vollkorn", serif;
+  color: #666;
 }
 
 input::placeholder, textarea::placeholder {
@@ -390,7 +390,7 @@ section#header form div.input-icon {
 section#header form div.input-icon > input {
   width: 100%;
   margin: 0;
-  padding-right: 65px;
+  padding: 15px 65px 15px 20px;
 }
 section#header form div.input-icon > button {
   position: absolute;
@@ -520,14 +520,6 @@ section#header:empty {
 [data-view=person][data-edit=true] section#header div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before {
   background: rgba(255, 255, 255, 0.8);
   border-color: rgba(0, 0, 0, 0.75);
-}
-[data-view=production][data-edit=true] section#header input, [data-view=production][data-edit=true] section#header select,
-[data-view=location][data-edit=true] section#header input,
-[data-view=location][data-edit=true] section#header select,
-[data-view=person][data-edit=true] section#header input,
-[data-view=person][data-edit=true] section#header select {
-  padding: 5px 10px;
-  color: #666;
 }
 [data-view=production][data-edit=true] section#header input[name=title], [data-view=production][data-edit=true] section#header input[name=address], [data-view=production][data-edit=true] section#header input[name=name],
 [data-view=location][data-edit=true] section#header input[name=title],
@@ -1372,7 +1364,7 @@ div#lightbox div.lb-details {
   width: 100%;
   height: 100%;
 }
-#map input, #map button {
+#map div.leaflet-top input, #map div.leaflet-top button {
   display: initial;
   margin: initial;
   padding: initial;
@@ -1413,31 +1405,8 @@ div.leaflet-control-attribution > a {
   border-radius: 3px;
 }
 
-div.leaflet-info-wrapper {
-  position: absolute;
-  top: auto;
-  bottom: 0;
-  left: 0;
-  margin: 10px;
-  width: calc(100% - 20px);
-  background-clip: padding-box;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-}
-div.leaflet-info-wrapper i.zmdi-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.2rem;
-  color: #36211C;
-  opacity: 0.6;
-}
-div.leaflet-info-wrapper i.zmdi-close:hover {
-  opacity: 1;
-  cursor: pointer;
-}
-div.leaflet-info-wrapper div.leaflet-info {
-  padding: 10px;
+/* Leaflet modal */
+div.leaflet-modal div.modal-content div.modal-inner {
   overflow: auto;
   border-radius: 2px;
   background: #FFF;
@@ -1445,10 +1414,10 @@ div.leaflet-info-wrapper div.leaflet-info {
   color: #666;
   text-align: justify;
 }
-div.leaflet-info-wrapper div.leaflet-info a {
+div.leaflet-modal div.modal-content div.modal-inner a {
   text-decoration: none;
 }
-div.leaflet-info-wrapper div.leaflet-info div.photo {
+div.leaflet-modal div.modal-content div.modal-inner div.photo {
   width: 100px;
   height: 100px;
   float: left;
@@ -1459,7 +1428,7 @@ div.leaflet-info-wrapper div.leaflet-info div.photo {
   background-position: center center;
   border-radius: 4px;
 }
-div.leaflet-info-wrapper div.leaflet-info h1 {
+div.leaflet-modal div.modal-content div.modal-inner h1 {
   display: inline;
   margin-right: 15px;
   font: 1.2rem "Unica One", Helvetica, Arial, sans-serif;
@@ -1467,40 +1436,68 @@ div.leaflet-info-wrapper div.leaflet-info h1 {
   text-transform: uppercase;
   text-align: left;
 }
-div.leaflet-info-wrapper div.leaflet-info h3 {
+div.leaflet-modal div.modal-content div.modal-inner h3 {
   margin: 5px 0 10px 0;
   font-size: 1rem;
   color: #666;
   text-align: left;
 }
-div.leaflet-info-wrapper div.leaflet-info div.related-objects {
-  margin-top: 15px;
+div.leaflet-modal div.modal-content div.modal-inner div.related-objects {
+  margin-top: 20px;
   clear: both;
 }
-div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production {
+div.leaflet-modal div.modal-content div.modal-inner div.related-objects div.production {
   display: flex;
-  margin-top: 5px;
+  margin-top: 15px;
 }
-div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production img.poster {
+div.leaflet-modal div.modal-content div.modal-inner div.related-objects div.production img.poster {
   flex: 0 1 auto;
   width: 25px;
   height: 40px;
   margin-right: 10px;
   border-radius: 2px;
 }
-div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production div.title {
+div.leaflet-modal div.modal-content div.modal-inner div.related-objects div.production div.title {
   flex: 1 1 auto;
 }
-div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production div.title h2 {
+div.leaflet-modal div.modal-content div.modal-inner div.related-objects div.production div.title h2 {
   font-size: 1rem;
   color: #666;
 }
-div.leaflet-info-wrapper div.leaflet-info div.related-objects div.production div.title h3 {
+div.leaflet-modal div.modal-content div.modal-inner div.related-objects div.production div.title h3 {
   font-size: 0.7rem;
   color: #666;
 }
+div.leaflet-modal div.modal-content div.modal-inner div.related-objects div.gallery {
+  margin-top: 5px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 11vw;
+}
 @media only screen and (min-width: 768px) {
-  div.leaflet-info-wrapper {
+  div.leaflet-modal div.modal-content div.modal-inner div.related-objects div.gallery {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 8vw;
+  }
+}
+div.leaflet-modal div.modal-content div.modal-inner.location-select {
+  display: flex;
+}
+div.leaflet-modal div.modal-content div.modal-inner.location-select h1 {
+  flex: 1 0 auto;
+  line-height: 43px;
+}
+div.leaflet-modal div.modal-content div.modal-inner.location-select select {
+  flex: 1 1 auto;
+  width: 100%;
+  margin-right: 15px;
+}
+div.leaflet-modal div.modal-content div.modal-inner.location-select button {
+  flex: 1 1 auto;
+  padding: 5px 10px;
+  margin-right: 15px;
+}
+@media only screen and (min-width: 768px) {
+  div.leaflet-modal div.modal-content {
     width: 500px;
   }
 }

@@ -7,9 +7,10 @@ var NORLOC = NORLOC || {
     options: {
         name: 'NORLOC',
         debug: true,
-        map_style: [{featureType:"all",elementType:"labels.text.fill",stylers:[{saturation:36},{color:"#000000"},{lightness:40}]},{featureType:"all",elementType:"labels.text.stroke",stylers:[{visibility:"on"},{color:"#000000"},{lightness:16}]},{featureType:"all",elementType:"labels.icon",stylers:[{visibility:"off"}]},{featureType:"administrative",elementType:"geometry.fill",stylers:[{color:"#000000"},{lightness:20}]},{featureType:"administrative",elementType:"geometry.stroke",stylers:[{color:"#000000"},{lightness:17},{weight:1.2}]},{featureType:"landscape",elementType:"geometry",stylers:[{color:"#000000"},{lightness:20}]},{featureType:"poi",elementType:"geometry",stylers:[{color:"#000000"},{lightness:21}]},{featureType:"road.highway",elementType:"geometry.fill",stylers:[{color:"#000000"},{lightness:17}]},{featureType:"road.highway",elementType:"geometry.stroke",stylers:[{color:"#000000"},{lightness:29},{weight:.2}]},{featureType:"road.arterial",elementType:"geometry",stylers:[{color:"#000000"},{lightness:18}]},{featureType:"road.local",elementType:"geometry",stylers:[{color:"#000000"},{lightness:16}]},{featureType:"transit",elementType:"geometry",stylers:[{color:"#000000"},{lightness:19}]},{featureType:"water",elementType:"geometry",stylers:[{color:"#000000"},{lightness:17}]}],
         is_authenticated: DJANGO_USER,
     },
+
+    mapdebug: undefined,
 
     // View: Common
     common: function() {
@@ -188,31 +189,68 @@ var NORLOC = NORLOC || {
 
     // View: Map
     map: function() {
-        var map = new NLMap('map', [59.927669, 10.741541], 16);
+        // Map
+        var map = new L.Map.NorlocMap('map', {
+            center: [59.927669, 10.741541],
+            zoom: 15,
+        });
         
         // Locations
-        $.getJSON('/json/locations/', function(locations) {
-            $.each(locations, function(lpk, location) {
-                map.addLocation(lpk, location.bounds, location.full_address);
+        $.getJSON('/json/locations/?bounds=true', function(result) {
+            $.each(result.locations, function(i, location) {
+                // Create location polygon
+                new L.Polygon.LocationPolygon(location.bounds, {
+                    locationId: location.pk,
+                    locationAddress: location.full_address,
+                }).addTo(map.featureGroups.locations);
             });
 
             // Scenes
             $.getJSON('/json/scenes/', function(scenes) {
                 $.each(scenes, function(spk, scene) {
-                    map.addScene(spk, scene);
+                    // Shots
+                    var shots_coordinates = [];
+
+                    $.each(scene.shots, function(shpk, shot) {
+                        if (shot.coordinate) {
+                            // Coordinate
+                            shots_coordinates.push(shot.coordinate);
+
+                            // Marker
+                            var marker = new L.Marker.ShotMarker(shot.coordinate, {
+                                shotId: shpk,
+                                production: scene.production,
+                                icon: L.divIcon({
+                                    className: 'mapShotMarker',
+                                    html: '<img src="{0}">'.format((shot.image ? shot.image : '/static/img/bullet_blue.png'))
+                                })
+                            }).addTo(map.featureGroups.shots);
+                        }
+                    });
+
+                    // Connect shots in same scene
+                    if (shots_coordinates.length > 1) {
+                        L.polyline(shots_coordinates, {
+                            color: '#345C7C',
+                            opacity: 0.3,
+                            weight: 3,
+                            dashArray: '1 4',
+                        }).addTo(map.featureGroups.shots);
+                    }
                 });
 
                 // Fit bounds
-                map.instance.fitBounds(map.locationsGroup.getBounds());
-
+                // map.fitBounds(map.featureGroups.locations.getBounds());
 
                 ////////////////////
-                // map.toggleEditMode();
+                map.toggleEditMode();
                 ////////////////////
             });
         });
 
         $('i.zmdi-edit').on('click', function(e) {
+            e.preventDefault();
+            window.history.pushState({}, '', '?edit=true' );
             map.toggleEditMode();
         });
     },

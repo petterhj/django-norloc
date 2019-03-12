@@ -119,6 +119,28 @@ UTIL = {
         }
         return cookieValue;
     },
+
+    // Post JSON
+    post_json: function(url, data, on_success, on_fail) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: url,
+            data: JSON.stringify(data),
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader('X-CSRFToken', UTIL.getCookie('csrftoken'));
+            },
+            success: function(result) {
+                UTIL.log('JSON post success!');
+                if (on_success) on_success(result);
+            },
+            fail: function() {
+                UTIL.log('JSON post failed!');
+                if (on_fail) on_fail();
+            }
+        });
+    },
     
     // Log
     log: function(message) {

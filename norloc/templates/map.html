@@ -6,6 +6,10 @@
 {# Navigation #}
 {% block navigation %}
  Kart
+
+ {% if user.is_authenticated %}
+  <a href="?edit=true" class="right icon" title="Rediger lokasjoner"><i class="zmdi zmdi-edit"></i></a>
+ {% endif %}
 {% endblock %}
 
 
@@ -22,50 +26,54 @@
  <!-- Template: Location details -->
  {% verbatim %}
   <script id="location-details-template" type="text/x-handlebars-template">
-    <div class="leaflet-info-wrapper leaflet-control">
-     <div class="leaflet-info location">
-      <i class="zmdi zmdi-close" title="Lukk"></i>
-      {{#if photo}}
-       <div style="background-image: url('{{photo}}')" class="photo"></div>
-      {{/if}}
-      <a href="{{url}}"><h1>{{address}}</h1></a>
-      <h3>{{place}}, {{county}}</h3>
-      {{description}}
+   {{#if photo}}
+    <div style="background-image: url('{{photo}}')" class="photo"></div>
+   {{/if}}
+   <a href="{{url}}"><h1>{{address}}</h1></a>
+   <h3>{{place}}, {{county}}</h3>
+   {{description}}
 
-      <div class="related-objects">
-       {{#each productions}}
-        <a href="{{url}}">
-         <div class="production">
-          <img src="{{poster}}" class="poster">
-          <div class="title">
-           <h2>{{title}}</h2>
-           <h3>{{join directors delimiter=", "}}</h3>
-          </div>
-         </div>
+   <div class="related-objects">
+    {{#each productions}}
+     <a href="{{url}}">
+      <div class="production">
+       <img src="{{poster}}" class="poster">
+       <div class="title">
+        <h2>{{title}}</h2>
+        <h3>{{join directors delimiter=", "}}</h3>
+       </div>
+      </div>
+     </a>
+     {{#if scenes}}
+      <div class="gallery">
+       {{#each scenes}}
+        {{#each shots}}
+         <a href="{{image}}" data-lightbox="location" data-title="{{../../title}}{{#if ../description}}: {{../description}}{{/if}}">
+         <div class="image" title="" style="background-image: url('{{image}}');"></div>
         </a>
+        {{/each}}
        {{/each}}
       </div>
-     </div>
-    </div>
+     {{/if}}
+    {{/each}}
+   </div>    
   </script>
  {% endverbatim %}
 
- <!-- Template: Location details edit -->
+ 
  {% if user.is_authenticated %}
   {% verbatim %}
-  <script id="location-details-edit-template" type="text/x-handlebars-template">
-    <div class="location-details-control leaflet-control">
-     <div class="location">
-      <div class="address">
-       <input type="text" value="{{address}}" placeholder="Sted/Adresse">
-       <input type="text" value="{{municipality}}" placeholder="By/Bydel">
-       <input type="text" value="{{county}}" placeholder="Fylke">
-       <input type="button" name="save" value="Lagre">
-      </div>
-      <textarea name="description">{{description}}</textarea>
-     </div>
-    </div>
-  </script>
+   <!-- Template: Location select edit -->
+   <script id="location-select-edit-template" type="text/x-handlebars-template">
+    <h1>Sted:</h1>
+    <select name="location">
+     {{#each locations}}
+      <option value="{{pk}}" {{#if bounds}}disabled="true"{{/if}}>{{full_address}}</option>
+     {{/each}}
+    </select>
+    <button name="select_location">Velg</button>
+   </script>
+
   {% endverbatim %}
  {% endif %}
 

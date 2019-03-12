@@ -51,11 +51,13 @@ def locations(request, county=None, place=None, json=False):
     # Locations in JSON format
     if json:
         # Return JSON
-        return JsonResponse({l.pk: {
-            'full_address': l.full_address,
-            # 'bounds': [[p.latitude, p.longitude] for p in l.bounds.all()],
-            'bounds': l.bounds if l.bounds else [],
-        } for l in locations})
+        include_bounds = request.GET.get('bounds', '').lower() == 'true'
+
+        return JsonResponse({'locations': [{
+            'pk': location.pk,
+            'full_address': location.full_address,
+            'bounds': location.bounds if location.bounds else []
+        } for location in locations]})
 
     # Render template
     return render(request, 'locations.html', {
@@ -113,15 +115,31 @@ def location(request, county, place, slug):
 def location_details(request, lpk):
     # Location
     location = get_object_or_404(Location, pk=lpk)
+    
     productions = {}
+
     for scene in location.scene_set.all().order_by('production__release'):
         if scene.production.pk not in productions:
             productions[scene.production.pk] = {
+                'pk': scene.production.pk,
                 'title': scene.production.title_with_year,
                 'poster': scene.production.poster.url if scene.production.poster else None,
                 'directors': [p.name for p in scene.production.directors.all()],
                 'url': reverse('production', args=[scene.production.type, scene.production.slug]),
+                'scenes': []
             }
+
+        productions[scene.production.pk]['scenes'].append({
+            'pk': scene.pk,
+            'description': scene.description,
+            'shot_count': scene.shot_set.count(),
+            'uncertain': scene.uncertain,
+            'shots': [{
+                'image': s.image.url,
+                'timecode': s.timecode,
+                'double': s.double,
+            } for s in scene.shot_set.order_by('timecode', 'pk')]
+        })
 
     # Return JSON
     return JsonResponse({
@@ -145,8 +163,6 @@ def productions(request, lpk):
     productions = {}
 
     for scene in location.scene_set.all():
-        print scene
-
         if scene.production.pk not in productions:
             productions[scene.production.pk] = {
                 'title': scene.production.title_with_year,

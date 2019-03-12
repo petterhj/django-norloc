@@ -91,9 +91,10 @@ div#debug {
 input, button, textarea, select { border: 1px solid transparent; outline: 0; }
 input, textarea, select, button {
 	display: block;
-	margin: 15px 0; padding: 15px 20px;
+	// margin: 15px 0; 
+	padding: 5px 10px; 
 	background: #FFF; border-radius: 4px;
-	font: 1.3rem $font-serif;
+	font: 1.3rem $font-serif; color: #666;
 }
 input::placeholder, textarea::placeholder {
 	color: rgba(0, 0, 0, 0.3);
@@ -329,7 +330,7 @@ section#header {
 
 			> input {
                 width: 100%; margin: 0;
-				padding-right: 65px;
+				padding: 15px 65px 15px 20px;
 			}
 			> button { 
 				position: absolute; top: 13px; right: 25px;
@@ -452,7 +453,6 @@ section#header {
 	div.imageselect.cleared > .imageselect-buttons .imageselect-btn.clear::before {
 	}
 
-	input, select { padding: 5px 10px; color: #666; }
 	input[name="title"], input[name="address"], input[name="name"] {
 		width: 100%; margin: 0;
 		font: 1.7rem $font-sans-serif; color: $color-accent; 
@@ -1031,10 +1031,12 @@ div#lightbox {
 #map { 
 	width: 100%; height: 100%; 
 
-	input, button { 
-		display: initial; 
-		margin: initial; padding: initial;
-		font-size: initial; font-family: initial;
+	div.leaflet-top {
+		input, button { 
+			display: initial; 
+			margin: initial; padding: initial;
+			font-size: initial; font-family: initial;
+		}
 	}
 }
 
@@ -1062,73 +1064,89 @@ div.leaflet-control-attribution > a { color: rgba(0, 255, 0, 0.2); }
 .mapShotMarker > img { width: 20px; height: 12px; border-radius: 3px; }
 
 
-div.leaflet-info-wrapper {
-	position: absolute; top: auto; bottom: 0; left: 0; 
-	margin: 10px; width: calc(100% - 20px);
-	background-clip: padding-box;
-	border: 2px solid rgba(0,0,0,0.2); border-radius: 4px; 
+/* Leaflet modal */
+div.leaflet-modal {
+	div.modal-content {
+		div.modal-inner {
+			overflow: auto;
+			border-radius: 2px; background: #FFF;
+			font: 0.8rem $font-serif; color: #666; 
+			text-align: justify; 
 
-	i.zmdi-close {
-		position: absolute; top: 10px; right: 10px;
-		font-size: 1.2rem; color: #36211C; opacity: 0.6;
+			a { text-decoration: none; }
 
-		&:hover { opacity: 1; cursor: pointer; }
-	}
+			div.photo {
+				width: 100px; height: 100px; float: left;
+				margin: 0 10px 10px 0;
+				background-color: rgba(0, 0, 0, 0.2); 
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center center;
+				border-radius: $border-radius;
+			}
 
-	div.leaflet-info {
-		padding: 10px; overflow: auto;
-		border-radius: 2px; background: #FFF;
-		font: 0.8rem $font-serif; color: #666; 
-		text-align: justify; 
+			h1 {
+				display: inline; margin-right: 15px;
+				font: 1.2rem $font-sans-serif; color: $color-accent;
+				text-transform: uppercase; text-align: left;
+			}
+			h3 { 
+				margin: 5px 0 10px 0; font-size: 1rem; 
+				color: #666; text-align: left;
+			}
 
-		a { text-decoration: none; }
+			div.related-objects {
+				margin-top: 20px; clear: both;
 
-		div.photo {
-			width: 100px; height: 100px; float: left;
-			margin: 0 10px 10px 0;
-			background-color: rgba(0, 0, 0, 0.2); 
-			background-size: cover;
-			background-repeat: no-repeat;
-			background-position: center center;
-			border-radius: $border-radius;
-		}
+				div.production {
+					display: flex; margin-top: 15px; 
 
-		h1 {
-			display: inline; margin-right: 15px;
-			font: 1.2rem $font-sans-serif; color: $color-accent;
-			text-transform: uppercase; text-align: left;
-		}
-		h3 { 
-			margin: 5px 0 10px 0; font-size: 1rem; 
-			color: #666; text-align: left;
-		}
+					// &:first-of-type { margin-top: 15px; }
 
-		div.related-objects {
-			margin-top: 15px; clear: both;
+					img.poster { 
+						flex: 0 1 auto; width: 25px; height: 40px; 
+						margin-right: 10px; border-radius: 2px; 
+					}
+					div.title {
+						flex: 1 1 auto;
 
-			div.production {
-				display: flex; margin-top: 5px; 
-
-				// &:first-of-type { margin-top: 15px; }
-
-				img.poster { 
-					flex: 0 1 auto; width: 25px; height: 40px; 
-					margin-right: 10px; border-radius: 2px; 
+						h2 { font-size: 1rem; color: #666; }
+						h3 { font-size: 0.7rem; color: #666; }
+					}
 				}
-				div.title {
-					flex: 1 1 auto;
+				div.gallery { 
+					margin-top: 5px; 
+					grid-template-columns: repeat(5, 1fr);
+					grid-auto-rows: 11vw;
 
-					h2 { font-size: 1rem; color: #666; }
-					h3 { font-size: 0.7rem; color: #666; }
+					// @include respond-to(small-screens) {
+					// 	grid-template-columns: repeat(3, 1fr);
+					// 	grid-auto-rows: 18vw;
+					// }
+					@include respond-to(medium-screens) {
+						grid-template-columns: repeat(4, 1fr);
+						grid-auto-rows: 8vw;
+					}
+					@include respond-to(large-screens) {}
+					@include respond-to(wide-screens) {
+					}
 				}
 			}
-		}
-	}
 
-	@include respond-to(small-screens) {}
-    @include respond-to(medium-screens) { width: 500px; }
-    @include respond-to(large-screens) {}
-    @include respond-to(wide-screens) {}
+			&.location-select {
+				display: flex;
+				
+				h1 { flex: 1 0 auto; line-height: 43px; }
+				select { flex: 1 1 auto; width: 100%; margin-right: 15px; }
+				button { flex: 1 1 auto; padding: 5px 10px; margin-right: 15px; }
+			}
+		}
+		
+		@include respond-to(small-screens) {}
+	    @include respond-to(medium-screens) { width: 500px; }
+	    @include respond-to(large-screens) {}
+	    @include respond-to(wide-screens) {}
+	}
 }
 
 .location-details-control > div.location input,

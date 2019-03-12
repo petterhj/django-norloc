@@ -1,436 +1,454 @@
 /*  NORLOC MAP
   ================================================================================== */
 
-var LocationPolygon = L.Polygon.extend({
-	options: {
-		locationId: 0,
-		locationAddress: '',
-	}
-});
-
-
-// Norloc map
-function NLMap(container, center, zoom) {
-	UTIL.log('Initializing map');
-
-	// Properties
-	this.container = container;
-	this.center = center;
-	this.zoom = zoom;
-
-	this.styles = {
-		DEFAULT: {
-			color: '#db3b61',
-			weight: 2,
-			opacity: 0.8,
-			fillOpacity: 0.2,
-		},
-		SATELLITE: {
-			color: 'red',
-			weight: 3,
-			opacity: 0.8,
-			fillOpacity: 0,
-		},
-		EDITABLE: {
-			color: '#f87d42',
-			weight: 2,
-			opacity: 0.3,
-			fillOpacity: 0.1,
-		},
-		SELECTED: {
-			color: '#be3737',
-			weight: 2,
-			opacity: 0.3,
-			fillOpacity: 0.1,
-		}
-	}
-
-	// Tile layers
-	var nldark = L.tileLayer('https://api.mapbox.com/styles/v1/slekvak/cjly2r5d14zbm2rlxq8elklvk/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+var mapTileLayers = {
+	nldark: L.tileLayer('https://api.mapbox.com/styles/v1/slekvak/cjly2r5d14zbm2rlxq8elklvk/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 		id: 'mapbox.dark',
+		name: 'Standard',
 		accessToken: 'pk.eyJ1Ijoic2xla3ZhayIsImEiOiJjaXE4azdndnQwMDQ4aHhrcWZpM25rcDMxIn0.5ObHw68HeWzfLprlb5M5HA',
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		maxZoom: 19,
 		tileSize: 512,
 		zoomOffset: -1,
-	});
-
-	var mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+	}),
+	mapbox: L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 		id: 'streets-v9',
+		name: 'Mapbox',
 		accessToken: 'pk.eyJ1Ijoic2xla3ZhayIsImEiOiJjaXE4azdndnQwMDQ4aHhrcWZpM25rcDMxIn0.5ObHw68HeWzfLprlb5M5HA',
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		maxZoom: 19,
 		tileSize: 512,
 		zoomOffset: -1,
-	});
-
-	var mapbox_outdoors = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+	}),
+	mapbox_outdoors: L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 		id: 'outdoors-v9',
+		name: 'Mapbox (Outdoors)',
 		accessToken: 'pk.eyJ1Ijoic2xla3ZhayIsImEiOiJjaXE4azdndnQwMDQ4aHhrcWZpM25rcDMxIn0.5ObHw68HeWzfLprlb5M5HA',
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		maxZoom: 19,
 		tileSize: 512,
 		zoomOffset: -1,
-	});
-
-	var satellite = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+	}),
+	satellite: L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 		id: 'satellite-streets-v9',
+		name: 'Satellitt',
 		accessToken: 'pk.eyJ1Ijoic2xla3ZhayIsImEiOiJjaXE4azdndnQwMDQ4aHhrcWZpM25rcDMxIn0.5ObHw68HeWzfLprlb5M5HA',
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 	    maxZoom: 18,
 	    tileSize: 512,
 		zoomOffset: -1,
-	});
-
-	var norgeskart = L.tileLayer('http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}', {
+	}),
+	norgeskart: L.tileLayer('http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}', {
+		name: 'Norgeskart',
 		attribution: '<a href="http://www.kartverket.no/">Kartverket</a>'
-	});
+	})
+};
 
-	// Map
-	this.instance = L.map(this.container, {
-		center: this.center,
-		zoom: this.zoom,
-		layers: [nldark]
-	});
 
-	// Locations
-	this.locationsGroup = L.featureGroup().addTo(this.instance);
-	this.scenesGroup = L.featureGroup().addTo(this.instance);
+// NorlocMap
+L.Map.NorlocMap = L.Map.extend({
+	// Options
+	default_options: {
+		layers: [mapTileLayers.nldark],
+		editMode: false
+	},
 
-	// Control
-	L.control.layers({
-	    'Standard': nldark,
-	    'Satellitt': satellite,
-	    'Norgeskart': norgeskart,
-	    'Mapbox': mapbox,
-	    'Mapbox (Outdoors)': mapbox_outdoors,
-	}, {
-	    'Lokasjoner': this.locationsGroup,
-	    'Scener': this.scenesGroup,
-	}).addTo(this.instance);
+	// Feature groups
+	featureGroups: {
+		locations: L.featureGroup(),
+		shots: L.featureGroup(),
+	},
 
-	L.easyButton('zmdi zmdi-gps-dot', function(btn, map) {
-    	// Fit bounds
-		map.fitBounds(this.locationsGroup.getBounds());
-	}.bind(this), 'Zoom til alle').addTo(this.instance);
+	// Initialize
+	initialize: function (id, options) {
+		// Super
+		L.Util.setOptions(this, this.default_options);
+		L.Map.prototype.initialize.call(this, id, options);
 
-	// Tile layer change
-	this.instance.on('baselayerchange', function(e) {
-		if (e.name === 'Satellitt') {
-			this.locationsGroup.setStyle(this.styles.SATELLITE);
-		} else {
-			this.locationsGroup.setStyle(this.styles.DEFAULT);
+		UTIL.log('Initializing map, center={0}, zoom={1}, edit={2}'.format(
+			this.options.center, this.options.zoom, this.options.editMode
+		));
+
+		// Add feature groups
+		for (var group in this.featureGroups) { 
+    		this.featureGroups[group].addTo(this);
 		}
-	}.bind(this));
 
-	// Editor
-	this.editMode = false;
-	this.drawControl = undefined;
-	this.editableGroup = undefined;
-	this.selectedEditable = undefined;
-}
+		// Controls
+		L.control.layers({
+		    'Standard': mapTileLayers.nldark,
+		    'Satellitt': mapTileLayers.satellite,
+		    'Norgeskart': mapTileLayers.norgeskart,
+		    'Mapbox': mapTileLayers.mapbox,
+		    'Mapbox (Outdoors)': mapTileLayers.mapbox_outdoors,
+		}, {
+		    'Lokasjoner': this.featureGroups.locations,
+		    'Scener': this.featureGroups.shots,
+		}).addTo(this);
 
-// Add location
-NLMap.prototype.addLocation = function(id, bounds, label) {
-	// Check bounds size
-	if (bounds.length < 3) {
-		UTIL.log('Ignoring location {0}:{1}, too few points defined'.format(id, label));
-		return;
-	}
+		L.easyButton('zmdi zmdi-gps-dot', function(btn, map) {
+	    	// Fit bounds
+			map.fitBounds(map.featureGroups.locations.getBounds());
+		}, 'Zoom til alle').addTo(this);
 
-	UTIL.log('Adding location {0}:{1} ({2} points)'.format(id, label, bounds.length));
+		// Events
+		this.on('baselayerchange', this.onBaseLayerChange);
+	},
 
-	// Create location polygon
-	var polygon = new LocationPolygon(bounds, {
-		locationId: id,
-		locationAddress: label,
-	});
+	// Toggle edit mode
+	toggleEditMode: function() {
+		UTIL.log('Toggling map edit mode, enabled={0}'.format(this.options.editMode));
 
-	polygon.setStyle(this.styles.DEFAULT);
+		if (!this.options.editMode) {
+			this.options.editMode = true;
+			this.featureGroups.editableGroup = L.featureGroup();
+			this.featureGroups.editableGroup.addTo(this);
 
-	if (label) {
-		polygon.bindTooltip(label);
+			// Edit controls
+			L.Browser.touch = false;
+			L.EditToolbar.Delete.include({
+				removeAllLayers: false
+			});
+
+			this.drawControl = new L.Control.Draw({
+				edit: {
+					featureGroup: this.featureGroups.editableGroup,
+					poly: { allowIntersection: false }
+				},
+				draw: {
+					marker: true,
+					circle: false,
+					circlemarker: false,
+					polyline: false,
+					rectangle: false,
+					polygon: {
+						allowIntersection: false,
+						showArea: true,
+						shapeOptions: { weight: 3 }
+					},
+				}
+			});
+
+			// Add draw control to map instance
+			this.addControl(this.drawControl);
+
+			// Events
+			this.on('draw:edited', this.onDrawEdited);
+			this.on(L.Draw.Event.CREATED, this.onDrawCreated);
+			this.on('draw:deleted', this.onDrawDeleted);
+			this.on('draw:editstop', this.onDrawStopped);
+		} 
+		else {
+			this.options.editMode = false;
+
+			// Trigger cancel (hack..)
+			$('a.leaflet-draw-edit-edit')[0].click()
+
+			var editToolbarButtons = $('.leaflet-draw-actions').find('a');
+			
+			if (editToolbarButtons.length >= 2) {
+				editToolbarButtons[1].click();
+			}
+
+			// Remove edit controls
+			if (this.drawControl)
+				this.removeControl(this.drawControl);
+
+			// Unbind events
+			this.off(L.Draw.Event.CREATED);
+			this.off('draw:edited');
+			this.off('draw:editstop');
+		}
+	},
+
+	// Event: Base layer change
+	onBaseLayerChange: function(event) {
+		UTIL.log('map:baselayerchange - name={0}'.format(
+			event.layer.options.name
+		));
+
+		// 	if (e.name === 'Satellitt') {
+		// 		this.locationsGroup.setStyle(this.styles.SATELLITE);
+		// 	} else {
+		// 		this.locationsGroup.setStyle(this.styles.DEFAULT);
+		// 	}
+	},
+
+	// Event: Draw created
+	onDrawCreated: function(event) {
+		UTIL.log('map:draw_created - type={0}'.format(event.layerType));
+
+	    var created_layer = event.layer;
+	    
+	    created_layer.addTo(this.featureGroups.locations);
+
+		// Type: Location polygon
+	    if (event.layerType === 'polygon') {
+	    	// Get bounds of created polygon
+	    	var created_bounds = created_layer.getLatLngs()[0];
+
+	    	UTIL.log('Creating location polygon, points={0}'.format(
+	    		created_bounds.length
+	    	));
+
+			// Show location select modal
+			var map = this;
+			var source = $('#location-select-edit-template').html();
+		    var template = Handlebars.compile(source);
+
+	    	map.fire('modal', {
+				content: 'Laster inn...',
+				closeTitle: 'Lukk',
+				INNER_CONTENT_CLS: 'modal-inner location-select',
+
+				onShow: function(evt) { 
+					// Get location details
+					$.getJSON('/json/locations/', function(result) {
+						// Set modal content
+						var rendered = template(result);
+						evt.modal.setContent(rendered);
+						var content = $(evt.modal.getContentContainer());
+
+						content.find('button[name="select_location"]').on('click', function(e) {
+							// Close modal
+							map.closeModal();
+
+							// Create location polygon
+							var locationId = content.find('select[name="location"]').val();
+							var locationAddress = content.find('select[name="location"] option:selected').text();
+
+			                var polygon = new L.Polygon.LocationPolygon(created_bounds, {
+			                    locationId: locationId,
+			                    locationAddress: locationAddress,
+			                }).addTo(map.featureGroups.locations);
+
+							polygon.updateBounds(polygon.getBounds());
+						});
+					});
+				},
+
+				onHide: function(evt) {
+					// Remove initially created layer
+					created_layer.remove();
+				},
+			});
+	    }
+	},
+
+	// Event: Draw edited
+	onDrawEdited: function(event) {
+		UTIL.log('map:draw_edited');
+
+		// Update layers
+		event.layers.eachLayer(function(layer) {
+			layer.updateBounds(layer.getLatLngs()[0]);
+		});
+	},
+
+	// Event: Draw deleted
+	onDrawDeleted: function(event) {
+		UTIL.log('map:draw_deleted');
+
+		// // Delete polygons
+		// event.layers.eachLayer(function(layer) {
+		// 	console.log(layer);
+		// 	console.log(layer.getBounds())
+		// 	layer.updateBounds([]);
+		// });
+	},
+
+	// Event: Draw stopped
+	onDrawStopped: function(event) {
+		UTIL.log('map:draw_stopped');
+
+		// Set all layers not editable
+		this.featureGroups.editableGroup.eachLayer(function(layer) {
+			layer.setEditable(false);
+		});
+	},
+});
+
+
+
+// LocationPolygon
+L.Polygon.LocationPolygon = L.Polygon.extend({
+	// Options
+	default_options: {
+		locationId: 0,
+		locationAddress: '',
+		editable: false,
+	},
+
+	// Initialize
+	initialize: function(latlngs, options) {
+		// Super
+		L.Util.setOptions(this, this.default_options);
+		L.Polygon.prototype.initialize.call(this, latlngs, options);
+
+		// Default style
+		this.setStyle({
+			color: '#db3b61',
+			weight: 2,
+			opacity: 0.8,
+			fillOpacity: 0.2,
+		});
+
+		// Events
+		this.on('click', this.onClick);
+
+		// Tooltip
+		this.setTooltip(this.options.locationAddress);
+	},
+
+	// Set tooltip
+	setTooltip: function(label) {
+		if (!label)
+			return;
+
+		this.bindTooltip(label);
 		/*polygon.bindTooltip(label,  {
 			permanent: true, className: "my-label", offset: [0, 0] 
 		});*/
-	}
+	},
 
-	polygon.on('click', this.onPolygonClick.bind(this));
+	// Set editable
+	setEditable: function(editable) {
+		if (editable && this._map.options.editMode) {
+			this.options.editable = true;
 
-	polygon.addTo(this.locationsGroup);
-}
+			// Add to editable layers 
+			var editablePolygon = this;
+			var layer_groups = this._map.featureGroups;
 
-
-// Add scene
-NLMap.prototype.addScene = function(id, scene) {
-	UTIL.log('Adding scene {0}'.format(id));
-
-	// Add scene shots as markers
-	var shots_coordinates = [];
-
-	$.each(scene.shots, function(shpk, shot) {
-        if (shot.coordinate) {
-        	// Coordinate
-        	shots_coordinates.push(shot.coordinate);
-
-        	// Marker
-			var marker = L.marker(shot.coordinate, {icon: L.divIcon({
-				className: 'mapShotMarker',
-				html: '<img src="{0}">'.format((shot.image ? shot.image : '/static/img/bullet_blue.png'))
-			})});
-
-			marker.addTo(this.scenesGroup);
-			marker.bindPopup(scene.production);
-        }
-    }.bind(this));
-
-	// Connect shots in same scene
-	if (shots_coordinates.length > 1) {
-    	var polyline = L.polyline(shots_coordinates, {
-    		color: '#345C7C',
-    		opacity: 0.3,
-    		weight: 3,
-    		dashArray: '1 4',
-    	});
-
-    	polyline.addTo(this.scenesGroup);
-    }
-}
-
-
-// Toggle edit mode
-NLMap.prototype.toggleEditMode = function() {
-	if (!this.editMode) {
-		UTIL.log('Enabling map edit mode');
-
-		// Feature group
-		this.editableGroup = L.featureGroup().addTo(this.instance);
-
-
-		// Edit controls
-		L.Browser.touch = false;
-		L.EditToolbar.Delete.include({
-			removeAllLayers: false
-		});
-
-		this.drawControl = new L.Control.Draw({
-			edit: {
-				featureGroup: this.editableGroup,
-				poly: {
-					allowIntersection: false
-				}
-			},
-			draw: {
-				marker: false,
-				circle: false,
-				circlemarker: false,
-				polyline: false,
-				rectangle: false,
-				polygon: {
-					allowIntersection: false,
-					showArea: true,
-					shapeOptions: {
-						weight: 2,
-					},
-				},
-			}
-		});
-
-		// Add draw control to map instance
-		this.instance.addControl(this.drawControl);
-
-		// Mark polygons editable
-		this.locationsGroup.setStyle(this.styles.EDITABLE);
-
-		// Bind edited event
-		this.instance.on('draw:edited', function (e) {
-			UTIL.log('Map event fired - draw:edited');
-
-			// Check if any edited layers
-			var layers = e.layers.getLayers();
-
-			if (layers.length == 0) {
-				UTIL.log('No changed layers')
-				return;
-			}
+			layer_groups.locations.removeLayer(this);
 			
-			// Update polygon
-			var polygon = layers[0];
-			// layers.eachLayer(function(layer) {});
-
-			UTIL.log('Updating location {0} ({1} points)'.format(
-				polygon.options.locationId, polygon.getLatLngs()[0].length
-			));
-
-			$.ajaxSetup({beforeSend: function(xhr, settings) {
-				xhr.setRequestHeader('X-CSRFToken', UTIL.getCookie('csrftoken'));
-			}});
-
-			$.ajax({
-				type: 'POST',
-				dataType: 'json',
-				contentType: 'application/json; charset=utf-8',
-				url: '/json/location/{0}/bounds/update'.format(polygon.options.locationId),
-				data: JSON.stringify(polygon.getLatLngs()[0]),
-				success: function(result) {
-					console.log(result);
-				},
-				fail: function() {
-					console.log('FAIL')
-				}
+			editablePolygon.setStyle({
+				color: '#03a9f4',
+				weight: 2,
+				opacity: 0.3,
+				fillOpacity: 0.1,
 			});
 
-			// Remove all editable layers
-			// console.log(this.editableGroup);
-			// this.editableGroup.clearLayers();
-		}.bind(this));
+			editablePolygon.addTo(layer_groups.editableGroup);
+		}
+		else {
+			this.options.editable = false;
 
-		// Bind created event
-		this.instance.on(L.Draw.Event.CREATED, function(e) {
-			var type = e.layerType;
-            var layer = e.layer;
+			// Move to locations layer
+			var edited_polygon = this;
+			var layer_groups = this._map.featureGroups;
 
-			UTIL.log('Map event fired - draw:created, type={0}'.format(type));
+			layer_groups.editableGroup.removeLayer(this);
 
-            console.log(layer);
+			edited_polygon.setStyle({
+				color: '#db3b61',
+				weight: 2,
+				opacity: 0.8,
+				fillOpacity: 0.2,
+			});
 
-            console.log(layer.getLatLngs())
+			edited_polygon.addTo(layer_groups.locations);
+		}
+	},
 
+	// Get bounds
+	getBounds: function() {
+		return this.getLatLngs()[0];
+	},
 
-		}.bind(this));
+	// Update location bounds
+	updateBounds: function(bounds) {
+		if (this.options.locationId == 0) {
+			UTIL.log('Ignored polygon, invalid location id'.format(
+				this.options.locationId
+			));
+			return;
+		}
 
-		// Bind edit stop event
-		this.instance.on('draw:editstop', function (e) {
-			UTIL.log('Map event fired - draw:editstop');
+		if (!bounds || bounds.length < 3) {
+			UTIL.log('Polygon update failed, undefined or invalid bounds ({0} points)'.format(
+				bounds.length
+			));
+			return;	
+		}
 
-
-		}.bind(this));
-
-		
-
-		this.editMode = true;
-
-	} else {
-		UTIL.log('Disabling map edit mode');
-
-		this.editMode = false;
-	}
-}
-
-
-// Enable map controls
-NLMap.prototype.enableMapControls = function(enable) {
-	if (enable) {
-		this.instance.dragging.enable();
-		this.instance.touchZoom.enable();
-		this.instance.doubleClickZoom.enable();
-		this.instance.scrollWheelZoom.enable();
-		this.instance.boxZoom.enable();
-		this.instance.keyboard.enable();
-		if (this.instance.tap) this.instance.tap.enable();
-	} else {
-		this.instance.dragging.disable();
-		this.instance.touchZoom.disable();
-		this.instance.doubleClickZoom.disable();
-		this.instance.scrollWheelZoom.disable();
-		this.instance.boxZoom.disable();
-		this.instance.keyboard.disable();
-		if (this.instance.tap) this.instance.tap.disable();
-		// this.instance.style.cursor = 'default';
-	}
-}
-
-
-// Event: Polygon click
-NLMap.prototype.onPolygonClick = function(event) {
-	var polygon = event.target;
-
-	if (!this.editMode) {
-		// View mode
-		UTIL.log('View polygon: {0}:{1}'.format(
-			polygon.options.locationId, polygon.options.locationAddress
+		UTIL.log('Saving location bounds {0} ({1} points)'.format(
+			this.options.locationId, bounds.length
 		));
 
-		var nlmap = this;
+		console.log(bounds);
+		
+		UTIL.post_json('/json/location/{0}/bounds/update'.format(this.options.locationId), bounds);
+	},
 
-		nlmap.instance.on('click', function() {
-			console.log('test');
-		})
+	// Event: Click
+	onClick: function(event) {
+		if (this._map.options.editMode) {
+			// Toggle editable
+			this.setEditable(!this.options.editable);
+		} 
+		else {
+			// Show location modal
+			var layer = this;
+			var source = $('#location-details-template').html();
+		    var template = Handlebars.compile(source);
 
-		// Template
-		$.getJSON('/json/location/{0}/details'.format(polygon.options.locationId), function(location) {
-	        var source   = $('#location-details-template').html();
-	        var template = Handlebars.compile(source);
-	        var rendered = $(template(location));
+	    	this._map.fire('modal', {
+				content: 'Laster inn...',
+				closeTitle: 'Lukk',
+				positioned: true,
 
-	        rendered.on('mouseover', function () {
-    			nlmap.enableMapControls(false);
+				onShow: function(evt) { 
+					// Get location details
+					$.getJSON('/json/location/{0}/details'.format(layer.options.locationId), function(location) {
+						// Set modal content
+						evt.modal.setContent(template(location));
+					});
+				},
 			});
-	        rendered.on('mouseout', function () {
-    			nlmap.enableMapControls(true);
-			});
-
-	        $('div.leaflet-info-wrapper').fadeOut(function(e) { $(this).remove(); });
-	        $('div.leaflet-control-container').append(rendered);
-
-	        rendered.find('i.zmdi-close').on('click', function(e) {
-	        	e.preventDefault();
-	        	rendered.fadeOut(function(e) { $(this).remove(); });
-	        });
-	    });
-
-	} else {
-		// Set layer editable
-		if (!this.selectedEditable) {
-			UTIL.log('Edit polygon: {0}:{1}'.format(
-				polygon.options.locationId, polygon.options.locationAddress
-			));
-
-			// Display location details
-			var map = this.instance;
-
-			$.getJSON('/json/location/{0}/details'.format(polygon.options.locationId), function(location) {
-				// Template
-		        var source   = $('#location-details-edit-template').html();
-		        var template = Handlebars.compile(source);
-		        var rendered = $(template(location));
-
-		        rendered.on('mouseover', function () {
-        			map.dragging.disable();
-        			map.doubleClickZoom.disable();
-        			map.scrollWheelZoom.disable();
-        			map.boxZoom.disable();
-    			});
-		        rendered.on('mouseout', function () {
-        			map.dragging.enable();
-        			map.doubleClickZoom.enable();
-        			map.scrollWheelZoom.enable();
-        			map.boxZoom.enable();
-    			});
-
-                // Add location details control
-                $('div.leaflet-control-container').append(rendered);
-
-                // Save
-                rendered.find('input[name="save"]').click(function() {
-                	console.log('SAVE!');
-                });
-            });
-
-			// Add to editable items 
-			this.editableGroup.addLayer(polygon);
-
-			// console.log(polygon.editable);
-
-			// Mark as selected
-			polygon.setStyle(this.styles.SELECTED);
-
-			this.selectedEditable = polygon;
-
-			$('a.leaflet-draw-edit-edit').trigger('click');
-
-		} else {
-			console.log('Another layer currently beeing editable')
 		}
-	}
-}
+
+		UTIL.log('map:location_polygon:click - id={0}, editable={1}'.format(
+			this.options.locationId, this.options.editable
+		));
+	},
+});
+
+
+// ShotMarker
+L.Marker.ShotMarker = L.Marker.extend({
+	// Options
+	default_options: {
+		shotId: 0,
+		production: '',
+		editable: false,
+	},
+
+	// Initialize
+	initialize: function(latlng, options) {
+		// Super
+		L.Util.setOptions(this, this.default_options);
+		L.Marker.prototype.initialize.call(this, latlng, options);
+
+		// Events
+		this.on('click', this.onClick);
+
+		// Tooltip
+		this.setTooltip(this.options.production);
+	},
+
+	// Set tooltip
+	setTooltip: function(label) {
+		if (!label)
+			return;
+
+		this.bindTooltip(label);
+	},
+
+	// Clicked
+	onClick: function(event) {
+		UTIL.log('map:shot_marker:click - id={0}, editable={1}'.format(
+			this.options.shotId, this.options.editable
+		));
+	},
+});
