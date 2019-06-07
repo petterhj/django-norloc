@@ -23,7 +23,7 @@ class Reference(models.Model):
 
     # Metadata
     class Meta:
-        ordering = ['date']
+        ordering = ['-date']
 
 
     # Properties
