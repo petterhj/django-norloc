@@ -63,7 +63,7 @@ class TagsInput(forms.TextInput):
 
 
     # Render
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         # Model
         model = apps.get_model(self.model)
 
