@@ -577,11 +577,12 @@ section#content {
 		grid-auto-rows: 1fr;
 
 		.grid-item {
-			display: flex; flex-flow: column;
+			display: flex; flex-flow: row;
 			width: 100%; height: 100%; overflow: hidden; 
 			background: transparent; border-radius: $border-radius;
 			border: 2px solid #181818;
 
+			&:not(.production) { flex-flow: column; }
 			&.faded { opacity: 0.2; }
 			&:hover { border: 2px solid #9E9E9E; }
 
