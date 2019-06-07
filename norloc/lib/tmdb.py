@@ -27,7 +27,7 @@ class TMDb(object):
         tmdb_search = tmdb.Search()
         results = []
 
-        for production_type, method in {'film': tmdb_search.movie, 'tv': tmdb_search.tv}.iteritems():
+        for production_type, method in {'film': tmdb_search.movie, 'tv': tmdb_search.tv}.items():
             logging.info('> Searching type %s' % (production_type))
 
             for production in method(query=title, language=self.language).get('results')[0:limit]:
