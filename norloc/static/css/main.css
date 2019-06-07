@@ -1393,13 +1393,13 @@ div.leaflet-control-attribution > a {
   color: rgba(0, 255, 0, 0.2);
 }
 
-.mapShotMarker {
+.leaflet-shotmarker {
   width: auto !important;
   height: auto !important;
   /*background: #f30e5c; border-radius: 50%; */
 }
 
-.mapShotMarker > img {
+.leaflet-shotmarker > img {
   width: 20px;
   height: 12px;
   border-radius: 3px;
@@ -1479,19 +1479,19 @@ div.leaflet-modal div.modal-content div.modal-inner div.related-objects div.gall
     grid-auto-rows: 8vw;
   }
 }
-div.leaflet-modal div.modal-content div.modal-inner.location-select {
+div.leaflet-modal div.modal-content div.modal-inner.object-select {
   display: flex;
 }
-div.leaflet-modal div.modal-content div.modal-inner.location-select h1 {
+div.leaflet-modal div.modal-content div.modal-inner.object-select h1 {
   flex: 1 0 auto;
   line-height: 43px;
 }
-div.leaflet-modal div.modal-content div.modal-inner.location-select select {
+div.leaflet-modal div.modal-content div.modal-inner.object-select select {
   flex: 1 1 auto;
   width: 100%;
   margin-right: 15px;
 }
-div.leaflet-modal div.modal-content div.modal-inner.location-select button {
+div.leaflet-modal div.modal-content div.modal-inner.object-select button {
   flex: 1 1 auto;
   padding: 5px 10px;
   margin-right: 15px;

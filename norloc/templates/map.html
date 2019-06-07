@@ -73,7 +73,16 @@
     </select>
     <button name="select_location">Velg</button>
    </script>
-
+   <!-- Template: Shot select edit -->
+   <script id="shot-select-edit-template" type="text/x-handlebars-template">
+    <h1>Shot:</h1>
+    <select name="shot">
+     {{#each shots}}
+      <option value="{{pk}}" data-url="{{image}}" {{#if coordinate}}disabled="true"{{/if}}>{{production}}</option>
+     {{/each}}
+    </select>
+    <button name="select_shot">Velg</button>
+   </script>
   {% endverbatim %}
  {% endif %}
 

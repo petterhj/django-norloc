@@ -1,6 +1,11 @@
-*.pyc
-settings.py
-db.*
-*.sqlite*
+__pycache__
+captures/
+locations/
+prototypes/
+screenshots/
 media/
 migrations/
+settings.py
+*.pyc
+db.*
+*.sqlite*

@@ -344,18 +344,25 @@ def locations(request, ppk):
 # JSON: Shots
 def shots(request):
     # Return all shots with valid coordinate
-    shots = {}
+    shots = []
+
+    include_unmapped = request.GET.get('unmapped', '').lower() == 'true'
 
     for shot in Shot.objects.all():
-        if shot.longitude and shot.latitude:
-            shots[shot.pk] = {
-                'coordinate': {'lat': shot.latitude, 'lng': shot.longitude},
-                'image': shot.image.url if shot.image else None,
-                'production': shot.scene.production.title,
-            }
+        is_mapped = shot.longitude and shot.latitude
+
+        if not is_mapped and not include_unmapped:
+            continue
+        
+        shots.append({
+            'pk': shot.pk,
+            'coordinate': {'lat': shot.latitude, 'lng': shot.longitude} if is_mapped else None,
+            'image': shot.image.url if shot.image else None,
+            'production': shot.scene.production.title,
+        })
             
     # Return JSON
-    return JsonResponse(shots)
+    return JsonResponse({'shots': shots})
 
 
 # JSON: Scenes

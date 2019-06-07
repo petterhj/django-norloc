@@ -1,6 +1,8 @@
 django
 django-autoslug
 django-jsonfield
+django-markdownify
 django-uuid-upload-path
+django-imagekit
 Pillow
 tmdbsimple

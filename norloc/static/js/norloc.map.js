@@ -215,7 +215,7 @@ L.Map.NorlocMap = L.Map.extend({
 	    	map.fire('modal', {
 				content: 'Laster inn...',
 				closeTitle: 'Lukk',
-				INNER_CONTENT_CLS: 'modal-inner location-select',
+				INNER_CONTENT_CLS: 'modal-inner object-select',
 
 				onShow: function(evt) { 
 					// Get location details
@@ -239,6 +239,60 @@ L.Map.NorlocMap = L.Map.extend({
 			                }).addTo(map.featureGroups.locations);
 
 							polygon.updateBounds(polygon.getBounds());
+						});
+					});
+				},
+
+				onHide: function(evt) {
+					// Remove initially created layer
+					created_layer.remove();
+				},
+			});
+	    }
+
+	    // Type: Shot marker
+	    if (event.layerType === 'marker') {
+	    	// Get coordinate of created polygon
+	    	var created_coordinate = created_layer.getLatLng();
+
+	    	UTIL.log('Creating shot marker, point={0}'.format(
+	    		created_coordinate
+	    	));
+
+			// Show shot select modal
+			var map = this;
+			var source = $('#shot-select-edit-template').html();
+		    var template = Handlebars.compile(source);
+
+	    	map.fire('modal', {
+				content: 'Laster inn...',
+				closeTitle: 'Lukk',
+				INNER_CONTENT_CLS: 'modal-inner object-select',
+
+				onShow: function(evt) { 
+					// Get location details
+					$.getJSON('/json/shots/?unmapped=true', function(result) {
+						// Set modal content
+						var rendered = template(result);
+						evt.modal.setContent(rendered);
+						var content = $(evt.modal.getContentContainer());
+
+						content.find('button[name="select_shot"]').on('click', function(e) {
+							// Close modal
+							map.closeModal();
+
+							// Create shot marker
+							var shotId = content.find('select[name="shot"]').val();
+							var productionTitle = content.find('select[name="shot"] option:selected').text();
+							var shotUrl = content.find('select[name="shot"] option:selected').data('url');
+
+							var marker = new L.Marker.ShotMarker(created_coordinate, {
+                                shotId: shotId,
+                                productionTitle: productionTitle,
+								shotUrl: shotUrl
+                            }).addTo(map.featureGroups.shots);
+
+							marker.updateCoordinate(marker.getLatLng());
 						});
 					});
 				},
@@ -309,11 +363,11 @@ L.Polygon.LocationPolygon = L.Polygon.extend({
 			fillOpacity: 0.2,
 		});
 
-		// Events
-		this.on('click', this.onClick);
-
 		// Tooltip
 		this.setTooltip(this.options.locationAddress);
+
+		// Events
+		this.on('click', this.onClick);
 	},
 
 	// Set tooltip
@@ -392,8 +446,6 @@ L.Polygon.LocationPolygon = L.Polygon.extend({
 			this.options.locationId, bounds.length
 		));
 
-		console.log(bounds);
-		
 		UTIL.post_json('/json/location/{0}/bounds/update'.format(this.options.locationId), bounds);
 	},
 
@@ -436,7 +488,8 @@ L.Marker.ShotMarker = L.Marker.extend({
 	// Options
 	default_options: {
 		shotId: 0,
-		production: '',
+		productionTitle: '',
+		shotUrl: undefined,
 		editable: false,
 	},
 
@@ -446,11 +499,19 @@ L.Marker.ShotMarker = L.Marker.extend({
 		L.Util.setOptions(this, this.default_options);
 		L.Marker.prototype.initialize.call(this, latlng, options);
 
-		// Events
-		this.on('click', this.onClick);
+		// Set icon
+		if (this.options.shotUrl) {
+			this.setIcon(L.divIcon({
+	            className: 'leaflet-shotmarker',
+	            html: '<img src="{0}">'.format(this.options.shotUrl)
+	        }));
+		}
 
 		// Tooltip
-		this.setTooltip(this.options.production);
+		this.setTooltip(this.options.productionTitle);
+
+		// Events
+		this.on('click', this.onClick);
 	},
 
 	// Set tooltip
@@ -459,6 +520,29 @@ L.Marker.ShotMarker = L.Marker.extend({
 			return;
 
 		this.bindTooltip(label);
+	},
+
+	// Update marker coordinate
+	updateCoordinate: function(coordinate) {
+		if (this.options.shotId == 0) {
+			UTIL.log('Ignored marker, invalid shot id'.format(
+				this.options.shotId
+			));
+			return;
+		}
+
+		if (!coordinate) {
+			UTIL.log('Marker update failed, undefined or invalid coordinate ({0})'.format(
+				coordinate
+			));
+			return;	
+		}
+
+		UTIL.log('Saving marker coordinate {0} ({1})'.format(
+			this.options.locationId, coordinate
+		));
+		
+		// UTIL.post_json('/json/location/{0}/bounds/update'.format(this.options.locationId), bounds);
 	},
 
 	// Clicked

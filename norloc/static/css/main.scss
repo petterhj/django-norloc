@@ -1057,11 +1057,11 @@ div.leaflet-control-attribution {
 	bottom: 0;
 }
 div.leaflet-control-attribution > a { color: rgba(0, 255, 0, 0.2); }
-.mapShotMarker { 
+.leaflet-shotmarker { 
 	width: auto !important; height: auto !important; 
 	/*background: #f30e5c; border-radius: 50%; */
 }
-.mapShotMarker > img { width: 20px; height: 12px; border-radius: 3px; }
+.leaflet-shotmarker > img { width: 20px; height: 12px; border-radius: 3px; }
 
 
 /* Leaflet modal */
@@ -1133,7 +1133,7 @@ div.leaflet-modal {
 				}
 			}
 
-			&.location-select {
+			&.object-select {
 				display: flex;
 				
 				h1 { flex: 1 0 auto; line-height: 43px; }

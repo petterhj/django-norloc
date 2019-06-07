@@ -201,11 +201,8 @@ var NORLOC = NORLOC || {
                             // Marker
                             var marker = new L.Marker.ShotMarker(shot.coordinate, {
                                 shotId: shpk,
-                                production: scene.production,
-                                icon: L.divIcon({
-                                    className: 'mapShotMarker',
-                                    html: '<img src="{0}">'.format((shot.image ? shot.image : '/static/img/bullet_blue.png'))
-                                })
+                                productionTitle: scene.production,
+                                shotUrl: shot.image
                             }).addTo(map.featureGroups.shots);
                         }
                     });
@@ -225,7 +222,7 @@ var NORLOC = NORLOC || {
                 // map.fitBounds(map.featureGroups.locations.getBounds());
 
                 ////////////////////
-                // map.toggleEditMode();
+                map.toggleEditMode();
                 ////////////////////
             });
         });
