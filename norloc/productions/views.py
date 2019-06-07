@@ -56,7 +56,7 @@ def production(request, production_type, slug):
     # Production
     production = get_object_or_404(Production, type=production_type, slug=slug)
     edit_request = bool(request.GET.get('edit', False))
-    edit_mode = edit_request and request.user.is_authenticated()
+    edit_mode = edit_request and request.user.is_authenticated
     form = None
 
     # Edit production (GET)
@@ -88,7 +88,7 @@ def production(request, production_type, slug):
 
     # Render template
     logger.info('Rendering production (%s), slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
-        request.method, production.slug, edit_mode, edit_request, request.user.is_authenticated()
+        request.method, production.slug, edit_mode, edit_request, request.user.is_authenticated
     ))
 
     return render(request, 'production.html', {
@@ -154,7 +154,7 @@ def person(request, slug):
     # Person
     person = get_object_or_404(Person, slug=slug)
     edit_request = bool(request.GET.get('edit', False))
-    edit_mode = edit_request and request.user.is_authenticated()
+    edit_mode = edit_request and request.user.is_authenticated
     form = None
 
     # Edit person (GET)
@@ -163,7 +163,7 @@ def person(request, slug):
         form = PersonForm(instance=person)
 
     # Update person (POST)
-    if request.method == 'POST' and request.user.is_authenticated():
+    if request.method == 'POST' and request.user.is_authenticated:
         # Form
         form = PersonForm(instance=person, data=request.POST, files=request.FILES)
         
@@ -183,7 +183,7 @@ def person(request, slug):
 
     # Render template
     logger.info('Rendering person (%s), slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
-        request.method, person.slug, edit_mode, edit_request, request.user.is_authenticated()
+        request.method, person.slug, edit_mode, edit_request, request.user.is_authenticated
     ))
 
     # Render template
