@@ -4,7 +4,7 @@
 from json import dumps, loads
 from django import forms
 from django.apps import apps
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from .models import Production, Person
@@ -28,7 +28,7 @@ class StyledModelForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': attr_class + ' error'
             })
-            print self.fields[field].widget.attrs, '!!'*20
+            # print(self.fields[field].widget.attrs, '!!'*20)
 
         return valid
 

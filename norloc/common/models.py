@@ -2,14 +2,18 @@
 
 # Imports
 from django.db import models
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 
 # Model: Reference
 class Reference(models.Model):
     # Fields
-    production = models.ForeignKey('productions.Production', null=True, blank=True)
-    location = models.ForeignKey('locations.Location', null=True, blank=True)
+    production = models.ForeignKey('productions.Production', 
+        null=True, blank=True, on_delete=models.CASCADE
+    )
+    location = models.ForeignKey('locations.Location', 
+        null=True, blank=True, on_delete=models.CASCADE
+    )
 
     title = models.CharField(max_length=100)
     quote = models.TextField(max_length=350, blank=True)
@@ -25,4 +29,4 @@ class Reference(models.Model):
     # Properties
     @property
     def display_url(self):
-    	return urlparse(self.source).hostname
+        return urlparse(self.source).hostname

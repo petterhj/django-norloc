@@ -3,8 +3,8 @@
 # Imports
 from __future__ import unicode_literals
 
+import json
 import logging
-import simplejson as json
 
 from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
@@ -201,10 +201,10 @@ def update_location_bounds(request, lpk):
     # Location
     location = get_object_or_404(Location, pk=lpk)
 
-    print '~'*50
-    print location.bounds
-    print location.bounds_locked
-    print '~'*50
+    # print '~'*50
+    # print location.bounds
+    # print location.bounds_locked
+    # print '~'*50
 
     if not request.is_ajax():
         return JsonResponse({'success': False})

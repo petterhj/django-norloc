@@ -70,8 +70,8 @@ class Production(models.Model):
         super(Production, self).save(*args, **kwargs)
 
         # Update people
-        print '!'*1000
-        print self.directors.all()
+        # print('!'*1000)
+        # print(self.directors.all())
 
 
     # Properties
@@ -112,9 +112,11 @@ class Production(models.Model):
 # Model: Scene
 class Scene(models.Model):
     # Fields
-    production = models.ForeignKey(Production)
+    production = models.ForeignKey(Production, on_delete=models.CASCADE)
     description = models.TextField(max_length=800, blank=True)
-    location = models.ForeignKey('locations.Location', blank=True, null=True, on_delete=models.SET_NULL)
+    location = models.ForeignKey('locations.Location', 
+        blank=True, null=True, on_delete=models.SET_NULL
+    )
     uncertain = models.BooleanField(default=False)
 
     
@@ -130,7 +132,7 @@ class Scene(models.Model):
 # Model: Shot
 class Shot(models.Model):
     # Fields
-    scene = models.ForeignKey(Scene)
+    scene = models.ForeignKey(Scene, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=upload_to_shots)
     double = models.BooleanField(default=False)
     timecode = models.IntegerField(blank=True, null=True)

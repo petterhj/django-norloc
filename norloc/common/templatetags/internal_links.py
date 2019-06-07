@@ -4,7 +4,7 @@
 import re
 import logging
 from django import template
-from django.core.urlresolvers import reverse
+from django.urls  import reverse
 from productions.views import *
 
 

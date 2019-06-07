@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import Count
 from autoslug import AutoSlugField
 from jsonfield import JSONField
-from urlparse import urlparse
+from urllib.parse import urlparse
 from uuid_upload_path import upload_to_factory
 
 

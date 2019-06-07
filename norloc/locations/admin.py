@@ -1,6 +1,6 @@
 # Imports
 from django.contrib import admin
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 from locations.models import Location, Photo
 
