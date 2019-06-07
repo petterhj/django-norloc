@@ -101,7 +101,7 @@ def location(request, county, place, slug):
 
     # Render template
     logger.info('Rendering location (%s), slug=%s, edit_mode=%r (requested=%r, auth=%r)' % (
-        request.method, location.slug, edit_mode, edit_request, request.user.is_authenticated()
+        request.method, location.slug, edit_mode, edit_request, request.user.is_authenticated
     ))
 
     return render(request, 'location.html', {
